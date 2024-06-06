@@ -14,17 +14,20 @@ class CompanyRemoteDataSourceImpl extends CompanyRemoteDataSource {
   final Dio dio;
   final SharedPreferences sharedPreferences;
   CompanyRemoteDataSourceImpl(
-      {required this.sharedPreferences, required this.dio});
+      {required this.sharedPreferences, required this.dio}) {
+    String bearerToken =
+        'bearer ${sharedPreferences.getString(ACCESS_TOKEN_KEY)}';
+    dio.options = BaseOptions(
+      headers: {'Authorization': bearerToken},
+    );
+  }
+
   @override
   Future<CompanyModel> getCompanyInfo() async {
     try {
-      Response response = await dio.get(
-        options: Options(headers: {
-          'Authorization':
-              'bearer ${sharedPreferences.getString(ACCESS_TOKEN_KEY)}'
-        }),
-        API.COMPANIES,
-      );
+      // final bearerToken =
+      //     'bearer ${sharedPreferences.getString(ACCESS_TOKEN_KEY)}';
+      Response response = await dio.get(API.COMPANIES);
       return CompanyModel.fromJson(response.data);
     } on DioException catch (e) {
       throw ServerException.fromDioException(e);
@@ -32,17 +35,13 @@ class CompanyRemoteDataSourceImpl extends CompanyRemoteDataSource {
   }
 
   @override
-  Future<CompanyModel> updateCompanyInfo({required CompanyModel companyModel}) async {
+  Future<CompanyModel> updateCompanyInfo(
+      {required CompanyModel companyModel}) async {
     try {
-      Response response = await dio.put(
-          options: Options(headers: {
-            'Authorization':
-                'bearer ${sharedPreferences.getString(ACCESS_TOKEN_KEY)}'
-          }),
-          API.COMPANIES,
-          data: companyModel.toJson());
+      Response response =
+          await dio.put(API.COMPANIES, data: companyModel.toJson());
 
-     return CompanyModel.fromJson(response.data);
+      return CompanyModel.fromJson(response.data);
     } on DioException catch (e) {
       throw ServerException.fromDioException(e);
     }

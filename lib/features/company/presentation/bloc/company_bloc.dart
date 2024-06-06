@@ -12,7 +12,7 @@ part 'company_state.dart';
 class CompanyBloc extends Bloc<CompanyEvent, CompanyState> {
   final GetCompanyInfoUseCase getCompanyInfoUseCase;
   final UpdateCompanyInfoUseCase updateCompanyInfoUseCase;
-  late CompanyEntity company;
+  CompanyEntity? company;
   CompanyBloc({
     required this.getCompanyInfoUseCase,
     required this.updateCompanyInfoUseCase,

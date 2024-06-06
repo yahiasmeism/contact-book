@@ -11,4 +11,8 @@ abstract class API {
 
   // CONTACTS
   static const CONTACTS = '$BASE_URL/Contacts';
+
+  // USERS
+  static const USERS = '$BASE_URL/Users';
+  static const CURRENT_USER = '$USERS/current-user';
 }

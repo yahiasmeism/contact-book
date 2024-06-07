@@ -1,3 +1,4 @@
+import 'package:contact_book/core/utils/hive_init.dart';
 import 'package:contact_book/features/company/presentation/pages/company_profile_page.dart';
 import 'package:contact_book/features/home/managers/network_cubit/network_cubit.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ import 'container_injector.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await hiveInit();
   await di.init();
   Bloc.observer = MyBlocObserver();
   runApp(const ContactBookApp());
@@ -54,5 +56,4 @@ class ContactBookApp extends StatelessWidget {
     );
   }
 }
-
 

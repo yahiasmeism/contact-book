@@ -15,3 +15,6 @@ class EmptyChacheFailure extends Failure {
 class NetworkFailure extends Failure {
   NetworkFailure({required super.message});
 }
+class DatabaseFailure extends Failure {
+  DatabaseFailure({required super.message});
+}

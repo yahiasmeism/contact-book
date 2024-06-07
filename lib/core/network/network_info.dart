@@ -10,7 +10,7 @@ class NetworkInfoImpl implements NetworkInfo {
   final InternetConnection _connection = InternetConnection();
 
   @override
-  Future<bool> get isConnected {
+  Future<bool> get isConnected async {
     return _connection.hasInternetAccess;
   }
 }

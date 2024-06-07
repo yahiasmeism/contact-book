@@ -79,7 +79,7 @@ Future<void> init() async {
 
   // data sources
   sl.registerLazySingleton<CompanyLocalDataSource>(
-    () => CompanyLocalDataSourceImpl(sharedPreferences: sl()),
+    () => CompanyLocalDataSourceImpl(),
   );
   sl.registerLazySingleton<CompanyRemoteDataSource>(
     () => CompanyRemoteDataSourceImpl(dio: sl(), sharedPreferences: sl()),

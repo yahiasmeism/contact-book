@@ -1,16 +1,17 @@
 import 'package:contact_book/features/company/domain/entities/company_entity.dart';
 
 class CompanyModel extends CompanyEntity {
-  CompanyModel(
-      {required super.id,
-      required super.companyName,
-      required super.vatNumber,
-      required super.streetOne,
-      required super.streetTwo,
-      required super.city,
-      required super.state,
-      required super.zip,
-      required super.country});
+  const CompanyModel({
+    required super.id,
+    required super.companyName,
+    required super.vatNumber,
+    required super.streetOne,
+    required super.streetTwo,
+    required super.city,
+    required super.state,
+    required super.zip,
+    required super.country,
+  });
 
   factory CompanyModel.fromJson(Map<String, dynamic> json) {
     return CompanyModel(
@@ -49,6 +50,19 @@ class CompanyModel extends CompanyEntity {
       state: companyEntity.state,
       zip: companyEntity.zip,
       country: companyEntity.country,
+    );
+  }
+  CompanyEntity toEntity() {
+    return CompanyEntity(
+      id: id,
+      companyName: companyName,
+      vatNumber: vatNumber,
+      streetOne: streetOne,
+      streetTwo: streetTwo,
+      city: city,
+      state: state,
+      zip: zip,
+      country: country,
     );
   }
 }

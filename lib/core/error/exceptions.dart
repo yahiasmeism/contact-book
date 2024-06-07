@@ -5,6 +5,11 @@ class EmptyChacheException implements Exception {
 
   EmptyChacheException(this.message);
 }
+class DatabaseException implements Exception {
+  final String message;
+
+  DatabaseException(this.message);
+}
 
 class ServerException implements Exception {
   final String message;
@@ -27,7 +32,7 @@ class ServerException implements Exception {
         message = "Receive timeout in connection";
         break;
       case DioExceptionType.badResponse:
-        message = "Received invalid status";
+        message = "Session has expired , please login again";
         break;
       case DioExceptionType.connectionError:
         message = "Check internet connection";

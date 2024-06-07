@@ -1,8 +1,8 @@
-import 'dart:convert';
 
 import 'package:contact_book/core/constants/constant.dart';
+import 'package:contact_book/core/constants/messages.dart';
 import 'package:contact_book/core/error/exceptions.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive_flutter/adapters.dart';
 
 import '../models/company_model.dart';
 
@@ -12,25 +12,26 @@ abstract interface class CompanyLocalDataSource {
 }
 
 class CompanyLocalDataSourceImpl extends CompanyLocalDataSource {
-  final SharedPreferences sharedPreferences;
-
-  CompanyLocalDataSourceImpl({required this.sharedPreferences});
+  CompanyLocalDataSourceImpl();
 
   @override
   Future<CompanyModel> getCompanyInfo() async {
-    if (sharedPreferences.containsKey(COMAPNY_KEY)) {
-      String jsonEncoded = sharedPreferences.getString(COMAPNY_KEY)!;
-      final jsonDecoded = jsonDecode(jsonEncoded);
-      return CompanyModel.fromJson(jsonDecoded);
+    final box = Hive.box(APP_BOX);
+    if (box.containsKey(COMAPNY_INFO_KEY)) {
+      final companyEntity = box.get(COMAPNY_INFO_KEY);
+      return CompanyModel.fromEntity(companyEntity);
     } else {
-      throw EmptyChacheException('Company info not found');
+      throw EmptyChacheException(MESSAGES.DATA_NOT_FOUND);
     }
   }
 
   @override
   Future<void> storeCompanyInfo(CompanyModel companyModel) async {
-    Map<String, dynamic> json = companyModel.toJson();
-    final jsonEncoded = jsonEncode(json);
-    await sharedPreferences.setString(COMAPNY_KEY, jsonEncoded);
+    try {
+      final box = Hive.box(APP_BOX);
+      await box.put(COMAPNY_INFO_KEY, companyModel);
+    } on HiveError catch (e) {
+      throw DatabaseException(e.message);
+    }
   }
 }

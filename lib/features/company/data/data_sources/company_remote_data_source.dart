@@ -15,6 +15,8 @@ class CompanyRemoteDataSourceImpl extends CompanyRemoteDataSource {
   final SharedPreferences sharedPreferences;
   CompanyRemoteDataSourceImpl(
       {required this.sharedPreferences, required this.dio}) {
+
+        // initial dio base option
     String bearerToken =
         'bearer ${sharedPreferences.getString(ACCESS_TOKEN_KEY)}';
     dio.options = BaseOptions(
@@ -25,8 +27,6 @@ class CompanyRemoteDataSourceImpl extends CompanyRemoteDataSource {
   @override
   Future<CompanyModel> getCompanyInfo() async {
     try {
-      // final bearerToken =
-      //     'bearer ${sharedPreferences.getString(ACCESS_TOKEN_KEY)}';
       Response response = await dio.get(API.COMPANIES);
       return CompanyModel.fromJson(response.data);
     } on DioException catch (e) {

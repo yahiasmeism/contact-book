@@ -24,13 +24,14 @@ class CompanyRepositoryImpl implements CompanyRepository {
   Future<Either<Failure, CompanyEntity>> getCompanyInfo() async {
     try {
       CompanyModel companyModel;
-      if (await networkInfo.isConnected) {
+      bool isConnected = await networkInfo.isConnected;
+      if (isConnected) {
         companyModel = await companyRemoteDataSource.getCompanyInfo();
         companyLocalDataSource.storeCompanyInfo(companyModel);
       } else {
         companyModel = await companyLocalDataSource.getCompanyInfo();
       }
-      return Right(companyModel);
+      return Right(companyModel.toEntity());
     } on ServerException catch (e) {
       return Left(ServerFalure(message: e.message));
     } on EmptyChacheException catch (e) {
@@ -42,15 +43,15 @@ class CompanyRepositoryImpl implements CompanyRepository {
   Future<Either<Failure, CompanyEntity>> updateCompanyInfo({
     required CompanyEntity companyEntity,
   }) async {
+    CompanyModel companyModel = CompanyModel.fromEntity(companyEntity);
     try {
-      companyEntity = await companyRemoteDataSource.updateCompanyInfo(
-        companyModel: CompanyModel.fromEntity(companyEntity),
+      companyModel = await companyRemoteDataSource.updateCompanyInfo(
+        companyModel: companyModel,
       );
 
-      await companyLocalDataSource
-          .storeCompanyInfo(CompanyModel.fromEntity(companyEntity));
+      await companyLocalDataSource.storeCompanyInfo(companyModel);
 
-      return Right(companyEntity);
+      return Right(companyModel.toEntity());
     } on ServerException catch (e) {
       return Left(ServerFalure(message: e.message));
     }

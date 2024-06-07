@@ -29,7 +29,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
       return const Right(unit);
     } on ServerException catch (e) {
-      return Left(ServerFalure(message: e.message));
+      return Left(ServerFailure(message: e.message));
     }
   }
 
@@ -40,7 +40,7 @@ class AuthRepositoryImpl implements AuthRepository {
       await remote.register(RegisterModel.fromEntity(register));
       return const Right(unit);
     } on ServerException catch (e) {
-      return Left(ServerFalure(message: e.message));
+      return Left(ServerFailure(message: e.message));
     }
   }
 

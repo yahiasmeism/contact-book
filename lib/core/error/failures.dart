@@ -4,8 +4,8 @@ abstract interface class Failure {
   Failure({required this.message});
 }
 
-class ServerFalure extends Failure {
-  ServerFalure({required super.message});
+class ServerFailure extends Failure {
+  ServerFailure({required super.message});
 }
 
 class EmptyChacheFailure extends Failure {
@@ -15,6 +15,7 @@ class EmptyChacheFailure extends Failure {
 class NetworkFailure extends Failure {
   NetworkFailure({required super.message});
 }
+
 class DatabaseFailure extends Failure {
   DatabaseFailure({required super.message});
 }

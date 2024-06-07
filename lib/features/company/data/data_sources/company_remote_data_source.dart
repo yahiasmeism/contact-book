@@ -15,8 +15,7 @@ class CompanyRemoteDataSourceImpl extends CompanyRemoteDataSource {
   final SharedPreferences sharedPreferences;
   CompanyRemoteDataSourceImpl(
       {required this.sharedPreferences, required this.dio}) {
-
-        // initial dio base option
+    // initial dio base option
     String bearerToken =
         'bearer ${sharedPreferences.getString(ACCESS_TOKEN_KEY)}';
     dio.options = BaseOptions(

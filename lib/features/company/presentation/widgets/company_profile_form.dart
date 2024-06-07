@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/widgets/country_drop_down_menu.dart';
 
-// ignore: must_be_immutable
 class CompanyProfileForm extends StatefulWidget {
   const CompanyProfileForm({
     super.key,
@@ -151,7 +150,7 @@ class _CompanyProfileFormState extends State<CompanyProfileForm> {
             editingActive = false;
           });
           CompanyEntity companyEntityUpdate = CompanyEntity(
-            id: companyEntity!.id,
+            id: companyEntity?.id ?? 0,
             companyName: companyNameCon.text,
             vatNumber: vatNumberCon.text,
             streetOne: streetCon.text,

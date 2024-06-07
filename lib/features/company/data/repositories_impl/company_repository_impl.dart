@@ -33,7 +33,7 @@ class CompanyRepositoryImpl implements CompanyRepository {
       }
       return Right(companyModel.toEntity());
     } on ServerException catch (e) {
-      return Left(ServerFalure(message: e.message));
+      return Left(ServerFailure(message: e.message));
     } on EmptyChacheException catch (e) {
       return Left(EmptyChacheFailure(message: e.message));
     }
@@ -53,7 +53,7 @@ class CompanyRepositoryImpl implements CompanyRepository {
 
       return Right(companyModel.toEntity());
     } on ServerException catch (e) {
-      return Left(ServerFalure(message: e.message));
+      return Left(ServerFailure(message: e.message));
     }
   }
 }

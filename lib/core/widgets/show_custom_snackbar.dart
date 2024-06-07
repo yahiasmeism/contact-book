@@ -19,10 +19,12 @@ class SnackBarGlobal {
             children: [
               icon == null
                   ? const SizedBox()
-                  : Icon(icon, color: Colors.white, size: 40),
-              const SizedBox(
-                width: 20,
-              ),
+                  : Row(
+                      children: [
+                        Icon(icon, color: Colors.white, size: 40),
+                        const SizedBox(width: 20),
+                      ],
+                    ),
               Expanded(
                   child: Text(
                 text,

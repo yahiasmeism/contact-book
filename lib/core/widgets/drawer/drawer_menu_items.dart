@@ -2,6 +2,9 @@ import 'package:contact_book/features/authentication/presentation/cubits/logout_
 import 'package:contact_book/features/authentication/presentation/pages/login_page.dart';
 import 'package:contact_book/features/company/presentation/pages/company_profile_page.dart';
 import 'package:contact_book/core/widgets/drawer/drawer_item.dart';
+import 'package:contact_book/features/home/pages/home_page.dart';
+import 'package:contact_book/features/users/presentation/pages/users_page.dart';
+import 'package:contact_book/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,14 +17,12 @@ class DrawerMenuItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? currentPageName = ModalRoute.of(context)!.settings.name;
     return Column(
       children: [
         DrawerItem(
           title: 'Home',
           onTap: () {
-            Navigator.pop(context);
-            Navigator.of(context).popUntil((route) => route.isFirst);
+            pushPageAndPopDrawer(context, HomePage.id);
           },
         ),
         const CustomDivider(),
@@ -35,17 +36,14 @@ class DrawerMenuItems extends StatelessWidget {
         DrawerItem(
           title: 'Company Profile',
           onTap: () {
-            Navigator.pop(context);
-            if (currentPageName != CompanyProfilePage.id) {
-              Navigator.pushNamed(context, CompanyProfilePage.id);
-            }
+            pushPageAndPopDrawer(context, CompanyProfilePage.id);
           },
         ),
         const CustomDivider(),
         DrawerItem(
           title: 'Users',
           onTap: () {
-            Navigator.pop(context);
+            pushPageAndPopDrawer(context, UsersPage.id);
           },
         ),
         const CustomDivider(),
@@ -56,12 +54,7 @@ class DrawerMenuItems extends StatelessWidget {
         DrawerItem(
           leading: const Icon(Icons.person, size: 30),
           title: 'My Profile',
-          onTap: () {
-            Navigator.pop(context);
-            if (currentPageName != CompanyProfilePage.id) {
-              Navigator.pushNamed(context, CompanyProfilePage.id);
-            }
-          },
+          onTap: () {},
         ),
         DrawerItem(
           leading: const Icon(Icons.logout, size: 30),
@@ -101,5 +94,15 @@ class DrawerMenuItems extends StatelessWidget {
         );
       },
     );
+  }
+
+  pushPageAndPopDrawer(BuildContext context, String pageName) {
+    Navigator.pop(context);
+    final routeObserver = ContactBookApp.routeObserver;
+    if (routeObserver.isRoutePresent(pageName)) {
+      Navigator.popUntil(context, ModalRoute.withName(pageName));
+    } else {
+      Navigator.pushNamed(context, pageName);
+    }
   }
 }

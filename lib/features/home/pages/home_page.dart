@@ -2,6 +2,7 @@ import 'package:contact_book/core/widgets/main_app_bar.dart';
 import 'package:contact_book/core/widgets/show_custom_snackbar.dart';
 import 'package:contact_book/features/home/managers/network_cubit/network_cubit.dart';
 import 'package:contact_book/features/home/widgets/home_body.dart';
+import 'package:contact_book/features/users/presentation/blocs/bloc/users_bloc.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     context.read<CompanyBloc>().add(GetCompanyInfoEvent());
+    context.read<UsersBloc>().add(GetAllUsersEvent());
     super.initState();
   }
 

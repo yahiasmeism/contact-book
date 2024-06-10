@@ -4,6 +4,12 @@ import 'package:contact_book/features/company/data/data_sources/company_remote_d
 import 'package:contact_book/features/company/data/repositories_impl/company_repository_impl.dart';
 import 'package:contact_book/features/company/domain/repositories/company_repository.dart';
 import 'package:contact_book/features/company/domain/use_cases/get_company_info_use_case.dart';
+import 'package:contact_book/features/users/data/data_sources/users_local_data_source.dart';
+import 'package:contact_book/features/users/data/data_sources/users_remote_data_source.dart';
+import 'package:contact_book/features/users/data/repositories_impl/user_repository_impl.dart';
+import 'package:contact_book/features/users/domain/repositories/user_repository.dart';
+import 'package:contact_book/features/users/domain/use_cases/get_all_user_use_case.dart';
+import 'package:contact_book/features/users/presentation/blocs/bloc/users_bloc.dart';
 import 'features/authentication/domain/use_cases/check_logged_in_use_case.dart';
 
 import 'features/authentication/data/data_sources/auth_local_data_source.dart';
@@ -85,6 +91,28 @@ Future<void> init() async {
     () => CompanyRemoteDataSourceImpl(dio: sl(), sharedPreferences: sl()),
   );
 
+  //! Users Feature ===========================================
+  // Bloc
+  sl.registerFactory(() => UsersBloc(getAllUserUseCase: sl()));
+
+  // Use Cases
+  sl.registerLazySingleton(() => GetAllUserUseCase(userRepository: sl()));
+
+  // repositories
+  sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(
+        networkInfo: sl(),
+        usersLocal: sl(),
+        usersRemote: sl(),
+      ));
+
+  // data sources
+  sl.registerLazySingleton<UsersLocalDataSource>(
+      () => UsersLocalDataSourceImpl());
+  sl.registerLazySingleton<UsersRemoteDataSource>(
+      () => UsersRemoteDataSourceImpl(
+            dio: sl(),
+            sharedPreferences: sl(),
+          ));
   //! External ===============================================================
   sl.registerLazySingleton<Dio>(() => Dio());
 

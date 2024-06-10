@@ -7,33 +7,33 @@ class UserEntity extends HiveObject with EquatableMixin {
   @HiveField(0)
 	final String id;
   @HiveField(1)
-	final String userName;
+	final String? userName;
   @HiveField(2)
-	final String normalizedUserName;
+	final String? normalizedUserName;
   @HiveField(3)
 	final String email;
   @HiveField(4)
-	final String normalizedEmail;
+	final String? normalizedEmail;
   @HiveField(5)
-	final bool emailConfirmed;
+	final bool? emailConfirmed;
   @HiveField(6)
-	final String passwordHash;
+	final String? passwordHash;
   @HiveField(7)
-	final String securityStamp;
+	final String? securityStamp;
   @HiveField(8)
-	final String concurrencyStamp;
+	final String? concurrencyStamp;
   @HiveField(9)
 	final String phoneNumber;
   @HiveField(10)
-	final bool phoneNumberConfirmed;
+	final bool? phoneNumberConfirmed;
   @HiveField(11)
-	final bool twoFactorEnabled;
+	final bool? twoFactorEnabled;
   @HiveField(12)
 	final DateTime? lockoutEnd;
   @HiveField(13)
-	final bool lockoutEnabled;
+	final bool? lockoutEnabled;
   @HiveField(14)
-	final int accessFailedCount;
+	final int? accessFailedCount;
   @HiveField(15)
 	final String firstName;
   @HiveField(16)
@@ -49,20 +49,20 @@ class UserEntity extends HiveObject with EquatableMixin {
 
 	  UserEntity({
 		required this.id, 
-		required this.userName, 
-		required this.normalizedUserName, 
+		this.userName, 
+		this.normalizedUserName, 
 		required this.email, 
-		required this.normalizedEmail, 
-		required this.emailConfirmed, 
-		required this.passwordHash, 
-		required this.securityStamp, 
-		required this.concurrencyStamp, 
+		 this.normalizedEmail, 
+		 this.emailConfirmed, 
+		 this.passwordHash, 
+		 this.securityStamp, 
+		 this.concurrencyStamp, 
 		required this.phoneNumber, 
-		required this.phoneNumberConfirmed, 
-		required this.twoFactorEnabled, 
+		 this.phoneNumberConfirmed, 
+		 this.twoFactorEnabled, 
 		this.lockoutEnd, 
-		required this.lockoutEnabled, 
-		required this.accessFailedCount, 
+		 this.lockoutEnabled, 
+		 this.accessFailedCount, 
 		required this.firstName, 
 		required this.lastName, 
 		required this.status, 

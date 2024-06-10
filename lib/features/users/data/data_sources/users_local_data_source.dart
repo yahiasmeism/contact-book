@@ -15,9 +15,9 @@ abstract interface class UsersLocalDataSource {
 }
 
 class UsersLocalDataSourceImpl implements UsersLocalDataSource {
-  late Box<UserModel> _box;
+  late Box _box;
   UsersLocalDataSourceImpl() {
-    _box = Hive.box<UserModel>(APP_BOX);
+    _box = Hive.box(APP_BOX);
   }
 
   @override
@@ -44,7 +44,7 @@ class UsersLocalDataSourceImpl implements UsersLocalDataSource {
 
   @override
   Future<List<UserModel>> getAllUsers() async {
-    return _box.values.toList();
+    return _box.values.cast<UserModel>().toList();
   }
 
   @override

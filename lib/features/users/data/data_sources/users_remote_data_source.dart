@@ -10,10 +10,10 @@ import '../models/user_model.dart';
 abstract interface class UsersRemoteDataSource {
   Future<List<UserModel>> getAllUsers();
   Future<UserModel> getCurrentUser();
-  Future<UserModel> getUserById(String id);
-  Future<void> addUser(UserModel userModel);
-  Future<UserModel> updateUser(UserModel userModel);
-  Future<void> deleteUserById(String id);
+  Future<UserModel> getUser({required String id});
+  Future<void> addUser({required UserModel userModel});
+  Future<UserModel> updateUser({required UserModel userModel});
+  Future<void> deleteUser({required String id});
 }
 
 class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
@@ -32,7 +32,7 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
   }
 
   @override
-  Future<void> addUser(UserModel userModel) async {
+  Future<void> addUser({required UserModel userModel}) async {
     try {
       await dio.post(
         API.USERS,
@@ -44,7 +44,7 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
   }
 
   @override
-  Future<void> deleteUserById(String id) async {
+  Future<void> deleteUser({required String id}) async {
     try {
       await dio.delete('${API.USERS}/$id');
     } on DioException catch (e) {
@@ -78,7 +78,7 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
   }
 
   @override
-  Future<UserModel> getUserById(String id) async {
+  Future<UserModel> getUser({required String id}) async {
     try {
       Response response = await dio.get('${API.USERS}/$id');
       return UserModel.fromJson(response.data);
@@ -88,7 +88,7 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
   }
 
   @override
-  Future<UserModel> updateUser(UserModel userModel) async {
+  Future<UserModel> updateUser({required UserModel userModel}) async {
     try {
       Response response = await dio.put(
         API.USERS,

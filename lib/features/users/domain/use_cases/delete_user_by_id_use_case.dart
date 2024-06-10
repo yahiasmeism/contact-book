@@ -9,6 +9,6 @@ class DeleteUserByIdUseCase {
     required this.userRepository,
   });
   Future<Either<Failure, Unit>> call({required String id}) {
-    return userRepository.deleteUserById(id);
+    return userRepository.deleteUser(id: id);
   }
 }

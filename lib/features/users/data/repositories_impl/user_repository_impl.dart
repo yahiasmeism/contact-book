@@ -19,12 +19,12 @@ class UserRepositoryImpl implements UserRepository {
     required this.usersRemote,
   });
   @override
-  Future<Either<Failure, Unit>> deleteUserById(String id) async {
+  Future<Either<Failure, Unit>> deleteUser({required String id}) async {
     return await _performDataOperation<Unit>(remoteTask: () async {
-      usersRemote.deleteUserById(id);
+      usersRemote.deleteUser(id: id);
       return unit;
     }, loacalTask: () async {
-      usersLocal.deleteUserById(id);
+      usersLocal.deleteUser(id: id);
       return unit;
     });
   }
@@ -46,19 +46,21 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, UserEntity>> getUserById(String id) {
+  Future<Either<Failure, UserEntity>> getUser({required String id}) {
     return _performDataOperation<UserEntity>(
-      loacalTask: () => usersLocal.getUserById(id),
-      remoteTask: () => usersRemote.getUserById(id),
+      loacalTask: () => usersLocal.getUser(id: id),
+      remoteTask: () => usersRemote.getUser(id: id),
     );
   }
 
   @override
-  Future<Either<Failure, UserEntity>> updateUser(UserEntity userEntity) {
+  Future<Either<Failure, UserEntity>> updateUser(
+      {required UserEntity userEntity}) {
     return _performDataOperation(
       remoteTask: () =>
-          usersRemote.updateUser(UserModel.fromEntity(userEntity)),
-      loacalTask: () => usersLocal.updateUser(UserModel.fromEntity(userEntity)),
+          usersRemote.updateUser(userModel: UserModel.fromEntity(userEntity)),
+      loacalTask: () =>
+          usersLocal.updateUser(userModel: UserModel.fromEntity(userEntity)),
     );
   }
 

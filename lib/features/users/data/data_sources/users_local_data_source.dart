@@ -5,12 +5,12 @@ import 'package:hive/hive.dart';
 import '../models/user_model.dart';
 
 abstract interface class UsersLocalDataSource {
-  Future<void> storeUsers(List<UserModel> users);
-  Future<void> storeUser(UserModel user);
+  Future<void> storeUsers({required List<UserModel> users});
+  Future<void> storeUser({required UserModel user});
   Future<List<UserModel>> getAllUsers();
-  Future<UserModel> getUserById(String id);
-  Future<UserModel> updateUser(UserModel user);
-  Future<void> deleteUserById(String id);
+  Future<UserModel> getUser({required String id});
+  Future<UserModel> updateUser({required UserModel userModel});
+  Future<void> deleteUser({required String id});
   Future<UserModel> getCurrentUser();
 }
 
@@ -21,7 +21,7 @@ class UsersLocalDataSourceImpl implements UsersLocalDataSource {
   }
 
   @override
-  Future<void> deleteUserById(String id) async {
+  Future<void> deleteUser({required String id}) async {
     if (_box.containsKey(id)) {
       await _box.delete(id);
     }
@@ -33,12 +33,12 @@ class UsersLocalDataSourceImpl implements UsersLocalDataSource {
   }
 
   @override
-  Future<UserModel> getUserById(String id) async {
+  Future<UserModel> getUser({required String id}) async {
     return await _getUserByKey(id);
   }
 
   @override
-  Future<void> storeUser(UserModel user) async {
+  Future<void> storeUser({required UserModel user}) async {
     await _storeOrUpdate(user);
   }
 
@@ -48,15 +48,15 @@ class UsersLocalDataSourceImpl implements UsersLocalDataSource {
   }
 
   @override
-  Future<void> storeUsers(List<UserModel> users) async {
+  Future<void> storeUsers({required List<UserModel> users}) async {
     for (var user in users) {
       await _storeOrUpdate(user);
     }
   }
 
   @override
-  Future<UserModel> updateUser(UserModel user) async {
-    return await _storeOrUpdate(user);
+  Future<UserModel> updateUser({required UserModel userModel}) async {
+    return await _storeOrUpdate(userModel);
   }
 
   /// If the user does not exist it will be stored

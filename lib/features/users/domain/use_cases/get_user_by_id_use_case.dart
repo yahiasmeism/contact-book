@@ -11,6 +11,6 @@ class GetUserByIdUseCase {
     required this.userRepository,
   });
   Future<Either<Failure, UserEntity>> call({required String id}) {
-    return userRepository.getUserById(id);
+    return userRepository.getUser(id: id);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:contact_book/core/constants/constant.dart';
 import 'package:contact_book/core/error/exceptions.dart';
+import 'package:contact_book/features/users/domain/entities/user_entity.dart';
 import 'package:hive/hive.dart';
 
 import '../models/user_model.dart';
@@ -7,11 +8,11 @@ import '../models/user_model.dart';
 abstract interface class UsersLocalDataSource {
   Future<void> storeUsers({required List<UserModel> users});
   Future<void> storeUser({required UserModel user});
-  Future<List<UserModel>> getAllUsers();
-  Future<UserModel> getUser({required String id});
-  Future<UserModel> updateUser({required UserModel userModel});
-  Future<void> deleteUser({required String id});
-  Future<UserModel> getCurrentUser();
+  Future<List<UserEntity>> getAllUsers();
+  Future<UserEntity> getUser({required String id});
+  Future<UserEntity> updateUser({required UserEntity userModel});
+  Future<void> deleteUsers({required List<String> usersId});
+  Future<UserEntity> getCurrentUser();
 }
 
 class UsersLocalDataSourceImpl implements UsersLocalDataSource {
@@ -21,9 +22,11 @@ class UsersLocalDataSourceImpl implements UsersLocalDataSource {
   }
 
   @override
-  Future<void> deleteUser({required String id}) async {
-    if (_box.containsKey(id)) {
-      await _box.delete(id);
+  Future<void> deleteUsers({required List<String> usersId}) async {
+    for (var userID in usersId) {
+      if (_box.containsKey(userID)) {
+        await _box.delete(userID);
+      }
     }
   }
 
@@ -43,8 +46,8 @@ class UsersLocalDataSourceImpl implements UsersLocalDataSource {
   }
 
   @override
-  Future<List<UserModel>> getAllUsers() async {
-    return _box.values.cast<UserModel>().toList();
+  Future<List<UserEntity>> getAllUsers() async {
+    return _box.values.whereType<UserEntity>().toList();
   }
 
   @override
@@ -55,13 +58,13 @@ class UsersLocalDataSourceImpl implements UsersLocalDataSource {
   }
 
   @override
-  Future<UserModel> updateUser({required UserModel userModel}) async {
+  Future<UserEntity> updateUser({required UserEntity userModel}) async {
     return await _storeOrUpdate(userModel);
   }
 
   /// If the user does not exist it will be stored
   /// otherwise it will be updated
-  Future<UserModel> _storeOrUpdate(UserModel user) async {
+  Future<UserEntity> _storeOrUpdate(UserEntity user) async {
     try {
       await _box.put(user.id, user);
       return user;

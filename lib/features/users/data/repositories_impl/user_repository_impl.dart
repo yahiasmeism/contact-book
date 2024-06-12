@@ -18,71 +18,79 @@ class UserRepositoryImpl implements UserRepository {
     required this.usersLocal,
     required this.usersRemote,
   });
-  @override
-  Future<Either<Failure, Unit>> deleteUser({required String id}) async {
-    return await _performDataOperation<Unit>(remoteTask: () async {
-      usersRemote.deleteUser(id: id);
-      return unit;
-    }, loacalTask: () async {
-      usersLocal.deleteUser(id: id);
-      return unit;
-    });
-  }
 
   @override
   Future<Either<Failure, List<UserEntity>>> getAllUsers() async {
-    return _performDataOperation<List<UserEntity>>(
-      loacalTask: usersLocal.getAllUsers,
-      remoteTask: usersRemote.getAllUsers,
+    return _getData<List<UserEntity>>(
+      getLoacal: usersLocal.getAllUsers,
+      getRemote: () async {
+        final users = await usersRemote.getAllUsers();
+        usersLocal.storeUsers(users: users);
+        return users;
+      },
     );
   }
 
   @override
   Future<Either<Failure, UserEntity>> getCurrentUser() async {
-    return _performDataOperation<UserEntity>(
-      loacalTask: usersLocal.getCurrentUser,
-      remoteTask: usersRemote.getCurrentUser,
+    return _getData<UserEntity>(
+      getLoacal: usersLocal.getCurrentUser,
+      getRemote: usersRemote.getCurrentUser,
     );
   }
 
   @override
   Future<Either<Failure, UserEntity>> getUser({required String id}) {
-    return _performDataOperation<UserEntity>(
-      loacalTask: () => usersLocal.getUser(id: id),
-      remoteTask: () => usersRemote.getUser(id: id),
+    return _getData<UserEntity>(
+      getLoacal: () => usersLocal.getUser(id: id),
+      getRemote: () => usersRemote.getUser(id: id),
     );
   }
 
   @override
-  Future<Either<Failure, UserEntity>> updateUser(
-      {required UserEntity userEntity}) {
-    return _performDataOperation(
-      remoteTask: () =>
-          usersRemote.updateUser(userModel: UserModel.fromEntity(userEntity)),
-      loacalTask: () =>
-          usersLocal.updateUser(userModel: UserModel.fromEntity(userEntity)),
-    );
+  Future<Either<Failure, Unit>> deleteUsers(
+      {required List<String> usersId}) async {
+    try {
+      await usersRemote.deleteUsers(usersId: usersId);
+      await usersLocal.deleteUsers(usersId: usersId);
+      return const Right(unit);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message));
+    }
   }
 
-  /// Performs a data operation by executing a remote or local task based on network connectivity.
-  /// If the device is connected to the network, it executes the [remoteTask], otherwise, it executes the [localTask].
+  @override
+  Future<Either<Failure, UserEntity>> updateUser(
+      {required UserEntity userEntity}) async {
+    try {
+      final updatedUser = await usersRemote.updateUser(
+          userModel: UserModel.fromEntity(userEntity));
+      await usersLocal.updateUser(userModel: updatedUser);
+      return Right(updatedUser);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message));
+    }
+  }
+
+  /// getting data from remote or local task based on network connectivity.
+  /// If the device is connected to the network, it executes the [getRemote], otherwise, it executes the [localTask].
   /// Returns an [Either] object representing the success or failure of the operation.
-  Future<Either<Failure, T>> _performDataOperation<T>({
-    required Future<T> Function() remoteTask,
-    required Future<T> Function() loacalTask,
+  Future<Either<Failure, T>> _getData<T>({
+    required Future<T> Function() getRemote,
+    required Future<T> Function() getLoacal,
   }) async {
     bool isConnected = await networkInfo.isConnected;
     if (isConnected) {
       try {
-        return Right(await remoteTask());
+        return Right(await getRemote());
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       }
     } else {
       try {
-        return Right(await loacalTask());
+        return Right(await getLoacal());
       } on DatabaseException catch (e) {
-        return Left(EmptyChacheFailure(message: e.message));
+        return Left(DatabaseFailure(message: e.message));
       }
     }
   }

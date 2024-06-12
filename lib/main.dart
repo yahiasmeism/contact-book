@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/utils/my_bloc_observer.dart';
 import 'core/utils/my_routes_observer.dart';
 import 'core/utils/theme_app.dart';
-import 'core/widgets/show_custom_snackbar.dart';
+import 'core/widgets/snackbar_global.dart';
 import 'features/authentication/presentation/cubits/auth_cubit/auth_cubit.dart';
 import 'features/authentication/presentation/cubits/login_cubit/login_cubit.dart';
 import 'features/authentication/presentation/cubits/logout_cubit/logout_cubit.dart';
@@ -33,7 +33,7 @@ class ContactBookApp extends StatelessWidget {
   const ContactBookApp({super.key});
   static final GlobalKey<NavigatorState> navigatorKey =
       GlobalKey<NavigatorState>();
-  static final MyRouteObserver routeObserver = MyRouteObserver();
+  static final AppNavigatorObserver routeObserver = AppNavigatorObserver();
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -62,6 +62,7 @@ class ContactBookApp extends StatelessWidget {
         },
         initialRoute: SplashPage.id,
       ),
+
     );
   }
 }

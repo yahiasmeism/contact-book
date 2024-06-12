@@ -19,6 +19,9 @@ class CustomTextFromField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTapOutside: (event) {
+        FocusScope.of(context).unfocus();
+      },
       enabled: enabled,
       style: STYLES.TEXT_STYLE_18.copyWith(color: Colors.black),
       controller: controller,

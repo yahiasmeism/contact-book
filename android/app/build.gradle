@@ -24,9 +24,9 @@ if (flutterVersionName == null) {
 }
 
 android {
+    ndkVersion "25.1.8937393"
     namespace = "com.example.contact_book"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8

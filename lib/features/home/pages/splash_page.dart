@@ -19,7 +19,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     // weating 1 secound before check
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(milliseconds: 1500), () {
       // Check if he is logged in or not by AuthenticationStatusChanged
       context.read<AuthCubit>().checkIsLoggedIn();
     });

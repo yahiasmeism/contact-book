@@ -20,6 +20,9 @@ class CompanyRemoteDataSourceImpl extends CompanyRemoteDataSource {
         'bearer ${sharedPreferences.getString(ACCESS_TOKEN_KEY)}';
     dio.options = BaseOptions(
       headers: {'Authorization': bearerToken},
+      connectTimeout: const Duration(seconds: 3),
+       sendTimeout: const Duration(seconds: 3),
+      receiveTimeout: const Duration(seconds: 3),
     );
   }
 

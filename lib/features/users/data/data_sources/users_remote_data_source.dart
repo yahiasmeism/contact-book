@@ -13,7 +13,7 @@ abstract interface class UsersRemoteDataSource {
   Future<UserModel> getUser({required String id});
   Future<void> addUser({required UserModel userModel});
   Future<UserModel> updateUser({required UserModel userModel});
-  Future<void> deleteUser({required String id});
+  Future<void> deleteUsers({required List<String> usersId});
 }
 
 class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
@@ -27,7 +27,11 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
     String bearerToken =
         'bearer ${sharedPreferences.getString(ACCESS_TOKEN_KEY)}';
     dio.options = BaseOptions(
+      contentType: 'application/json',
       headers: {'Authorization': bearerToken},
+      connectTimeout: const Duration(seconds: 3),
+      sendTimeout: const Duration(seconds: 3),
+      receiveTimeout: const Duration(seconds: 3),
     );
   }
 
@@ -44,9 +48,9 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
   }
 
   @override
-  Future<void> deleteUser({required String id}) async {
+  Future<void> deleteUsers({required List<String> usersId}) async {
     try {
-      await dio.delete('${API.USERS}/$id');
+      await dio.delete(API.USERS, data: usersId);
     } on DioException catch (e) {
       throw ServerException.fromDioException(e);
     }

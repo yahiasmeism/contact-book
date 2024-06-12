@@ -27,10 +27,18 @@ class UpdateUserEvent extends UsersEvent {
   List<Object> get props => [userEntity];
 }
 
-class DeleteUserEvent extends UsersEvent {
-  final String userId;
+class DeleteUsersEvent extends UsersEvent {
+  final List<String> usersId;
 
-  const DeleteUserEvent({required this.userId});
+  const DeleteUsersEvent({required this.usersId});
   @override
-  List<Object> get props => [userId];
+  List<Object> get props => [usersId];
+}
+
+class SearchUserEvent extends UsersEvent {
+  final String searchKeyword;
+
+  const SearchUserEvent({required this.searchKeyword});
+  @override
+  List<Object> get props => [searchKeyword];
 }

@@ -14,6 +14,7 @@ abstract class MESSAGES {
   static const String UNEXPECTED_ERROR = "Opps error, please try later";
   static const String CHECK_NETWORK = "Please check network";
   static const String UPDATED_SUCCESS = 'Updated successfuly';
+  static const String DELETE_SUCCESS = 'Delete successfuly';
   static const String NOT_LOGGED_IN = 'Not logged in';
 
   static const String DATA_NOT_FOUND = 'Data is not found';

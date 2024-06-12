@@ -1,3 +1,5 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:contact_book/core/constants/colors.dart';
 import 'package:contact_book/features/authentication/presentation/cubits/logout_cubit/logout_cubit.dart';
 import 'package:contact_book/features/authentication/presentation/pages/login_page.dart';
 import 'package:contact_book/features/company/presentation/pages/company_profile_page.dart';
@@ -54,55 +56,52 @@ class DrawerMenuItems extends StatelessWidget {
         DrawerItem(
           leading: const Icon(Icons.person, size: 30),
           title: 'My Profile',
-          onTap: () {},
-        ),
-        DrawerItem(
-          leading: const Icon(Icons.logout, size: 30),
-          title: 'Log out',
           onTap: () {
-            Navigator.pop(context);
-            showConfirmLogoutDialog(context);
+            pushPageAndPopDrawer(context, CompanyProfilePage.id);
           },
         ),
+        buildLogoutButton(context),
       ],
     );
   }
 
-  Future<dynamic> showConfirmLogoutDialog(BuildContext context) {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Are you sure to Log out'),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Cancel')),
-            TextButton(
-                onPressed: () {
-                  context.read<LogoutCubit>().logout();
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    LoginPage.id,
-                    (route) => false,
-                  );
-                },
-                child: const Text('Log out')),
-          ],
-        );
+  DrawerItem buildLogoutButton(BuildContext context) {
+    return DrawerItem(
+      leading: const Icon(Icons.logout, size: 30),
+      title: 'Log out',
+      onTap: () {
+        AwesomeDialog(
+          animType: AnimType.bottomSlide,
+          dialogType: DialogType.warning,
+          context: context,
+          title: 'Are you sure to Log out',
+          btnOkColor: COLORS.PRIMARY,
+          btnCancelOnPress: () {},
+          btnOkOnPress: () {
+            context.read<LogoutCubit>().logout();
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              LoginPage.id,
+              (route) => false,
+            );
+          },
+        ).show();
       },
     );
   }
 
-  pushPageAndPopDrawer(BuildContext context, String pageName) {
+  pushPageAndPopDrawer(BuildContext context, String nextPageName) {
     Navigator.pop(context);
     final routeObserver = ContactBookApp.routeObserver;
-    if (routeObserver.isRoutePresent(pageName)) {
-      Navigator.popUntil(context, ModalRoute.withName(pageName));
+    final currentPage = ModalRoute.of(context)?.settings.name;
+    if (routeObserver.isRoutePresent(nextPageName)) {
+      Navigator.popUntil(context, ModalRoute.withName(nextPageName));
     } else {
-      Navigator.pushNamed(context, pageName);
+      if (currentPage == HomePage.id) {
+        Navigator.pushNamed(context, nextPageName);
+      } else {
+        Navigator.pushReplacementNamed(context, nextPageName);
+      }
     }
   }
 }

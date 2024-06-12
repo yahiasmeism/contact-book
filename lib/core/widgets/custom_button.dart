@@ -18,7 +18,6 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-            // minimumSize: Size.fromWidth(MediaQuery.of(context).size.width),
             backgroundColor: color,
             padding: const EdgeInsets.symmetric(vertical: 16),
             textStyle: STYLES.TEXT_STYLE_20),

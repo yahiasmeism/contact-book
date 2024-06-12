@@ -3,7 +3,7 @@ import 'package:contact_book/features/company/presentation/widgets/company_profi
 import 'package:flutter/material.dart';
 
 import '../../../../core/widgets/footer_app.dart';
-import '../../../../core/widgets/page_title.dart';
+import '../../../../core/widgets/bread_crumb.dart';
 
 class CompanyProfileBody extends StatelessWidget {
   const CompanyProfileBody({
@@ -18,7 +18,7 @@ class CompanyProfileBody extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
-            const PageTitle(pageTitle: 'Company Profile'),
+            const BreadCrumbNavigator(),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
               decoration: BoxDecoration(

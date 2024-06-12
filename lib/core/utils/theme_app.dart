@@ -5,6 +5,7 @@ import '../constants/colors.dart';
 
 ThemeData themeApp() {
   return ThemeData(
+    scaffoldBackgroundColor: const Color(0xffF7F7F7),
     colorScheme: const ColorScheme.light().copyWith(primary: COLORS.PRIMARY),
     textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(

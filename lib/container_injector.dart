@@ -29,6 +29,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'features/company/domain/use_cases/updata_company_info_user_case.dart';
 import 'features/company/presentation/bloc/company_bloc.dart';
+import 'features/users/domain/use_cases/delete_users_use_case.dart';
 
 final sl = GetIt.instance;
 Future<void> init() async {
@@ -93,10 +94,12 @@ Future<void> init() async {
 
   //! Users Feature ===========================================
   // Bloc
-  sl.registerFactory(() => UsersBloc(getAllUserUseCase: sl()));
+  sl.registerFactory(
+      () => UsersBloc(getAllUserUseCase: sl(), deleteUserUseCase: sl()));
 
   // Use Cases
   sl.registerLazySingleton(() => GetAllUserUseCase(userRepository: sl()));
+  sl.registerLazySingleton(() => DeleteUsersUseCase(userRepository: sl()));
 
   // repositories
   sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(

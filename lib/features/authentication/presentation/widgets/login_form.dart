@@ -35,7 +35,7 @@ class LoginForm extends StatelessWidget {
           listener: (context, state) async {
             if (state is LoginSuccess) {
               Fluttertoast.showToast(msg: state.message);
-              Navigator.pushReplacementNamed(context, HomePage.id);
+              Navigator.pushReplacementNamed(context, HomePage.name);
             } else if (state is LoginFailure) {
               Fluttertoast.showToast(msg: state.message);
             }
@@ -110,7 +110,7 @@ class LoginForm extends StatelessWidget {
                           'Sign up',
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, RegisterPage.id);
+                          Navigator.pushNamed(context, RegisterPage.name);
                         },
                       ),
                     ),

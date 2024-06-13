@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:contact_book/core/error/exceptions.dart';
 import 'package:contact_book/features/users/data/models/user_model.dart';
 import 'package:dartz/dartz.dart';
@@ -67,6 +69,17 @@ class UserRepositoryImpl implements UserRepository {
           userModel: UserModel.fromEntity(userEntity));
       await usersLocal.updateUser(userModel: updatedUser);
       return Right(updatedUser);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserEntity>> addUser({required UserEntity user}) async {
+    try {
+      UserModel userModel = UserModel.fromEntity(user);
+      UserEntity userEntity = await usersRemote.addUser(userModel: userModel);
+      return  Right(userEntity);
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));
     }

@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:contact_book/core/constants/constant.dart';
+import 'package:contact_book/core/constants/messages.dart';
 import 'package:contact_book/core/error/exceptions.dart';
+import 'package:contact_book/features/users/domain/entities/user_entity.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,7 +15,7 @@ abstract interface class UsersRemoteDataSource {
   Future<List<UserModel>> getAllUsers();
   Future<UserModel> getCurrentUser();
   Future<UserModel> getUser({required String id});
-  Future<void> addUser({required UserModel userModel});
+  Future<UserEntity> addUser({required UserModel userModel});
   Future<UserModel> updateUser({required UserModel userModel});
   Future<void> deleteUsers({required List<String> usersId});
 }
@@ -36,14 +40,19 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
   }
 
   @override
-  Future<void> addUser({required UserModel userModel}) async {
+  Future<UserModel> addUser({required UserModel userModel}) async {
     try {
-      await dio.post(
+      Response response = await dio.post(
         API.USERS,
         data: userModel.toJson(),
       );
+      return UserModel.fromJson(response.data);
     } on DioException catch (e) {
-      throw ServerException.fromDioException(e);
+      if (e.response!.statusCode == 400) {
+        throw ServerException(message: e.response!.data);
+      } else {
+        throw ServerException.fromDioException(e);
+      }
     }
   }
 

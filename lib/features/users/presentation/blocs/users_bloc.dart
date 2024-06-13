@@ -1,10 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:contact_book/core/constants/messages.dart';
 import 'package:contact_book/features/users/domain/entities/user_entity.dart';
+import 'package:contact_book/features/users/domain/use_cases/add_user_use_case.dart';
 import 'package:contact_book/features/users/domain/use_cases/get_all_user_use_case.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../domain/use_cases/delete_users_use_case.dart';
+import '../../domain/use_cases/delete_users_use_case.dart';
 
 part 'users_event.dart';
 part 'users_state.dart';
@@ -12,9 +13,11 @@ part 'users_state.dart';
 class UsersBloc extends Bloc<UsersEvent, UsersState> {
   final GetAllUserUseCase getAllUserUseCase;
   final DeleteUsersUseCase deleteUserUseCase;
+  final AddUserUseCase addUserUseCase;
   List<UserEntity> usersSelected = [];
   List<UserEntity> users = [];
   UsersBloc({
+    required this.addUserUseCase,
     required this.getAllUserUseCase,
     required this.deleteUserUseCase,
   }) : super(UsersInitial()) {
@@ -29,17 +32,21 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
       });
     });
     // search user
-    on<SearchUserEvent>((event, emit) {
+    on<FilterUserEvent>((event, emit) {
       List<UserEntity> usersFilter = users.where(
         (user) {
           return ("${user.firstName} ${user.lastName}")
-                  .startsWith(event.searchKeyword) |
-              user.lastName.startsWith(event.searchKeyword) |
-              user.email.contains(event.searchKeyword) |
-              user.phoneNumber.contains(event.searchKeyword);
+                  .startsWith(event.searchKeyword.trim()) |
+              user.lastName.startsWith(event.searchKeyword.trim()) |
+              user.email.contains(event.searchKeyword.trim()) |
+              user.phoneNumber.contains(event.searchKeyword.trim());
         },
       ).toList();
-      emit(UserOnSearchState(usersFilter: usersFilter));
+      emit(FilterUsersState(usersFilter: usersFilter));
+    });
+    // undo search
+    on<UndoFilterUsersEvent>((event, emit) {
+      emit(UsersLoaded());
     });
 
     // delete user
@@ -52,6 +59,22 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
         emit(UsersLoaded());
         emit(const UserOperationSuccess(message: MESSAGES.DELETE_SUCCESS));
       });
+    });
+
+    // add new user
+    on<AddUserEvent>((event, emit) async {
+      emit(UsersLoading());
+      final result = await addUserUseCase(userEntity: event.user);
+      result.fold(
+        (fialure) => emit(UsersFailure(message: fialure.message)),
+        (userAdded) {
+          users.add(userAdded);
+          emit(UsersLoaded());
+          emit(
+            const UserOperationSuccess(message: MESSAGES.INVITED_SUCCESSfFULY),
+          );
+        },
+      );
     });
   }
 }

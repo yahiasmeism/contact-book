@@ -27,6 +27,14 @@ class UpdateUserEvent extends UsersEvent {
   List<Object> get props => [userEntity];
 }
 
+class AddUserEvent extends UsersEvent {
+  final UserEntity user;
+
+  const AddUserEvent({required this.user});
+  @override
+  List<Object> get props => [user];
+}
+
 class DeleteUsersEvent extends UsersEvent {
   final List<String> usersId;
 
@@ -35,10 +43,12 @@ class DeleteUsersEvent extends UsersEvent {
   List<Object> get props => [usersId];
 }
 
-class SearchUserEvent extends UsersEvent {
+class FilterUserEvent extends UsersEvent {
   final String searchKeyword;
 
-  const SearchUserEvent({required this.searchKeyword});
+  const FilterUserEvent({required this.searchKeyword});
   @override
   List<Object> get props => [searchKeyword];
 }
+
+class UndoFilterUsersEvent extends UsersEvent {}

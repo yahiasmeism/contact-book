@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
-  static const id = 'RegisterView';
+  static const name = 'RegisterView';
   @override
   Widget build(BuildContext context) {
     return SafeArea(

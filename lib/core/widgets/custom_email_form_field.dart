@@ -14,6 +14,9 @@ class CustomEmailFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTapOutside: (event) {
+        FocusScope.of(context).unfocus();
+      },
       controller: controller,
       keyboardType: TextInputType.emailAddress,
       validator: (value) {

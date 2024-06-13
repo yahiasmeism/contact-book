@@ -2,11 +2,11 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:contact_book/core/constants/colors.dart';
 import 'package:contact_book/core/widgets/bread_crumb.dart';
 import 'package:contact_book/core/widgets/custom_button.dart';
+import 'package:contact_book/features/users/presentation/blocs/users_bloc.dart';
+import 'package:contact_book/features/users/presentation/pages/invite_new_user_page.dart';
+import 'package:contact_book/features/users/presentation/widgets/users_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:number_paginator/number_paginator.dart';
-import '../blocs/bloc/users_bloc.dart';
-import 'users_list_builder.dart';
 
 class UsersBody extends StatelessWidget {
   const UsersBody({
@@ -22,8 +22,9 @@ class UsersBody extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: CustomScrollView(
-          physics: const BouncingScrollPhysics(
-              parent: AlwaysScrollableScrollPhysics()),
+          physics: const AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics(),
+          ),
           slivers: [
             const SliverToBoxAdapter(child: BreadCrumbNavigator()),
             SliverToBoxAdapter(
@@ -31,35 +32,50 @@ class UsersBody extends StatelessWidget {
                 children: [
                   buildDeleteButton(context),
                   const SizedBox(width: 16),
-                  Expanded(
-                    child: CustomButton(
-                      child: const Text('Invite new user'),
-                      onPressed: () {},
-                    ),
-                  ),
+                  buildInviteUserButton(context),
                 ],
               ),
             ),
-            const SliverToBoxAdapter(child: SizedBox(height: 24)),
-            SliverToBoxAdapter(
-              child: TextField(
-                onChanged: (value) {
-                  context
-                      .read<UsersBloc>()
-                      .add(SearchUserEvent(searchKeyword: value));
-                },
-                onTapOutside: (event) {
-                  FocusScope.of(context).unfocus();
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Search',
-                ),
-              ),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(vertical: 24),
+              sliver: buildSearchField(context),
             ),
-            const SliverToBoxAdapter(child: SizedBox(height: 24)),
-            const SliverToBoxAdapter(child: UsersListBuilder()),
+            const SliverToBoxAdapter(child: UsersBuilder())
           ],
         ),
+      ),
+    );
+  }
+
+  Widget buildSearchField(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: TextField(
+        onChanged: (value) {
+          if (value.isNotEmpty) {
+            context
+                .read<UsersBloc>()
+                .add(FilterUserEvent(searchKeyword: value));
+          } else {
+            context.read<UsersBloc>().add(UndoFilterUsersEvent());
+          }
+        },
+        onTapOutside: (event) {
+          FocusScope.of(context).unfocus();
+        },
+        decoration: const InputDecoration(
+          labelText: 'Search',
+        ),
+      ),
+    );
+  }
+
+  Widget buildInviteUserButton(BuildContext context) {
+    return Expanded(
+      child: CustomButton(
+        child: const Text('Invite new user'),
+        onPressed: () {
+          Navigator.pushNamed(context, InviteNewUserPage.name);
+        },
       ),
     );
   }
@@ -76,15 +92,15 @@ class UsersBody extends StatelessWidget {
               context: context,
               animType: AnimType.bottomSlide,
               dialogType: DialogType.warning,
-              title: 'Are you sure to delete',
+              title:
+                  'Are you sure to delete ${userBloc.usersSelected.length} user',
               btnOkColor: Colors.red,
               btnCancelColor: COLORS.PRIMARY,
-              btnCancelOnPress: () {
-                Navigator.pop(context);
-              },
+              btnCancelOnPress: () {},
               btnOkOnPress: () {
-                List<String> usersId =
-                    userBloc.usersSelected.map((user) => user.id).toList();
+                List<String> usersId = userBloc.usersSelected
+                    .map((user) => user.id ?? '')
+                    .toList();
                 userBloc.add(DeleteUsersEvent(usersId: usersId));
                 userBloc.usersSelected.clear();
               },

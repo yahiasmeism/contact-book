@@ -1,18 +1,17 @@
-import 'package:contact_book/core/widgets/main_app_bar.dart';
 import 'package:contact_book/core/widgets/snackbar_global.dart';
 import 'package:contact_book/features/home/managers/network_cubit/network_cubit.dart';
 import 'package:contact_book/features/home/widgets/home_body.dart';
-import 'package:contact_book/features/users/presentation/blocs/bloc/users_bloc.dart';
+import 'package:contact_book/features/users/presentation/blocs/users_bloc.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/widgets/drawer/main_nav_drawer.dart';
+import '../../../core/widgets/app_scaffold.dart';
 import '../../company/presentation/bloc/company_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
-  static const id = 'Home';
+  static const name = 'Home';
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -50,14 +49,7 @@ class _HomePageState extends State<HomePage> {
           );
         }
       },
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.grey[200],
-          drawer: const MainNavDrawer(),
-          appBar: mainAppBar(),
-          body: const HomeBody(),
-        ),
-      ),
+      child: const AppScaffold(body: HomeBody()),
     );
   }
 }

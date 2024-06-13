@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 
 class EmptyChacheException implements Exception {
@@ -5,6 +7,7 @@ class EmptyChacheException implements Exception {
 
   EmptyChacheException(this.message);
 }
+
 class DatabaseException implements Exception {
   final String message;
 
@@ -32,7 +35,11 @@ class ServerException implements Exception {
         message = "Receive timeout in connection";
         break;
       case DioExceptionType.badResponse:
-        message = "Session has expired , please login again";
+        if (dioException.response?.statusCode == 401) {
+          message = 'Session has expired , please login again';
+        } else {
+          message = 'Invalid server response. Try again later';
+        }
         break;
       case DioExceptionType.connectionError:
         message = "Check internet connection";

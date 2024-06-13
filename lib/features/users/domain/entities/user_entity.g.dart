@@ -17,7 +17,7 @@ class UserEntityAdapter extends TypeAdapter<UserEntity> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return UserEntity(
-      id: fields[0] as String,
+      id: fields[0] as String?,
       userName: fields[1] as String?,
       normalizedUserName: fields[2] as String?,
       email: fields[3] as String,
@@ -34,7 +34,7 @@ class UserEntityAdapter extends TypeAdapter<UserEntity> {
       accessFailedCount: fields[14] as int?,
       firstName: fields[15] as String,
       lastName: fields[16] as String,
-      status: fields[17] as String,
+      status: fields[17] as String?,
       role: fields[18] as String,
       companyId: fields[19] as int?,
       company: fields[20] as CompanyEntity?,

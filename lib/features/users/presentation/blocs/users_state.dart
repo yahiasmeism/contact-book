@@ -31,11 +31,12 @@ class UserOperationSuccess extends UsersState {
   List<Object> get props => [message];
 }
 
-class UserOnSearchState extends UsersState {
+class FilterUsersState extends UsersState {
   final List<UserEntity> usersFilter;
 
-  const UserOnSearchState({required this.usersFilter});
+  const FilterUsersState({required this.usersFilter});
 
   @override
   List<Object> get props => [usersFilter];
 }
+

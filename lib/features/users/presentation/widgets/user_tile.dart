@@ -1,8 +1,12 @@
+import 'package:contact_book/core/constants/assets.dart';
 import 'package:contact_book/core/constants/colors.dart';
 import 'package:contact_book/core/constants/styles.dart';
 import 'package:contact_book/core/widgets/custom_checkbox.dart';
 import 'package:contact_book/core/widgets/custom_divider.dart';
+import 'package:contact_book/features/users/domain/entities/user_entity.dart';
+import 'package:contact_book/features/users/presentation/blocs/users_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'star_favorite_toggle.dart';
 import 'status_text.dart';
@@ -10,23 +14,15 @@ import 'status_text.dart';
 class UserTile extends StatelessWidget {
   const UserTile({
     super.key,
-    required this.status,
     required this.numberId,
-    required this.image,
-    required this.name,
     this.toggleSelect,
-    required this.email,
-    required this.phone,
     this.toggleFavorite,
+    required this.userEntity,
   });
-  final String status;
+  final UserEntity userEntity;
   final int numberId;
-  final ImageProvider image;
-  final String name;
   final Function(bool value)? toggleSelect;
   final Function(bool value)? toggleFavorite;
-  final String email;
-  final String phone;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +36,7 @@ class UserTile extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           // top section
-          buildTopSection(),
+          buildTopSection(context),
           const CustomDivider(),
           // center section
           buildCenterSection(),
@@ -55,14 +51,21 @@ class UserTile extends StatelessWidget {
     );
   }
 
-  Padding buildTopSection() {
+  Padding buildTopSection(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Transform.scale(
-              scale: 1.2, child: CustomCheckBox(onChange: toggleSelect)),
+              scale: 1.2,
+              child: CustomCheckBox(
+                onChange: toggleSelect,
+                initalValue: context
+                    .read<UsersBloc>()
+                    .usersSelected
+                    .contains(userEntity),
+              )),
           StarFavoriteToggle(
             initalValue: false,
             favoriteToggle: (value) {},
@@ -84,13 +87,13 @@ class UserTile extends StatelessWidget {
                 Column(
                   children: [
                     const SizedBox(height: 12),
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 50,
-                      backgroundImage: image,
+                      backgroundImage: AssetImage(ASSETS.PERSON),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      name,
+                      '${userEntity.firstName} ${userEntity.lastName}',
                       style: STYLES.TEXT_STYLE_24.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -100,7 +103,7 @@ class UserTile extends StatelessWidget {
                 Positioned(
                   top: 5,
                   right: 5,
-                  child: StatusText(status: status),
+                  child: StatusText(status: userEntity.status ?? ''),
                 ),
                 Positioned(
                   top: 5,
@@ -134,12 +137,12 @@ class UserTile extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            email,
+            userEntity.email,
             style: STYLES.TEXT_STYLE_16.copyWith(color: Colors.black54),
           ),
           const SizedBox(height: 4),
           Text(
-            phone,
+            userEntity.phoneNumber,
             style: STYLES.TEXT_STYLE_16.copyWith(color: Colors.black54),
           ),
         ],

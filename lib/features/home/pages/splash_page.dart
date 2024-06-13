@@ -9,7 +9,7 @@ import 'home_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
-  static const id = 'SplashPage';
+  static const name = 'SplashPage';
 
   @override
   State<SplashPage> createState() => _SplashPageState();
@@ -33,12 +33,12 @@ class _SplashPageState extends State<SplashPage> {
         if (state == AuthState.authenticated) {
           Navigator.pushReplacementNamed(
             context,
-            HomePage.id,
+            HomePage.name,
           );
         } else if (state == AuthState.unauthenticated) {
           Navigator.pushReplacementNamed(
             context,
-            LoginPage.id,
+            LoginPage.name,
           );
         }
       },

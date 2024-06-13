@@ -24,7 +24,7 @@ class DrawerMenuItems extends StatelessWidget {
         DrawerItem(
           title: 'Home',
           onTap: () {
-            pushPageAndPopDrawer(context, HomePage.id);
+            pushPageAndPopDrawer(context, HomePage.name);
           },
         ),
         const CustomDivider(),
@@ -38,14 +38,14 @@ class DrawerMenuItems extends StatelessWidget {
         DrawerItem(
           title: 'Company Profile',
           onTap: () {
-            pushPageAndPopDrawer(context, CompanyProfilePage.id);
+            pushPageAndPopDrawer(context, CompanyProfilePage.name);
           },
         ),
         const CustomDivider(),
         DrawerItem(
           title: 'Users',
           onTap: () {
-            pushPageAndPopDrawer(context, UsersPage.id);
+            pushPageAndPopDrawer(context, UsersPage.name);
           },
         ),
         const CustomDivider(),
@@ -57,7 +57,7 @@ class DrawerMenuItems extends StatelessWidget {
           leading: const Icon(Icons.person, size: 30),
           title: 'My Profile',
           onTap: () {
-            pushPageAndPopDrawer(context, CompanyProfilePage.id);
+            pushPageAndPopDrawer(context, CompanyProfilePage.name);
           },
         ),
         buildLogoutButton(context),
@@ -81,7 +81,7 @@ class DrawerMenuItems extends StatelessWidget {
             context.read<LogoutCubit>().logout();
             Navigator.pushNamedAndRemoveUntil(
               context,
-              LoginPage.id,
+              LoginPage.name,
               (route) => false,
             );
           },
@@ -97,7 +97,7 @@ class DrawerMenuItems extends StatelessWidget {
     if (routeObserver.isRoutePresent(nextPageName)) {
       Navigator.popUntil(context, ModalRoute.withName(nextPageName));
     } else {
-      if (currentPage == HomePage.id) {
+      if (currentPage == HomePage.name) {
         Navigator.pushNamed(context, nextPageName);
       } else {
         Navigator.pushReplacementNamed(context, nextPageName);

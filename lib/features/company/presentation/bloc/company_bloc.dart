@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:contact_book/core/constants/messages.dart';
 import 'package:equatable/equatable.dart';
@@ -38,7 +36,6 @@ class CompanyBloc extends Bloc<CompanyEvent, CompanyState> {
       result
           .fold((failure) => emit(CompanyInfoFailure(message: failure.message)),
               (updatedCompanyEntity) {
-        log(updatedCompanyEntity.runtimeType.toString());
         company = updatedCompanyEntity;
         emit(const CompanyInfoUpdatedSuccess());
       });

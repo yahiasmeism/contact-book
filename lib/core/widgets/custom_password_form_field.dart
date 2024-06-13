@@ -27,6 +27,9 @@ class _CustomPasswordFormFieldState extends State<CustomPasswordFormField> {
         }
         return null;
       },
+      onTapOutside: (event) {
+        FocusScope.of(context).unfocus();
+      },
       obscureText: _obscureText,
       decoration: InputDecoration(
         filled: true,

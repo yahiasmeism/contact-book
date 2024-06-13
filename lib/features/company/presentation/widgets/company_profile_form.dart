@@ -1,3 +1,4 @@
+import 'package:contact_book/core/widgets/country_drop_down_menu.dart';
 import 'package:contact_book/core/widgets/custom_button.dart';
 import 'package:contact_book/core/widgets/custom_outline_button.dart';
 import 'package:contact_book/core/widgets/custom_text_form_field.dart';
@@ -5,8 +6,6 @@ import 'package:contact_book/features/company/domain/entities/company_entity.dar
 import 'package:contact_book/features/company/presentation/bloc/company_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../core/widgets/country_drop_down_menu.dart';
 
 class CompanyProfileForm extends StatefulWidget {
   const CompanyProfileForm({
@@ -122,6 +121,7 @@ class _CompanyProfileFormState extends State<CompanyProfileForm> {
           ),
           const SizedBox(height: 32),
           CountryDropDownMenu(
+
             countryController: countryCon,
             enabled: editingActive,
           ),

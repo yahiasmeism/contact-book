@@ -8,8 +8,8 @@ import 'package:contact_book/features/users/data/data_sources/users_local_data_s
 import 'package:contact_book/features/users/data/data_sources/users_remote_data_source.dart';
 import 'package:contact_book/features/users/data/repositories_impl/user_repository_impl.dart';
 import 'package:contact_book/features/users/domain/repositories/user_repository.dart';
+import 'package:contact_book/features/users/domain/use_cases/add_user_use_case.dart';
 import 'package:contact_book/features/users/domain/use_cases/get_all_user_use_case.dart';
-import 'package:contact_book/features/users/presentation/blocs/bloc/users_bloc.dart';
 import 'features/authentication/domain/use_cases/check_logged_in_use_case.dart';
 
 import 'features/authentication/data/data_sources/auth_local_data_source.dart';
@@ -30,6 +30,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'features/company/domain/use_cases/updata_company_info_user_case.dart';
 import 'features/company/presentation/bloc/company_bloc.dart';
 import 'features/users/domain/use_cases/delete_users_use_case.dart';
+import 'features/users/presentation/blocs/users_bloc.dart';
 
 final sl = GetIt.instance;
 Future<void> init() async {
@@ -94,12 +95,13 @@ Future<void> init() async {
 
   //! Users Feature ===========================================
   // Bloc
-  sl.registerFactory(
-      () => UsersBloc(getAllUserUseCase: sl(), deleteUserUseCase: sl()));
+  sl.registerFactory(() => UsersBloc(
+      getAllUserUseCase: sl(), deleteUserUseCase: sl(), addUserUseCase: sl()));
 
   // Use Cases
   sl.registerLazySingleton(() => GetAllUserUseCase(userRepository: sl()));
   sl.registerLazySingleton(() => DeleteUsersUseCase(userRepository: sl()));
+  sl.registerLazySingleton(() => AddUserUseCase(userRepository: sl()));
 
   // repositories
   sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(

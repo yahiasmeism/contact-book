@@ -7,7 +7,6 @@ import '../models/user_model.dart';
 
 abstract interface class UsersLocalDataSource {
   Future<void> storeUsers({required List<UserModel> users});
-  Future<void> storeUser({required UserModel user});
   Future<List<UserEntity>> getAllUsers();
   Future<UserEntity> getUser({required String id});
   Future<UserEntity> updateUser({required UserEntity userModel});
@@ -40,10 +39,6 @@ class UsersLocalDataSourceImpl implements UsersLocalDataSource {
     return await _getUserByKey(id);
   }
 
-  @override
-  Future<void> storeUser({required UserModel user}) async {
-    await _storeOrUpdate(user);
-  }
 
   @override
   Future<List<UserEntity>> getAllUsers() async {

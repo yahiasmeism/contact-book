@@ -7,7 +7,7 @@ import '../widgets/login_form.dart';
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
-  static const id = 'loginView';
+  static const name = 'loginView';
   @override
   Widget build(BuildContext context) {
     return Scaffold(

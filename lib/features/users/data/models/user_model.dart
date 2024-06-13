@@ -78,7 +78,7 @@ class UserModel extends UserEntity {
         'companyId': companyId,
         'company': companyModel?.toJson(),
       };
-
+  
   factory UserModel.fromEntity(UserEntity entity) {
     return UserModel(
       id: entity.id,

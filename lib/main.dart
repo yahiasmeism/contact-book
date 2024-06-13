@@ -1,7 +1,8 @@
 import 'package:contact_book/core/utils/hive_init.dart';
 import 'package:contact_book/features/company/presentation/pages/company_profile_page.dart';
 import 'package:contact_book/features/home/managers/network_cubit/network_cubit.dart';
-import 'package:contact_book/features/users/presentation/blocs/bloc/users_bloc.dart';
+import 'package:contact_book/features/users/presentation/blocs/users_bloc.dart';
+import 'package:contact_book/features/users/presentation/pages/invite_new_user_page.dart';
 import 'package:contact_book/features/users/presentation/pages/users_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,16 +54,16 @@ class ContactBookApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: themeApp(),
         routes: {
-          LoginPage.id: (context) => const LoginPage(),
-          RegisterPage.id: (context) => const RegisterPage(),
-          SplashPage.id: (context) => const SplashPage(),
-          HomePage.id: (context) => const HomePage(),
-          CompanyProfilePage.id: (context) => const CompanyProfilePage(),
-          UsersPage.id: (context) => const UsersPage(),
+          LoginPage.name: (context) => const LoginPage(),
+          RegisterPage.name: (context) => const RegisterPage(),
+          SplashPage.name: (context) => const SplashPage(),
+          HomePage.name: (context) => const HomePage(),
+          CompanyProfilePage.name: (context) => const CompanyProfilePage(),
+          UsersPage.name: (context) => const UsersPage(),
+          InviteNewUserPage.name: (context) => InviteNewUserPage(),
         },
-        initialRoute: SplashPage.id,
+        initialRoute: SplashPage.name,
       ),
-
     );
   }
 }

@@ -20,6 +20,7 @@ class _CustomCheckBoxState extends State<CustomCheckBox> {
   @override
   Widget build(BuildContext context) {
     return Checkbox(
+      
       visualDensity: VisualDensity.compact,
       activeColor: COLORS.PRIMARY,
       value: widget.initalValue,

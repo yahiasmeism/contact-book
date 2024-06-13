@@ -35,7 +35,11 @@ class LoginForm extends StatelessWidget {
           listener: (context, state) async {
             if (state is LoginSuccess) {
               Fluttertoast.showToast(msg: state.message);
-              Navigator.pushReplacementNamed(context, HomePage.name);
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                HomePage.name,
+                (route) => false,
+              );
             } else if (state is LoginFailure) {
               Fluttertoast.showToast(msg: state.message);
             }

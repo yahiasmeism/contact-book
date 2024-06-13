@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:contact_book/core/constants/api.dart';
 import 'package:contact_book/core/constants/constant.dart';
 import 'package:contact_book/core/error/exceptions.dart';
@@ -16,20 +18,30 @@ class CompanyRemoteDataSourceImpl extends CompanyRemoteDataSource {
   CompanyRemoteDataSourceImpl(
       {required this.sharedPreferences, required this.dio}) {
     // initial dio base option
-    String bearerToken =
-        'bearer ${sharedPreferences.getString(ACCESS_TOKEN_KEY)}';
     dio.options = BaseOptions(
-      headers: {'Authorization': bearerToken},
+      contentType: 'application/json',
       connectTimeout: const Duration(seconds: 3),
-       sendTimeout: const Duration(seconds: 3),
+      sendTimeout: const Duration(seconds: 3),
       receiveTimeout: const Duration(seconds: 3),
+    );
+  }
+
+  MapEntry<String, String> get _authToken {
+    return MapEntry(
+      'Authorization',
+      'bearer ${sharedPreferences.getString(ACCESS_TOKEN_KEY)}',
     );
   }
 
   @override
   Future<CompanyModel> getCompanyInfo() async {
     try {
-      Response response = await dio.get(API.COMPANIES);
+      Response response = await dio.get(
+        API.COMPANIES,
+        options: Options(
+          headers: {_authToken.key: _authToken.value},
+        ),
+      );
       return CompanyModel.fromJson(response.data);
     } on DioException catch (e) {
       throw ServerException.fromDioException(e);
@@ -40,8 +52,11 @@ class CompanyRemoteDataSourceImpl extends CompanyRemoteDataSource {
   Future<CompanyModel> updateCompanyInfo(
       {required CompanyModel companyModel}) async {
     try {
-      Response response =
-          await dio.put(API.COMPANIES, data: companyModel.toJson());
+      Response response = await dio.put(
+        API.COMPANIES,
+        data: companyModel.toJson(),
+        options: Options(headers: {_authToken.key: _authToken.value}),
+      );
 
       return CompanyModel.fromJson(response.data);
     } on DioException catch (e) {

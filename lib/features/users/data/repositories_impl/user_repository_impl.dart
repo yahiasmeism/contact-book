@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:contact_book/core/error/exceptions.dart';
 import 'package:contact_book/features/users/data/models/user_model.dart';

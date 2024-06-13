@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:hive/hive.dart';
+
 import '../../../../core/constants/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -6,6 +8,7 @@ abstract interface class AuthLocalDataSource {
   Future<bool> storeToken(String token);
   String? getToken();
   Future<void> removeToken();
+  Future<void> clearAppData();
 }
 
 class AuthLocalDataSourceimpl implements AuthLocalDataSource {
@@ -33,5 +36,10 @@ class AuthLocalDataSourceimpl implements AuthLocalDataSource {
     if (sharedPreferences.containsKey(ACCESS_TOKEN_KEY)) {
       await sharedPreferences.remove(ACCESS_TOKEN_KEY);
     }
+  }
+
+  @override
+  Future<void> clearAppData() async{
+   await Hive.box(APP_BOX).clear();
   }
 }

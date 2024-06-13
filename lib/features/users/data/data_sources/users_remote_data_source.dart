@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:contact_book/core/constants/constant.dart';
-import 'package:contact_book/core/constants/messages.dart';
 import 'package:contact_book/core/error/exceptions.dart';
 import 'package:contact_book/features/users/domain/entities/user_entity.dart';
 import 'package:dio/dio.dart';
@@ -28,14 +27,18 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
     required this.dio,
   }) {
     // initail dio base options
-    String bearerToken =
-        'bearer ${sharedPreferences.getString(ACCESS_TOKEN_KEY)}';
+
     dio.options = BaseOptions(
       contentType: 'application/json',
-      headers: {'Authorization': bearerToken},
       connectTimeout: const Duration(seconds: 3),
       sendTimeout: const Duration(seconds: 3),
       receiveTimeout: const Duration(seconds: 3),
+    );
+  }
+  MapEntry<String, String> get _authToken {
+    return MapEntry(
+      'Authorization',
+      'bearer ${sharedPreferences.getString(ACCESS_TOKEN_KEY)}',
     );
   }
 
@@ -43,12 +46,13 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
   Future<UserModel> addUser({required UserModel userModel}) async {
     try {
       Response response = await dio.post(
+        options: Options(headers: {_authToken.key: _authToken.value}),
         API.USERS,
         data: userModel.toJson(),
       );
       return UserModel.fromJson(response.data);
     } on DioException catch (e) {
-      if (e.response!.statusCode == 400) {
+      if (e.response?.statusCode == 400) {
         throw ServerException(message: e.response!.data);
       } else {
         throw ServerException.fromDioException(e);
@@ -59,7 +63,11 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
   @override
   Future<void> deleteUsers({required List<String> usersId}) async {
     try {
-      await dio.delete(API.USERS, data: usersId);
+      await dio.delete(
+        API.USERS,
+        data: usersId,
+        options: Options(headers: {_authToken.key: _authToken.value}),
+      );
     } on DioException catch (e) {
       throw ServerException.fromDioException(e);
     }
@@ -68,8 +76,12 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
   @override
   Future<List<UserModel>> getAllUsers() async {
     try {
-      Response response = await dio.get(API.USERS);
+      Response response = await dio.get(
+        API.USERS,
+        options: Options(headers: {_authToken.key: _authToken.value}),
+      );
       final usersJsonList = response.data as List<dynamic>;
+      log("current user: ${(await getCurrentUser()).firstName}");
       return usersJsonList.map(
         (userJson) {
           return UserModel.fromJson(userJson);
@@ -83,7 +95,10 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
   @override
   Future<UserModel> getCurrentUser() async {
     try {
-      Response response = await dio.get(API.CURRENT_USER);
+      Response response = await dio.get(
+        API.CURRENT_USER,
+        options: Options(headers: {_authToken.key: _authToken.value}),
+      );
       return UserModel.fromJson(response.data);
     } on DioException catch (e) {
       throw ServerException.fromDioException(e);
@@ -93,7 +108,10 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
   @override
   Future<UserModel> getUser({required String id}) async {
     try {
-      Response response = await dio.get('${API.USERS}/$id');
+      Response response = await dio.get(
+        '${API.USERS}/$id',
+        options: Options(headers: {_authToken.key: _authToken.value}),
+      );
       return UserModel.fromJson(response.data);
     } on DioException catch (e) {
       throw ServerException.fromDioException(e);
@@ -104,6 +122,7 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
   Future<UserModel> updateUser({required UserModel userModel}) async {
     try {
       Response response = await dio.put(
+        options: Options(headers: {_authToken.key: _authToken.value}),
         API.USERS,
         data: userModel.toJson(),
       );

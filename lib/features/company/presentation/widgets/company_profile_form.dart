@@ -66,7 +66,6 @@ class _CompanyProfileFormState extends State<CompanyProfileForm> {
               const SizedBox(width: 16),
               Expanded(
                 child: CustomTextFromField(
-                  isRequired: true,
                   labelText: 'Street2',
                   controller: street2Con,
                   enabled: editingActive,
@@ -121,7 +120,6 @@ class _CompanyProfileFormState extends State<CompanyProfileForm> {
           ),
           const SizedBox(height: 32),
           CountryDropDownMenu(
-
             countryController: countryCon,
             enabled: editingActive,
           ),

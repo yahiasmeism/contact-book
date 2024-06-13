@@ -25,7 +25,7 @@ class AuthRepositoryImpl implements AuthRepository {
       // should be returned auth token if no Exception
       String token = await remote.login(LoginModel.fromEntity(login));
 
-      local.storeToken(token);
+      await local.storeToken(token);
 
       return const Right(unit);
     } on ServerException catch (e) {
@@ -47,6 +47,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<void> logout() async {
     await local.removeToken();
+    await local.clearAppData();
   }
 
   @override

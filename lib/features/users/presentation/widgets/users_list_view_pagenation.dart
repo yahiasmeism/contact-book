@@ -1,4 +1,3 @@
-import 'package:contact_book/core/constants/assets.dart';
 import 'package:contact_book/features/users/domain/entities/user_entity.dart';
 import 'package:contact_book/features/users/presentation/blocs/users_bloc.dart';
 import 'package:contact_book/features/users/presentation/widgets/user_tile.dart';

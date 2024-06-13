@@ -3,7 +3,6 @@ import 'package:contact_book/features/users/presentation/widgets/user_tile.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/constants/assets.dart';
 import '../../domain/entities/user_entity.dart';
 import '../blocs/users_bloc.dart';
 

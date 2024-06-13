@@ -39,7 +39,6 @@ class UsersLocalDataSourceImpl implements UsersLocalDataSource {
     return await _getUserByKey(id);
   }
 
-
   @override
   Future<List<UserEntity>> getAllUsers() async {
     return _box.values.whereType<UserEntity>().toList();

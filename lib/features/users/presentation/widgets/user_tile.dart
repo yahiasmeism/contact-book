@@ -8,6 +8,7 @@ import 'package:contact_book/features/users/presentation/blocs/users_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../pages/user_details_page.dart';
 import 'star_favorite_toggle.dart';
 import 'status_text.dart';
 
@@ -26,27 +27,36 @@ class UserTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: COLORS.BORDER),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // top section
-          buildTopSection(context),
-          const CustomDivider(),
-          // center section
-          buildCenterSection(),
-          const CustomDivider(
-            indent: 25,
-            endIndent: 25,
-          ),
-          // bottom section
-          buildBottomSection()
-        ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          UserDetailsPage.name,
+          arguments: userEntity,
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: COLORS.BORDER),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // top section
+            buildTopSection(context),
+            const CustomDivider(),
+            // center section
+            buildCenterSection(),
+            const CustomDivider(
+              indent: 25,
+              endIndent: 25,
+            ),
+            // bottom section
+            buildBottomSection()
+          ],
+        ),
       ),
     );
   }

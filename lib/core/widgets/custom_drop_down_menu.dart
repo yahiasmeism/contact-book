@@ -22,7 +22,6 @@ class CustomDropDownMenu extends StatelessWidget {
       inputDecorationTheme: InputDecorationTheme(
         contentPadding: const EdgeInsets.all(12),
         disabledBorder: const UnderlineInputBorder(),
-        fillColor: Colors.grey[200]!,
         filled: enabled,
         border: const UnderlineInputBorder(
             borderSide: BorderSide(
@@ -30,7 +29,7 @@ class CustomDropDownMenu extends StatelessWidget {
         )),
       ),
       expandedInsets: EdgeInsets.zero,
-      initialSelection: values.first,
+      initialSelection: controller?.text,
       label: Text(label),
       controller: controller,
       dropdownMenuEntries: values

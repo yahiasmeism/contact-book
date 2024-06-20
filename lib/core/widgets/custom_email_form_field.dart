@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'package:flutter/material.dart';
 
 import '../constants/styles.dart';
@@ -8,12 +8,16 @@ class CustomEmailFormField extends StatelessWidget {
     super.key,
     this.controller,
     this.labelText = 'Email',
+    this.enabled = true,
   });
   final TextEditingController? controller;
   final String? labelText;
+  final bool enabled;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: STYLES.TEXT_STYLE_18.copyWith(color: Colors.black),
+      enabled: enabled,
       onTapOutside: (event) {
         FocusScope.of(context).unfocus();
       },
@@ -30,9 +34,10 @@ class CustomEmailFormField extends StatelessWidget {
         return null;
       },
       decoration: InputDecoration(
-        filled: true,
+        contentPadding: const EdgeInsets.all(12),
+        disabledBorder: const UnderlineInputBorder(),
+        filled: enabled,
         labelText: labelText,
-        labelStyle: STYLES.TEXT_STYLE_20,
       ),
     );
   }

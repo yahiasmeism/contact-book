@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:contact_book/core/constants/api.dart';
 import 'package:contact_book/core/constants/constant.dart';
 import 'package:contact_book/core/error/exceptions.dart';

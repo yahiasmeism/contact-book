@@ -34,11 +34,11 @@ class CustomTextFromField extends StatelessWidget {
         return null;
       },
       decoration: InputDecoration(
-          contentPadding: const EdgeInsets.all(12),
-          disabledBorder: const UnderlineInputBorder(),
-          filled: enabled,
-          labelText: labelText,
-          labelStyle: const TextStyle()),
+        contentPadding: const EdgeInsets.all(12),
+        disabledBorder: const UnderlineInputBorder(),
+        filled: enabled,
+        labelText: labelText,
+      ),
     );
   }
 }

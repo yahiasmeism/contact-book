@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:contact_book/core/constants/messages.dart';
 import 'package:contact_book/features/users/domain/entities/user_entity.dart';
 import 'package:contact_book/features/users/domain/use_cases/add_user_use_case.dart';
 import 'package:contact_book/features/users/domain/use_cases/get_all_user_use_case.dart';
+import 'package:contact_book/features/users/domain/use_cases/get_current_user_use_case.dart';
+import 'package:contact_book/features/users/domain/use_cases/update_user_use_case.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../domain/use_cases/delete_users_use_case.dart';
@@ -12,11 +16,15 @@ part 'users_state.dart';
 
 class UsersBloc extends Bloc<UsersEvent, UsersState> {
   final GetAllUserUseCase getAllUserUseCase;
+  final GetCurrentUserUseCase getCurrentUserUseCase;
   final DeleteUsersUseCase deleteUserUseCase;
+  final UpdateUserUseCase updateUserUseCase;
   final AddUserUseCase addUserUseCase;
   List<UserEntity> usersSelected = [];
   List<UserEntity> users = [];
   UsersBloc({
+    required this.getCurrentUserUseCase,
+    required this.updateUserUseCase,
     required this.addUserUseCase,
     required this.getAllUserUseCase,
     required this.deleteUserUseCase,
@@ -76,5 +84,21 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
         },
       );
     });
+
+    ///update user event
+    on<UpdateUserEvent>((event, emit) async {
+      final oldUserIndex = users.indexWhere((u) => event.user.id == u.id);
+      emit(UsersLoading());
+      final either = await updateUserUseCase.call(userEntity: event.user);
+      either.fold((failure) {
+        emit(UsersFailure(message: failure.message));
+      }, (userUpdated) {
+        users[oldUserIndex] = userUpdated;
+        emit(const UserOperationSuccess(message: MESSAGES.UPDATED_SUCCESS));
+      });
+    });
+
+   
   }
+
 }

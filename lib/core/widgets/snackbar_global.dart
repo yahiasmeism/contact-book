@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SnackBarGlobal {
+abstract class SnackBarGlobal {
   static var key = GlobalKey<ScaffoldMessengerState>();
 
   static void show(BuildContext context, String text,

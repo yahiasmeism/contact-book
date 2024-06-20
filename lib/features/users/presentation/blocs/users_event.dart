@@ -9,8 +9,6 @@ sealed class UsersEvent extends Equatable {
 
 class GetAllUsersEvent extends UsersEvent {}
 
-class GetCurrentUserEvent extends UsersEvent {}
-
 class GetUserEvent extends UsersEvent {
   final String userId;
 
@@ -20,11 +18,11 @@ class GetUserEvent extends UsersEvent {
 }
 
 class UpdateUserEvent extends UsersEvent {
-  final UserEntity userEntity;
+  final UserEntity user;
 
-  const UpdateUserEvent({required this.userEntity});
+  const UpdateUserEvent({required this.user});
   @override
-  List<Object> get props => [userEntity];
+  List<Object> get props => [user];
 }
 
 class AddUserEvent extends UsersEvent {

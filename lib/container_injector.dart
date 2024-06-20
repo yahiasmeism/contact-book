@@ -10,6 +10,9 @@ import 'package:contact_book/features/users/data/repositories_impl/user_reposito
 import 'package:contact_book/features/users/domain/repositories/user_repository.dart';
 import 'package:contact_book/features/users/domain/use_cases/add_user_use_case.dart';
 import 'package:contact_book/features/users/domain/use_cases/get_all_user_use_case.dart';
+import 'package:contact_book/features/users/domain/use_cases/get_current_user_use_case.dart';
+import 'package:contact_book/features/users/domain/use_cases/update_user_use_case.dart';
+import 'package:contact_book/features/users/presentation/blocs/current_user_cubit/current_user_cubit.dart';
 import 'features/authentication/domain/use_cases/check_logged_in_use_case.dart';
 
 import 'features/authentication/data/data_sources/auth_local_data_source.dart';
@@ -96,12 +99,20 @@ Future<void> init() async {
   //! Users Feature ===========================================
   // Bloc
   sl.registerFactory(() => UsersBloc(
-      getAllUserUseCase: sl(), deleteUserUseCase: sl(), addUserUseCase: sl()));
+        getCurrentUserUseCase: sl(),
+        updateUserUseCase: sl(),
+        getAllUserUseCase: sl(),
+        deleteUserUseCase: sl(),
+        addUserUseCase: sl(),
+      ));
+  sl.registerFactory(() => CurrentUserCubit(getCurrentUserUseCase: sl()));
 
   // Use Cases
   sl.registerLazySingleton(() => GetAllUserUseCase(userRepository: sl()));
   sl.registerLazySingleton(() => DeleteUsersUseCase(userRepository: sl()));
   sl.registerLazySingleton(() => AddUserUseCase(userRepository: sl()));
+  sl.registerLazySingleton(() => UpdateUserUseCase(userRepository: sl()));
+  sl.registerLazySingleton(() => GetCurrentUserUseCase(userRepository: sl()));
 
   // repositories
   sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(

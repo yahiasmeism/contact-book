@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:contact_book/core/constants/constant.dart';
 import 'package:contact_book/core/error/exceptions.dart';
-import 'package:contact_book/features/users/domain/entities/user_entity.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,8 +12,7 @@ import '../models/user_model.dart';
 abstract interface class UsersRemoteDataSource {
   Future<List<UserModel>> getAllUsers();
   Future<UserModel> getCurrentUser();
-  Future<UserModel> getUser({required String id});
-  Future<UserEntity> addUser({required UserModel userModel});
+  Future<UserModel> addUser({required UserModel userModel});
   Future<UserModel> updateUser({required UserModel userModel});
   Future<void> deleteUsers({required List<String> usersId});
 }
@@ -48,7 +46,7 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
       Response response = await dio.post(
         options: Options(headers: {_authToken.key: _authToken.value}),
         API.USERS,
-        data: userModel.toJson(),
+        data: userModel.toJson,
       );
       return UserModel.fromJson(response.data);
     } on DioException catch (e) {
@@ -106,25 +104,13 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
   }
 
   @override
-  Future<UserModel> getUser({required String id}) async {
-    try {
-      Response response = await dio.get(
-        '${API.USERS}/$id',
-        options: Options(headers: {_authToken.key: _authToken.value}),
-      );
-      return UserModel.fromJson(response.data);
-    } on DioException catch (e) {
-      throw ServerException.fromDioException(e);
-    }
-  }
-
-  @override
   Future<UserModel> updateUser({required UserModel userModel}) async {
     try {
+      String url = '${API.USERS}/${userModel.id}';
       Response response = await dio.put(
+        url,
         options: Options(headers: {_authToken.key: _authToken.value}),
-        API.USERS,
-        data: userModel.toJson(),
+        data: userModel.toJson
       );
       return UserModel.fromJson(response.data);
     } on DioException catch (e) {

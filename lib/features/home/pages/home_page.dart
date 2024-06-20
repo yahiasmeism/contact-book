@@ -1,6 +1,7 @@
 import 'package:contact_book/core/widgets/snackbar_global.dart';
 import 'package:contact_book/features/home/managers/network_cubit/network_cubit.dart';
 import 'package:contact_book/features/home/widgets/home_body.dart';
+import 'package:contact_book/features/users/presentation/blocs/current_user_cubit/current_user_cubit.dart';
 import 'package:contact_book/features/users/presentation/blocs/users_bloc.dart';
 
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     context.read<CompanyBloc>().add(GetCompanyInfoEvent());
     context.read<UsersBloc>().add(GetAllUsersEvent());
+    context.read<CurrentUserCubit>().getCurrentUset();
     super.initState();
   }
 

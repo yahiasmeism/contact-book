@@ -1,4 +1,3 @@
-
 import 'package:contact_book/core/error/exceptions.dart';
 import 'package:contact_book/features/users/data/models/user_model.dart';
 import 'package:dartz/dartz.dart';
@@ -25,9 +24,10 @@ class UserRepositoryImpl implements UserRepository {
     return _getData<List<UserEntity>>(
       getLoacal: usersLocal.getAllUsers,
       getRemote: () async {
-        final users = await usersRemote.getAllUsers();
-        usersLocal.storeUsers(users: users);
-        return users;
+        List<UserModel> usersModel = await usersRemote.getAllUsers();
+        usersLocal.storeUsers(users: usersModel);
+
+        return usersModel.map((u) => u.toEntity()).toList();
       },
     );
   }
@@ -41,19 +41,10 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, UserEntity>> getUser({required String id}) {
-    return _getData<UserEntity>(
-      getLoacal: () => usersLocal.getUser(id: id),
-      getRemote: () => usersRemote.getUser(id: id),
-    );
-  }
-
-  @override
   Future<Either<Failure, Unit>> deleteUsers(
       {required List<String> usersId}) async {
     try {
       await usersRemote.deleteUsers(usersId: usersId);
-      await usersLocal.deleteUsers(usersId: usersId);
       return const Right(unit);
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));
@@ -66,19 +57,19 @@ class UserRepositoryImpl implements UserRepository {
     try {
       final updatedUser = await usersRemote.updateUser(
           userModel: UserModel.fromEntity(userEntity));
-      await usersLocal.updateUser(userModel: updatedUser);
-      return Right(updatedUser);
+      return Right(updatedUser.toEntity());
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));
     }
   }
 
   @override
-  Future<Either<Failure, UserEntity>> addUser({required UserEntity user}) async {
+  Future<Either<Failure, UserEntity>> addUser(
+      {required UserEntity user}) async {
     try {
       UserModel userModel = UserModel.fromEntity(user);
       UserEntity userEntity = await usersRemote.addUser(userModel: userModel);
-      return  Right(userEntity);
+      return Right(userEntity);
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));
     }

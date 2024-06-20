@@ -3,7 +3,7 @@ import 'package:contact_book/core/constants/colors.dart';
 import 'package:contact_book/core/widgets/bread_crumb.dart';
 import 'package:contact_book/core/widgets/custom_button.dart';
 import 'package:contact_book/features/users/presentation/blocs/users_bloc.dart';
-import 'package:contact_book/features/users/presentation/pages/invite_new_user_page.dart';
+import 'package:contact_book/features/users/presentation/pages/user_invite_page.dart';
 import 'package:contact_book/features/users/presentation/widgets/users_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -74,7 +74,7 @@ class UsersBody extends StatelessWidget {
       child: CustomButton(
         child: const Text('Invite new user'),
         onPressed: () {
-          Navigator.pushNamed(context, InviteNewUserPage.name);
+          Navigator.pushNamed(context, UserInvitePage.name);
         },
       ),
     );

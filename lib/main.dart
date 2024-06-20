@@ -1,8 +1,8 @@
 import 'package:contact_book/core/utils/hive_init.dart';
 import 'package:contact_book/features/company/presentation/pages/company_profile_page.dart';
 import 'package:contact_book/features/home/managers/network_cubit/network_cubit.dart';
+import 'package:contact_book/features/users/presentation/blocs/current_user_cubit/current_user_cubit.dart';
 import 'package:contact_book/features/users/presentation/blocs/users_bloc.dart';
-import 'package:contact_book/features/users/presentation/pages/invite_new_user_page.dart';
 import 'package:contact_book/features/users/presentation/pages/users_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +21,8 @@ import 'features/home/pages/home_page.dart';
 import 'features/home/pages/splash_page.dart';
 
 import 'container_injector.dart' as di;
+import 'features/users/presentation/pages/user_details_page.dart';
+import 'features/users/presentation/pages/user_invite_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,6 +48,7 @@ class ContactBookApp extends StatelessWidget {
         BlocProvider(create: (context) => NetworkCubit()),
         BlocProvider(create: (context) => di.sl<CompanyBloc>()),
         BlocProvider(create: (context) => di.sl<UsersBloc>()),
+        BlocProvider(create: (context) => di.sl<CurrentUserCubit>()),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,
@@ -60,7 +63,8 @@ class ContactBookApp extends StatelessWidget {
           HomePage.name: (context) => const HomePage(),
           CompanyProfilePage.name: (context) => const CompanyProfilePage(),
           UsersPage.name: (context) => const UsersPage(),
-          InviteNewUserPage.name: (context) => InviteNewUserPage(),
+          UserInvitePage.name: (context) => const UserInvitePage(),
+          UserDetailsPage.name: (context) => const UserDetailsPage(),
         },
         initialRoute: SplashPage.name,
       ),

@@ -1,10 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'package:contact_book/features/users/presentation/widgets/user_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/entities/user_entity.dart';
-import '../blocs/users_bloc.dart';
 
 class UserListView extends StatelessWidget {
   const UserListView({
@@ -39,14 +38,6 @@ class UserListView extends StatelessWidget {
     return UserTile(
       numberId: index + 1,
       userEntity: users[index],
-      toggleSelect: (value) {
-        // add to selection List
-        if (value) {
-          context.read<UsersBloc>().usersSelected.add(users[index]);
-        } else {
-          context.read<UsersBloc>().usersSelected.remove(users[index]);
-        }
-      },
     );
   }
 }

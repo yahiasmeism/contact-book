@@ -1,3 +1,4 @@
+import 'package:contact_book/features/users/domain/entities/user_entity.dart';
 import 'package:contact_book/features/users/domain/repositories/user_repository.dart';
 import 'package:dartz/dartz.dart';
 
@@ -8,7 +9,7 @@ class DeleteUsersUseCase {
   DeleteUsersUseCase({
     required this.userRepository,
   });
-  Future<Either<Failure, Unit>> call({required List<String> usersId}) {
-    return userRepository.deleteUsers(usersId: usersId);
+  Future<Either<Failure, Unit>> call({required List<UserEntity> users}) {
+    return userRepository.deleteUsers(users: users);
   }
 }

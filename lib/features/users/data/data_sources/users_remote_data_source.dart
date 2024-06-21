@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:contact_book/core/constants/constant.dart';
 import 'package:contact_book/core/error/exceptions.dart';
+import 'package:contact_book/features/users/domain/entities/user_entity.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,7 +15,7 @@ abstract interface class UsersRemoteDataSource {
   Future<UserModel> getCurrentUser();
   Future<UserModel> addUser({required UserModel userModel});
   Future<UserModel> updateUser({required UserModel userModel});
-  Future<void> deleteUsers({required List<String> usersId});
+  Future<void> deleteUsers({required List<UserEntity> users});
 }
 
 class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
@@ -59,11 +60,13 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
   }
 
   @override
-  Future<void> deleteUsers({required List<String> usersId}) async {
+  Future<void> deleteUsers({required List<UserEntity> users}) async {
+    List<String?> userIDs = users.map((user) => user.id).toList();
+
     try {
       await dio.delete(
         API.USERS,
-        data: usersId,
+        data: userIDs,
         options: Options(headers: {_authToken.key: _authToken.value}),
       );
     } on DioException catch (e) {
@@ -107,11 +110,9 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
   Future<UserModel> updateUser({required UserModel userModel}) async {
     try {
       String url = '${API.USERS}/${userModel.id}';
-      Response response = await dio.put(
-        url,
-        options: Options(headers: {_authToken.key: _authToken.value}),
-        data: userModel.toJson
-      );
+      Response response = await dio.put(url,
+          options: Options(headers: {_authToken.key: _authToken.value}),
+          data: userModel.toJson);
       return UserModel.fromJson(response.data);
     } on DioException catch (e) {
       throw ServerException.fromDioException(e);

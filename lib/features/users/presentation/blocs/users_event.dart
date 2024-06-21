@@ -34,11 +34,11 @@ class AddUserEvent extends UsersEvent {
 }
 
 class DeleteUsersEvent extends UsersEvent {
-  final List<String> usersId;
+  final List<UserEntity> users;
 
-  const DeleteUsersEvent({required this.usersId});
+  const DeleteUsersEvent({required this.users});
   @override
-  List<Object> get props => [usersId];
+  List<Object> get props => [users];
 }
 
 class FilterUserEvent extends UsersEvent {

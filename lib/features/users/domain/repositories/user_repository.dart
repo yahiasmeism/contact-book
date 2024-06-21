@@ -9,5 +9,5 @@ abstract interface class UserRepository {
   Future<Either<Failure, UserEntity>> getCurrentUser();
   Future<Either<Failure, UserEntity>> updateUser(
       {required UserEntity userEntity});
-  Future<Either<Failure, Unit>> deleteUsers({required List<String> usersId});
+  Future<Either<Failure, Unit>> deleteUsers({required List<UserEntity> users});
 }

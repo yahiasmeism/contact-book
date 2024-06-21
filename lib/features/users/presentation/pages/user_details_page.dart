@@ -11,7 +11,7 @@ import '../blocs/users_bloc.dart';
 
 class UserDetailsPage extends StatefulWidget {
   const UserDetailsPage({super.key});
-  static const name = 'user details';
+  static const name = 'User Details';
 
   @override
   State<UserDetailsPage> createState() => _UserDetailsPageState();

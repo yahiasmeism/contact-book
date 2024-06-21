@@ -1,3 +1,4 @@
+import 'package:contact_book/core/constants/constant.dart';
 import 'package:contact_book/core/error/exceptions.dart';
 import 'package:contact_book/features/users/data/models/user_model.dart';
 import 'package:dartz/dartz.dart';
@@ -22,10 +23,10 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<Either<Failure, List<UserEntity>>> getAllUsers() async {
     return _getData<List<UserEntity>>(
-      getLoacal: usersLocal.getAllUsers,
+      getLocal: usersLocal.getAllUsers,
       getRemote: () async {
         List<UserModel> usersModel = await usersRemote.getAllUsers();
-        usersLocal.storeUsers(users: usersModel);
+        usersLocal.storeAllUsers(users: usersModel);
 
         return usersModel.map((u) => u.toEntity()).toList();
       },
@@ -35,19 +36,26 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<Either<Failure, UserEntity>> getCurrentUser() async {
     return _getData<UserEntity>(
-      getLoacal: usersLocal.getCurrentUser,
-      getRemote: usersRemote.getCurrentUser,
+      getRemote: () async {
+        final user = await usersRemote.getCurrentUser();
+        usersLocal.storeUser(id: CURRENT_USER_KEY, user: user);
+        return user;
+      },
+      getLocal: usersLocal.getCurrentUser,
     );
   }
 
   @override
   Future<Either<Failure, Unit>> deleteUsers(
-      {required List<String> usersId}) async {
+      {required List<UserEntity> users}) async {
     try {
-      await usersRemote.deleteUsers(usersId: usersId);
+      await usersRemote.deleteUsers(users: users);
+      await usersLocal.deleteUsers(users: users);
       return const Right(unit);
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));
+    } on DatabaseException catch (e) {
+      return Left(DatabaseFailure(message: e.message));
     }
   }
 
@@ -57,9 +65,13 @@ class UserRepositoryImpl implements UserRepository {
     try {
       final updatedUser = await usersRemote.updateUser(
           userModel: UserModel.fromEntity(userEntity));
+
+      usersLocal.storeUser(id: userEntity.id!, user: updatedUser);
       return Right(updatedUser.toEntity());
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));
+    } on DatabaseException catch (e) {
+      return Left(DatabaseFailure(message: e.message));
     }
   }
 
@@ -69,18 +81,21 @@ class UserRepositoryImpl implements UserRepository {
     try {
       UserModel userModel = UserModel.fromEntity(user);
       UserEntity userEntity = await usersRemote.addUser(userModel: userModel);
+      await usersLocal.storeUser(id: userEntity.id!, user: userEntity);
       return Right(userEntity);
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));
+    } on DatabaseException catch (e) {
+      return Left(DatabaseFailure(message: e.message));
     }
   }
 
   /// getting data from remote or local task based on network connectivity.
-  /// If the device is connected to the network, it executes the [getRemote], otherwise, it executes the [localTask].
+  /// If the device is connected to the network, it executes the [getRemote], otherwise, it executes the [getLocal].
   /// Returns an [Either] object representing the success or failure of the operation.
   Future<Either<Failure, T>> _getData<T>({
     required Future<T> Function() getRemote,
-    required Future<T> Function() getLoacal,
+    required Future<T> Function() getLocal,
   }) async {
     bool isConnected = await networkInfo.isConnected;
     if (isConnected) {
@@ -91,7 +106,7 @@ class UserRepositoryImpl implements UserRepository {
       }
     } else {
       try {
-        return Right(await getLoacal());
+        return Right(await getLocal());
       } on DatabaseException catch (e) {
         return Left(DatabaseFailure(message: e.message));
       }

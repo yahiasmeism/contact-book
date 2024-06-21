@@ -1,8 +1,6 @@
 import 'package:contact_book/features/users/domain/entities/user_entity.dart';
-import 'package:contact_book/features/users/presentation/blocs/users_bloc.dart';
 import 'package:contact_book/features/users/presentation/widgets/user_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'custom_pagenation.dart';
 
@@ -79,19 +77,10 @@ class _UsersListViewPaginationState extends State<UsersListViewPagination> {
   }
 
   Widget buildUserTile(int index) {
-    final userBloc = context.read<UsersBloc>();
     int userIndex = (currentPage * usersPerPage) + index;
     return UserTile(
       userEntity: currentPageUsers[index],
       numberId: userIndex + 1,
-      toggleSelect: (value) {
-        // add to selection List
-        if (value) {
-          userBloc.usersSelected.add(widget.users[userIndex]);
-        } else {
-          userBloc.usersSelected.remove(widget.users[userIndex]);
-        }
-      },
     );
   }
 }

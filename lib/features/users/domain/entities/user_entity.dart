@@ -5,8 +5,9 @@ part 'user_entity.g.dart';
 @HiveType(typeId: 1)
 class UserEntity extends HiveObject with EquatableMixin {
   @HiveField(0)
-  final String? id;
+  String? id;
   @HiveField(1)
+  
   final String firstName;
   @HiveField(2)
   final String lastName;
@@ -25,7 +26,7 @@ class UserEntity extends HiveObject with EquatableMixin {
     required this.lastName,
     required this.email,
     required this.phoneNumber,
-     this.status,
+    this.status,
     required this.role,
   });
   @override

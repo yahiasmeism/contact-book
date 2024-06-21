@@ -1,3 +1,4 @@
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:contact_book/core/constants/colors.dart';
 import 'package:contact_book/core/widgets/bread_crumb.dart';
@@ -97,12 +98,8 @@ class UsersBody extends StatelessWidget {
               btnOkColor: Colors.red,
               btnCancelColor: COLORS.PRIMARY,
               btnCancelOnPress: () {},
-              btnOkOnPress: () {
-                List<String> usersId = userBloc.usersSelected
-                    .map((user) => user.id ?? '')
-                    .toList();
-                userBloc.add(DeleteUsersEvent(usersId: usersId));
-                userBloc.usersSelected.clear();
+              btnOkOnPress: () async {
+                userBloc.add(DeleteUsersEvent(users: userBloc.usersSelected));
               },
             ).show();
           }

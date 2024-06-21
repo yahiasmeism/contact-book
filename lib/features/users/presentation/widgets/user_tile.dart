@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:contact_book/core/constants/assets.dart';
 import 'package:contact_book/core/constants/colors.dart';
 import 'package:contact_book/core/constants/styles.dart';
@@ -16,14 +18,10 @@ class UserTile extends StatelessWidget {
   const UserTile({
     super.key,
     required this.numberId,
-    this.toggleSelect,
-    this.toggleFavorite,
     required this.userEntity,
   });
   final UserEntity userEntity;
   final int numberId;
-  final Function(bool value)? toggleSelect;
-  final Function(bool value)? toggleFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +68,15 @@ class UserTile extends StatelessWidget {
           Transform.scale(
               scale: 1.2,
               child: CustomCheckBox(
-                onChange: toggleSelect,
+                onChange: (value) {
+                  if (value) {
+                    context.read<UsersBloc>().usersSelected.add(userEntity);
+                  } else {
+                    context.read<UsersBloc>().usersSelected.remove(userEntity);
+                  }
+                  var list = context.read<UsersBloc>().usersSelected;
+                  log(list.length.toString());
+                },
                 initalValue: context
                     .read<UsersBloc>()
                     .usersSelected

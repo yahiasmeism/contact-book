@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:contact_book/core/constants/messages.dart';
@@ -60,13 +59,13 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     // delete user
     on<DeleteUsersEvent>((event, emit) async {
       emit(UsersLoading());
-      final either = await deleteUserUseCase(usersId: event.usersId);
+      final either = await deleteUserUseCase(users: event.users);
       either.fold((failure) => emit(UsersFailure(message: failure.message)),
           (success) {
-        users.removeWhere((user) => event.usersId.contains(user.id));
-        emit(UsersLoaded());
+        users.removeWhere((user) => event.users.contains(user));
         emit(const UserOperationSuccess(message: MESSAGES.DELETE_SUCCESS));
       });
+      usersSelected.clear();
     });
 
     // add new user
@@ -93,12 +92,10 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
       either.fold((failure) {
         emit(UsersFailure(message: failure.message));
       }, (userUpdated) {
+        userUpdated.id = event.user.id;
         users[oldUserIndex] = userUpdated;
         emit(const UserOperationSuccess(message: MESSAGES.UPDATED_SUCCESS));
       });
     });
-
-   
   }
-
 }

@@ -2,10 +2,16 @@ import 'package:contact_book/core/constants/styles.dart';
 import 'package:flutter/material.dart';
 import '../utils/my_routes_observer.dart';
 
-class BreadCrumbNavigator extends StatelessWidget {
+class BreadCrumbNavigator extends StatefulWidget {
   const BreadCrumbNavigator({
     super.key,
   });
+
+  @override
+  State<BreadCrumbNavigator> createState() => _BreadCrumbNavigatorState();
+}
+
+class _BreadCrumbNavigatorState extends State<BreadCrumbNavigator> {
   @override
   Widget build(BuildContext context) {
     return Padding(

@@ -195,4 +195,17 @@ class _CompanyProfileFormState extends State<CompanyProfileForm> {
     stateCon.text = companyEntity.state;
     countryCon.text = companyEntity.country;
   }
+
+  @override
+  void dispose() {
+    companyNameCon.dispose();
+    streetCon.dispose();
+    street2Con.dispose();
+    vatNumberCon.dispose();
+    zipCon.dispose();
+    cityCon.dispose();
+    stateCon.dispose();
+    countryCon.dispose();
+    super.dispose();
+  }
 }

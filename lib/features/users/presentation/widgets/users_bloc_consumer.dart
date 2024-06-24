@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../blocs/users_bloc.dart';
 
-class UsersBuilder extends StatelessWidget {
-  const UsersBuilder({
+class UsersBlocConsumer extends StatelessWidget {
+  const UsersBlocConsumer({
     super.key,
   });
 

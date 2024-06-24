@@ -9,17 +9,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../blocs/users_bloc.dart';
 
-class UserInvitePage extends StatelessWidget {
+class UserInvitePage extends StatefulWidget {
   const UserInvitePage({super.key});
   static const name = 'Invite new user';
+
+  @override
+  State<UserInvitePage> createState() => _UserInvitePageState();
+}
+
+class _UserInvitePageState extends State<UserInvitePage> {
+  final formKey = GlobalKey<FormState>();
+  final fNameController = TextEditingController();
+  final lNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final roleController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
-    final fNameController = TextEditingController();
-    final lNameController = TextEditingController();
-    final emailController = TextEditingController();
-    final phoneController = TextEditingController();
-    final roleController = TextEditingController();
     return AppScaffold(
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -105,5 +111,15 @@ class UserInvitePage extends StatelessWidget {
         Navigator.pop(context);
       },
     );
+  }
+
+  @override
+  void dispose() {
+    fNameController.dispose();
+    lNameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    roleController.dispose();
+    super.dispose();
   }
 }

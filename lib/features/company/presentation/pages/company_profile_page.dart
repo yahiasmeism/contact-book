@@ -1,6 +1,6 @@
 import '../../../../core/widgets/app_scaffold.dart';
 import 'package:flutter/material.dart';
-import '../widgets/company_profile_builder.dart';
+import '../widgets/company_profile_bloc_consumer.dart';
 
 class CompanyProfilePage extends StatelessWidget {
   const CompanyProfilePage({
@@ -11,7 +11,7 @@ class CompanyProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const AppScaffold(
-      body: CompanyProfileBuilder(),
+      body: CompanyProfileBlocConsumer(),
     );
   }
 }

@@ -17,26 +17,31 @@ import '../../domain/entities/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RegistrationForm extends StatelessWidget {
+class RegistrationForm extends StatefulWidget {
   const RegistrationForm({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
-    final firstNameController = TextEditingController();
-    final lastNameController = TextEditingController();
-    final emailController = TextEditingController();
-    final phoneNumberController = TextEditingController();
-    final passwordController = TextEditingController();
-    final companyNameController = TextEditingController();
-    final vatNumberController = TextEditingController();
-    final streetOneController = TextEditingController();
-    final streetTwoController = TextEditingController();
-    final cityController = TextEditingController();
-    final stateController = TextEditingController();
-    final zipController = TextEditingController();
-    final countryController = TextEditingController();
+  State<RegistrationForm> createState() => _RegistrationFormState();
+}
 
+class _RegistrationFormState extends State<RegistrationForm> {
+  final formKey = GlobalKey<FormState>();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+  final passwordController = TextEditingController();
+  final companyNameController = TextEditingController();
+  final vatNumberController = TextEditingController();
+  final streetOneController = TextEditingController();
+  final streetTwoController = TextEditingController();
+  final cityController = TextEditingController();
+  final stateController = TextEditingController();
+  final zipController = TextEditingController();
+  final countryController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
     return Form(
       key: formKey,
       child: SizedBox(
@@ -242,5 +247,23 @@ class RegistrationForm extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
+    phoneNumberController.dispose();
+    passwordController.dispose();
+    companyNameController.dispose();
+    vatNumberController.dispose();
+    streetOneController.dispose();
+    streetTwoController.dispose();
+    cityController.dispose();
+    stateController.dispose();
+    zipController.dispose();
+    countryController.dispose();
+    super.dispose();
   }
 }

@@ -4,7 +4,7 @@ import '../../../../core/widgets/bread_crumb.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../blocs/users_bloc.dart';
 import '../pages/user_invite_page.dart';
-import 'users_builder.dart';
+import 'users_bloc_consumer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,7 +40,7 @@ class UsersBody extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 24),
               sliver: buildSearchField(context),
             ),
-            const SliverToBoxAdapter(child: UsersBuilder())
+            const SliverToBoxAdapter(child: UsersBlocConsumer())
           ],
         ),
       ),

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/widgets/snackbar_global.dart';
 
-class CompanyProfileBuilder extends StatelessWidget {
-  const CompanyProfileBuilder({super.key});
+class CompanyProfileBlocConsumer extends StatelessWidget {
+  const CompanyProfileBlocConsumer({super.key});
 
   @override
   Widget build(BuildContext context) {

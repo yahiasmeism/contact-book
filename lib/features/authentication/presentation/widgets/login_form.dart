@@ -15,15 +15,28 @@ import '../../../../core/widgets/custom_outline_button.dart';
 import '../../../../core/widgets/custom_password_form_field.dart';
 import 'package:flutter/material.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
   const LoginForm({
     super.key,
   });
 
   @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
     double screenWidth = MediaQuery.of(context).size.width;

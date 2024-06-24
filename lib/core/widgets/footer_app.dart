@@ -10,7 +10,7 @@ class Footer extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-            const SizedBox(height: 24),
+        const SizedBox(height: 24),
         Divider(
           color: Colors.black.withOpacity(0.3),
         ),

@@ -7,7 +7,6 @@ class UserEntity extends HiveObject with EquatableMixin {
   @HiveField(0)
   String? id;
   @HiveField(1)
-  
   final String firstName;
   @HiveField(2)
   final String lastName;

@@ -25,9 +25,7 @@ class AppScaffold extends StatelessWidget {
 
   AppBar myAppBAr(BuildContext context) {
     return AppBar(
-      actions: const <Widget>[
-        MainPopupMenu()
-      ],
+      actions: const <Widget>[MainPopupMenu()],
       centerTitle: true,
       title: SvgPicture.asset(ASSETS.LOGO_WHITE_PATH),
     );

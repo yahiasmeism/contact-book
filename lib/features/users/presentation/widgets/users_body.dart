@@ -1,4 +1,3 @@
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/widgets/bread_crumb.dart';

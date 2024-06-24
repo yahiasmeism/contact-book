@@ -39,7 +39,7 @@ class AuthLocalDataSourceimpl implements AuthLocalDataSource {
   }
 
   @override
-  Future<void> clearAppData() async{
-   await Hive.box(APP_BOX).clear();
+  Future<void> clearAppData() async {
+    await Hive.box(APP_BOX).clear();
   }
 }

@@ -39,5 +39,3 @@ class FilterUsersState extends UsersState {
   @override
   List<Object> get props => [usersFilter];
 }
-
-

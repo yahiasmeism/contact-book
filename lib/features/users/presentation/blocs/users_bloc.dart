@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 import '../../../../core/constants/messages.dart';
 import '../../domain/entities/user_entity.dart';

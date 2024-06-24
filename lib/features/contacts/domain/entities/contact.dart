@@ -3,7 +3,7 @@ import 'dart:io';
 import '../../../company/data/models/company_model.dart';
 
 class ContactEntity {
-  final int id;
+  final int? id;
   final String firstName;
   final String lastName;
   final String email;
@@ -12,11 +12,12 @@ class ContactEntity {
   final String? mobileNumber;
   final File? imageUploadFile;
   final String? imageUrl;
-  final ContactStatus? status;
-  final bool isFavorite;
+  final String? status;
+  final bool? isFavorite;
   final String address;
   final String? addressTwo;
-  final CompanyModel companyModel;
+  final int? companyId;
+  final CompanyModel? companyModel;
 
   ContactEntity({
     required this.id,
@@ -32,8 +33,7 @@ class ContactEntity {
     required this.isFavorite,
     required this.address,
     required this.addressTwo,
+    required this.companyId,
     required this.companyModel,
   });
 }
-
-enum ContactStatus { Inactive, Active }

@@ -24,7 +24,6 @@ class CompanyBloc extends Bloc<CompanyEvent, CompanyState> {
       result
           .fold((failure) => emit(CompanyInfoFailure(message: failure.message)),
               (companyEntity) {
-                
         company = companyEntity;
         emit(CompanyInfoLoaded());
       });

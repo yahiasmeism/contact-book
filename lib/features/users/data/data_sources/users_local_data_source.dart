@@ -3,7 +3,6 @@ import '../../../../core/error/exceptions.dart';
 import '../../domain/entities/user_entity.dart';
 import 'package:hive/hive.dart';
 
-
 abstract interface class UsersLocalDataSource {
   Future<void> storeAllUsers({required List<UserEntity> users});
   Future<void> storeUser({required String id, required UserEntity user});

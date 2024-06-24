@@ -1,11 +1,11 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:contact_book/core/constants/colors.dart';
-import 'package:contact_book/core/constants/styles.dart';
-import 'package:contact_book/core/widgets/snackbar_global.dart';
-import 'package:contact_book/features/authentication/presentation/cubits/logout_cubit/logout_cubit.dart';
-import 'package:contact_book/features/authentication/presentation/pages/login_page.dart';
-import 'package:contact_book/features/users/presentation/blocs/current_user_cubit/current_user_cubit.dart';
-import 'package:contact_book/features/users/presentation/pages/user_details_page.dart';
+import '../constants/colors.dart';
+import '../constants/styles.dart';
+import 'snackbar_global.dart';
+import '../../features/authentication/presentation/cubits/logout_cubit/logout_cubit.dart';
+import '../../features/authentication/presentation/pages/login_page.dart';
+import '../../features/users/presentation/blocs/current_user_cubit/current_user_cubit.dart';
+import '../../features/users/presentation/pages/user_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

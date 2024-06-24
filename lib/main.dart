@@ -1,9 +1,9 @@
-import 'package:contact_book/core/utils/hive_init.dart';
-import 'package:contact_book/features/company/presentation/pages/company_profile_page.dart';
-import 'package:contact_book/features/home/managers/network_cubit/network_cubit.dart';
-import 'package:contact_book/features/users/presentation/blocs/current_user_cubit/current_user_cubit.dart';
-import 'package:contact_book/features/users/presentation/blocs/users_bloc.dart';
-import 'package:contact_book/features/users/presentation/pages/users_page.dart';
+import 'core/utils/hive_init.dart';
+import 'features/company/presentation/pages/company_profile_page.dart';
+import 'features/home/managers/network_cubit/network_cubit.dart';
+import 'features/users/presentation/blocs/current_user_cubit/current_user_cubit.dart';
+import 'features/users/presentation/blocs/users_bloc.dart';
+import 'features/users/presentation/pages/users_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/utils/my_bloc_observer.dart';

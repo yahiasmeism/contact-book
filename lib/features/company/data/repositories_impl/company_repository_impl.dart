@@ -1,11 +1,11 @@
-import 'package:contact_book/core/error/exceptions.dart';
-import 'package:contact_book/core/error/failures.dart';
-import 'package:contact_book/core/network/network_info.dart';
-import 'package:contact_book/features/company/data/data_sources/company_local_data_source.dart';
-import 'package:contact_book/features/company/data/data_sources/company_remote_data_source.dart';
-import 'package:contact_book/features/company/data/models/company_model.dart';
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/network/network_info.dart';
+import '../data_sources/company_local_data_source.dart';
+import '../data_sources/company_remote_data_source.dart';
+import '../models/company_model.dart';
 
-import 'package:contact_book/features/company/domain/entities/company_entity.dart';
+import '../../domain/entities/company_entity.dart';
 
 import 'package:dartz/dartz.dart';
 

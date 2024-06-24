@@ -1,6 +1,6 @@
-import 'package:contact_book/core/widgets/snackbar_global.dart';
-import 'package:contact_book/features/users/presentation/widgets/user_list_view.dart';
-import 'package:contact_book/features/users/presentation/widgets/users_list_view_pagenation.dart';
+import '../../../../core/widgets/snackbar_global.dart';
+import 'user_list_view.dart';
+import 'users_list_view_pagenation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

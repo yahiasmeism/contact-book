@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:contact_book/features/company/data/models/company_model.dart';
+import '../../../company/data/models/company_model.dart';
 
 class ContactEntity {
   final int id;

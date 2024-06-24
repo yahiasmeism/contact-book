@@ -1,12 +1,12 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:contact_book/core/constants/colors.dart';
-import 'package:contact_book/features/authentication/presentation/cubits/logout_cubit/logout_cubit.dart';
-import 'package:contact_book/features/authentication/presentation/pages/login_page.dart';
-import 'package:contact_book/features/company/presentation/pages/company_profile_page.dart';
-import 'package:contact_book/core/widgets/drawer/drawer_item.dart';
-import 'package:contact_book/features/home/pages/home_page.dart';
-import 'package:contact_book/features/users/presentation/pages/users_page.dart';
-import 'package:contact_book/main.dart';
+import '../../constants/colors.dart';
+import '../../../features/authentication/presentation/cubits/logout_cubit/logout_cubit.dart';
+import '../../../features/authentication/presentation/pages/login_page.dart';
+import '../../../features/company/presentation/pages/company_profile_page.dart';
+import 'drawer_item.dart';
+import '../../../features/home/pages/home_page.dart';
+import '../../../features/users/presentation/pages/users_page.dart';
+import '../../../main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

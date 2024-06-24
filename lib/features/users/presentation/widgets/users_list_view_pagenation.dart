@@ -1,5 +1,5 @@
-import 'package:contact_book/features/users/domain/entities/user_entity.dart';
-import 'package:contact_book/features/users/presentation/widgets/user_tile.dart';
+import '../../domain/entities/user_entity.dart';
+import 'user_tile.dart';
 import 'package:flutter/material.dart';
 
 import 'custom_pagenation.dart';

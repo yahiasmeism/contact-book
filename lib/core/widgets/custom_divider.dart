@@ -1,4 +1,4 @@
-import 'package:contact_book/core/constants/colors.dart';
+import '../constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomDivider extends StatelessWidget {

@@ -1,5 +1,5 @@
-import 'package:contact_book/core/constants/styles.dart';
-import 'package:contact_book/features/company/presentation/widgets/company_profile_form.dart';
+import '../../../../core/constants/styles.dart';
+import 'company_profile_form.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/widgets/footer_app.dart';

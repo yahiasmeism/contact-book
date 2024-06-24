@@ -1,11 +1,11 @@
 
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:contact_book/core/constants/colors.dart';
-import 'package:contact_book/core/widgets/bread_crumb.dart';
-import 'package:contact_book/core/widgets/custom_button.dart';
-import 'package:contact_book/features/users/presentation/blocs/users_bloc.dart';
-import 'package:contact_book/features/users/presentation/pages/user_invite_page.dart';
-import 'package:contact_book/features/users/presentation/widgets/users_builder.dart';
+import '../../../../core/constants/colors.dart';
+import '../../../../core/widgets/bread_crumb.dart';
+import '../../../../core/widgets/custom_button.dart';
+import '../blocs/users_bloc.dart';
+import '../pages/user_invite_page.dart';
+import 'users_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

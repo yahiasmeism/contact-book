@@ -1,4 +1,4 @@
-import 'package:contact_book/core/error/failures.dart';
+import '../../../../core/error/failures.dart';
 import 'package:dartz/dartz.dart';
 
 import '../repositories/auth_repository.dart';

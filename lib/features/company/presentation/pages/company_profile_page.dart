@@ -1,4 +1,4 @@
-import 'package:contact_book/core/widgets/app_scaffold.dart';
+import '../../../../core/widgets/app_scaffold.dart';
 import 'package:flutter/material.dart';
 import '../widgets/company_profile_builder.dart';
 

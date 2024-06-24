@@ -1,9 +1,9 @@
-import 'package:contact_book/core/widgets/app_scaffold.dart';
-import 'package:contact_book/core/widgets/bread_crumb.dart';
-import 'package:contact_book/core/widgets/custom_button.dart';
-import 'package:contact_book/core/widgets/custom_outline_button.dart';
-import 'package:contact_book/features/users/domain/entities/user_entity.dart';
-import 'package:contact_book/features/users/presentation/widgets/user_details_form_.dart';
+import '../../../../core/widgets/app_scaffold.dart';
+import '../../../../core/widgets/bread_crumb.dart';
+import '../../../../core/widgets/custom_button.dart';
+import '../../../../core/widgets/custom_outline_button.dart';
+import '../../domain/entities/user_entity.dart';
+import '../widgets/user_details_form_.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

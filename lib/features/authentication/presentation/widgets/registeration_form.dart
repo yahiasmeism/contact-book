@@ -1,8 +1,8 @@
-import 'package:contact_book/core/constants/colors.dart';
-import 'package:contact_book/core/constants/styles.dart';
-import 'package:contact_book/core/widgets/country_drop_down_menu.dart';
-import 'package:contact_book/core/widgets/custom_checkbox.dart';
-import 'package:contact_book/core/widgets/custom_outline_button.dart';
+import '../../../../core/constants/colors.dart';
+import '../../../../core/constants/styles.dart';
+import '../../../../core/widgets/country_drop_down_menu.dart';
+import '../../../../core/widgets/custom_checkbox.dart';
+import '../../../../core/widgets/custom_outline_button.dart';
 
 import '../../domain/entities/login.dart';
 import '../cubits/login_cubit/login_cubit.dart';

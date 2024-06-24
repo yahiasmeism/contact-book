@@ -1,12 +1,12 @@
 import 'dart:developer';
 
-import 'package:contact_book/core/constants/assets.dart';
-import 'package:contact_book/core/constants/colors.dart';
-import 'package:contact_book/core/constants/styles.dart';
-import 'package:contact_book/core/widgets/custom_checkbox.dart';
-import 'package:contact_book/core/widgets/custom_divider.dart';
-import 'package:contact_book/features/users/domain/entities/user_entity.dart';
-import 'package:contact_book/features/users/presentation/blocs/users_bloc.dart';
+import '../../../../core/constants/assets.dart';
+import '../../../../core/constants/colors.dart';
+import '../../../../core/constants/styles.dart';
+import '../../../../core/widgets/custom_checkbox.dart';
+import '../../../../core/widgets/custom_divider.dart';
+import '../../domain/entities/user_entity.dart';
+import '../blocs/users_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

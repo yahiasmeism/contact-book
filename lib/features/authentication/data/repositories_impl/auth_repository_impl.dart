@@ -1,5 +1,5 @@
-import 'package:contact_book/core/constants/messages.dart';
-import 'package:contact_book/core/error/exceptions.dart';
+import '../../../../core/constants/messages.dart';
+import '../../../../core/error/exceptions.dart';
 
 import '../data_sources/auth_local_data_source.dart';
 import '../data_sources/auth_remote_data_source.dart';

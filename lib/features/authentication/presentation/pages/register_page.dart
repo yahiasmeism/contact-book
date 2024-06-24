@@ -1,4 +1,4 @@
-import 'package:contact_book/core/constants/styles.dart';
+import '../../../../core/constants/styles.dart';
 
 import '../../../../core/widgets/footer_app.dart';
 import '../widgets/registeration_form.dart';

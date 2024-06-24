@@ -1,5 +1,5 @@
-import 'package:contact_book/features/users/domain/entities/user_entity.dart';
-import 'package:contact_book/features/users/domain/repositories/user_repository.dart';
+import '../entities/user_entity.dart';
+import '../repositories/user_repository.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/failures.dart';

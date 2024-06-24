@@ -1,11 +1,11 @@
 
 import 'package:bloc/bloc.dart';
-import 'package:contact_book/core/constants/messages.dart';
-import 'package:contact_book/features/users/domain/entities/user_entity.dart';
-import 'package:contact_book/features/users/domain/use_cases/add_user_use_case.dart';
-import 'package:contact_book/features/users/domain/use_cases/get_all_user_use_case.dart';
-import 'package:contact_book/features/users/domain/use_cases/get_current_user_use_case.dart';
-import 'package:contact_book/features/users/domain/use_cases/update_user_use_case.dart';
+import '../../../../core/constants/messages.dart';
+import '../../domain/entities/user_entity.dart';
+import '../../domain/use_cases/add_user_use_case.dart';
+import '../../domain/use_cases/get_all_user_use_case.dart';
+import '../../domain/use_cases/get_current_user_use_case.dart';
+import '../../domain/use_cases/update_user_use_case.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../domain/use_cases/delete_users_use_case.dart';

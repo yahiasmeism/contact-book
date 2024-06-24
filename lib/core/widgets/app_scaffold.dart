@@ -1,4 +1,4 @@
-import 'package:contact_book/core/widgets/drawer/main_nav_drawer.dart';
+import 'drawer/main_nav_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 

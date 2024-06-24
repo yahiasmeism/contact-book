@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
-import 'package:contact_book/core/constants/messages.dart';
+import '../../../../core/constants/messages.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:contact_book/features/company/domain/entities/company_entity.dart';
-import 'package:contact_book/features/company/domain/use_cases/get_company_info_use_case.dart';
-import 'package:contact_book/features/company/domain/use_cases/updata_company_info_user_case.dart';
+import '../../domain/entities/company_entity.dart';
+import '../../domain/use_cases/get_company_info_use_case.dart';
+import '../../domain/use_cases/updata_company_info_user_case.dart';
 
 part 'company_event.dart';
 part 'company_state.dart';

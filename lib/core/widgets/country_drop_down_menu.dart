@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:contact_book/core/widgets/custom_drop_down_menu.dart';
+import 'custom_drop_down_menu.dart';
 
 class CountryDropDownMenu extends StatelessWidget {
   const CountryDropDownMenu({

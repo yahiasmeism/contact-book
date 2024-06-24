@@ -1,6 +1,6 @@
-import 'package:contact_book/core/constants/constant.dart';
-import 'package:contact_book/core/constants/messages.dart';
-import 'package:contact_book/core/error/exceptions.dart';
+import '../../../../core/constants/constant.dart';
+import '../../../../core/constants/messages.dart';
+import '../../../../core/error/exceptions.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import '../models/company_model.dart';

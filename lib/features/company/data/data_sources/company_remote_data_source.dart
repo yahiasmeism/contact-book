@@ -1,7 +1,7 @@
-import 'package:contact_book/core/constants/api.dart';
-import 'package:contact_book/core/constants/constant.dart';
-import 'package:contact_book/core/error/exceptions.dart';
-import 'package:contact_book/features/company/data/models/company_model.dart';
+import '../../../../core/constants/api.dart';
+import '../../../../core/constants/constant.dart';
+import '../../../../core/error/exceptions.dart';
+import '../models/company_model.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -1,4 +1,4 @@
-import 'package:contact_book/core/constants/styles.dart';
+import '../constants/styles.dart';
 import 'package:flutter/material.dart';
 
 class CustomDropDownMenu extends StatelessWidget {

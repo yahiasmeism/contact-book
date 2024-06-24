@@ -1,5 +1,5 @@
-import 'package:contact_book/features/company/presentation/bloc/company_bloc.dart';
-import 'package:contact_book/features/company/presentation/widgets/company_profile_body.dart';
+import '../bloc/company_bloc.dart';
+import 'company_profile_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/widgets/snackbar_global.dart';

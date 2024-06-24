@@ -1,4 +1,4 @@
-import 'package:contact_book/core/constants/colors.dart';
+import '../../../../core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:number_paginator/number_paginator.dart';
 

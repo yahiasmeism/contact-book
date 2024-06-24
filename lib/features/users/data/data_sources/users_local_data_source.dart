@@ -1,6 +1,6 @@
-import 'package:contact_book/core/constants/constant.dart';
-import 'package:contact_book/core/error/exceptions.dart';
-import 'package:contact_book/features/users/domain/entities/user_entity.dart';
+import '../../../../core/constants/constant.dart';
+import '../../../../core/error/exceptions.dart';
+import '../../domain/entities/user_entity.dart';
 import 'package:hive/hive.dart';
 
 

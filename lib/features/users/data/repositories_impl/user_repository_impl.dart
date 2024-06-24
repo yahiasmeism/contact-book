@@ -1,14 +1,14 @@
-import 'package:contact_book/core/constants/constant.dart';
-import 'package:contact_book/core/error/exceptions.dart';
-import 'package:contact_book/features/users/data/models/user_model.dart';
+import '../../../../core/constants/constant.dart';
+import '../../../../core/error/exceptions.dart';
+import '../models/user_model.dart';
 import 'package:dartz/dartz.dart';
 
-import 'package:contact_book/core/error/failures.dart';
-import 'package:contact_book/core/network/network_info.dart';
-import 'package:contact_book/features/users/data/data_sources/users_local_data_source.dart';
-import 'package:contact_book/features/users/data/data_sources/users_remote_data_source.dart';
-import 'package:contact_book/features/users/domain/entities/user_entity.dart';
-import 'package:contact_book/features/users/domain/repositories/user_repository.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/network/network_info.dart';
+import '../data_sources/users_local_data_source.dart';
+import '../data_sources/users_remote_data_source.dart';
+import '../../domain/entities/user_entity.dart';
+import '../../domain/repositories/user_repository.dart';
 
 class UserRepositoryImpl implements UserRepository {
   NetworkInfo networkInfo;

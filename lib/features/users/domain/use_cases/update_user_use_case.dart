@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 
-import 'package:contact_book/core/error/failures.dart';
-import 'package:contact_book/features/users/domain/entities/user_entity.dart';
-import 'package:contact_book/features/users/domain/repositories/user_repository.dart';
+import '../../../../core/error/failures.dart';
+import '../entities/user_entity.dart';
+import '../repositories/user_repository.dart';
 
 class UpdateUserUseCase {
   UserRepository userRepository;

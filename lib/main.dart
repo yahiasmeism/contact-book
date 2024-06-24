@@ -1,11 +1,8 @@
-import 'core/utils/hive_init.dart';
-import 'features/company/presentation/pages/company_profile_page.dart';
-import 'features/home/managers/network_cubit/network_cubit.dart';
-import 'features/users/presentation/blocs/current_user_cubit/current_user_cubit.dart';
-import 'features/users/presentation/blocs/users_bloc.dart';
-import 'features/users/presentation/pages/users_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'container_injector.dart' as di;
+import 'core/utils/hive_init.dart';
 import 'core/utils/my_bloc_observer.dart';
 import 'core/utils/my_routes_observer.dart';
 import 'core/utils/theme_app.dart';
@@ -17,12 +14,15 @@ import 'features/authentication/presentation/cubits/register_cubit/register_cubi
 import 'features/authentication/presentation/pages/login_page.dart';
 import 'features/authentication/presentation/pages/register_page.dart';
 import 'features/company/presentation/bloc/company_bloc.dart';
+import 'features/company/presentation/pages/company_profile_page.dart';
+import 'features/home/managers/network_cubit/network_cubit.dart';
 import 'features/home/pages/home_page.dart';
 import 'features/home/pages/splash_page.dart';
-
-import 'container_injector.dart' as di;
+import 'features/users/presentation/blocs/current_user_cubit/current_user_cubit.dart';
+import 'features/users/presentation/blocs/users_bloc.dart';
 import 'features/users/presentation/pages/user_details_page.dart';
 import 'features/users/presentation/pages/user_invite_page.dart';
+import 'features/users/presentation/pages/users_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

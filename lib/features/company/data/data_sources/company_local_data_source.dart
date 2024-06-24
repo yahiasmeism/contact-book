@@ -1,8 +1,8 @@
+import 'package:hive_flutter/adapters.dart';
+
 import '../../../../core/constants/constant.dart';
 import '../../../../core/constants/messages.dart';
 import '../../../../core/error/exceptions.dart';
-import 'package:hive_flutter/adapters.dart';
-
 import '../models/company_model.dart';
 
 abstract interface class CompanyLocalDataSource {

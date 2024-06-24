@@ -1,7 +1,8 @@
-import '../../constants/assets.dart';
-import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../constants/assets.dart';
+import '../../constants/colors.dart';
 
 class DrawerHead extends StatelessWidget {
   const DrawerHead({

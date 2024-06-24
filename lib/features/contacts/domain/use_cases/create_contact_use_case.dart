@@ -1,5 +1,6 @@
 import '../../../../core/error/failures.dart';
-import '../entities/contact.dart';
+
+import '../entities/contact_entity.dart';
 import '../repositories/contacts_repository.dart';
 import 'package:dartz/dartz.dart';
 

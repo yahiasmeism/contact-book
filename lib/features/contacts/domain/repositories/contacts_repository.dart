@@ -1,6 +1,8 @@
 import '../../../../core/error/failures.dart';
-import '../entities/contact.dart';
+
 import 'package:dartz/dartz.dart';
+
+import '../entities/contact_entity.dart';
 
 abstract interface class ContactsRepository {
   Future<Either<Failure, List<ContactEntity>>> getAllContacts();

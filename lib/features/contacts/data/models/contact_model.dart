@@ -1,26 +1,28 @@
 import 'dart:io';
 
-import 'package:contact_book/features/company/data/models/company_model.dart';
-import 'package:contact_book/features/contacts/domain/entities/contact.dart';
 import 'package:dio/dio.dart';
 
+import '../../../company/data/models/company_model.dart';
+import '../../domain/entities/contact_entity.dart';
+
 class ContactModel extends ContactEntity {
-  ContactModel(
-      {required super.id,
-      required super.firstName,
-      required super.lastName,
-      required super.email,
-      required super.emailTwo,
-      required super.phoneNumber,
-      required super.mobileNumber,
-      required super.imageUploadFile,
-      required super.imageUrl,
-      required super.status,
-      required super.isFavorite,
-      required super.address,
-      required super.addressTwo,
-      required super.companyId,
-      required super.companyModel});
+  ContactModel({
+    required super.id,
+    required super.firstName,
+    required super.lastName,
+    required super.email,
+    required super.emailTwo,
+    required super.phoneNumber,
+    required super.mobileNumber,
+    required super.imageUploadFile,
+    required super.imageUrl,
+    required super.status,
+    required super.isFavorite,
+    required super.address,
+    required super.addressTwo,
+    required super.companyId,
+    required super.companyModel,
+  });
 
   factory ContactModel.fromJson(Map<String, dynamic> json) {
     return ContactModel(

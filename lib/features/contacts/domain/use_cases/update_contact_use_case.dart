@@ -1,4 +1,5 @@
-import '../entities/contact.dart';
+
+import '../entities/contact_entity.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/failures.dart';

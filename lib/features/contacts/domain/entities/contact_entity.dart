@@ -1,12 +1,14 @@
 import 'dart:io';
 
+import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
 import '../../../company/data/models/company_model.dart';
+
 part 'contact_entity.g.dart';
 
 @HiveType(typeId: 2)
-class ContactEntity {
+class ContactEntity extends Equatable {
   @HiveField(0)
   final int? id;
   @HiveField(1)
@@ -38,7 +40,7 @@ class ContactEntity {
   @HiveField(14)
   final CompanyModel? companyModel;
 
-  ContactEntity({
+  const ContactEntity({
     required this.id,
     required this.firstName,
     required this.lastName,
@@ -55,4 +57,25 @@ class ContactEntity {
     required this.companyId,
     required this.companyModel,
   });
+
+  @override
+  List<Object?> get props {
+    return [
+      id,
+      firstName,
+      lastName,
+      email,
+      emailTwo,
+      phoneNumber,
+      mobileNumber,
+      imageUploadFile,
+      imageUrl,
+      status,
+      isFavorite,
+      address,
+      addressTwo,
+      companyId,
+      companyModel,
+    ];
+  }
 }

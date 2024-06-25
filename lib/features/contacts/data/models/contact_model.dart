@@ -6,7 +6,7 @@ import '../../../company/data/models/company_model.dart';
 import '../../domain/entities/contact_entity.dart';
 
 class ContactModel extends ContactEntity {
-  ContactModel({
+  const ContactModel({
     required super.id,
     required super.firstName,
     required super.lastName,
@@ -83,5 +83,44 @@ class ContactModel extends ContactEntity {
       if (imageUploadFile != null)
         'imageUploadFile': await MultipartFile.fromFile(imageUploadFile!.path),
     });
+  }
+
+  factory ContactModel.fromEntity(ContactEntity contactEntity) {
+    return ContactModel(
+      id: contactEntity.id,
+      firstName: contactEntity.firstName,
+      lastName: contactEntity.lastName,
+      email: contactEntity.email,
+      emailTwo: contactEntity.emailTwo,
+      phoneNumber: contactEntity.phoneNumber,
+      mobileNumber: contactEntity.mobileNumber,
+      imageUploadFile: contactEntity.imageUploadFile,
+      imageUrl: contactEntity.imageUrl,
+      status: contactEntity.status,
+      isFavorite: contactEntity.isFavorite,
+      address: contactEntity.address,
+      addressTwo: contactEntity.addressTwo,
+      companyId: contactEntity.companyId,
+      companyModel: contactEntity.companyModel,
+    );
+  }
+
+  ContactEntity toEntity() {
+    return ContactEntity(
+        id: id,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        emailTwo: emailTwo,
+        phoneNumber: phoneNumber,
+        mobileNumber: mobileNumber,
+        imageUploadFile: imageUploadFile,
+        imageUrl: imageUrl,
+        status: status,
+        isFavorite: isFavorite,
+        address: address,
+        addressTwo: addressTwo,
+        companyId: companyId,
+        companyModel: companyModel);
   }
 }

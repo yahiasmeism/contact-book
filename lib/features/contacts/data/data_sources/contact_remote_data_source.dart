@@ -1,6 +1,8 @@
-import 'package:contact_book/core/constants/api.dart';
-import 'package:contact_book/core/error/exceptions.dart';
-import 'package:contact_book/features/contacts/data/models/contact_model.dart';
+import 'package:contact_book/features/contacts/domain/entities/contact_entity.dart';
+
+import '../../../../core/constants/api.dart';
+import '../../../../core/error/exceptions.dart';
+import '../models/contact_model.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,13 +11,13 @@ import '../../../../core/constants/constant.dart';
 abstract interface class ContactRemoteDataSource {
   Future<List<ContactModel>> getAllContacts();
 
-  Future<void> deleteContacts({required List<ContactModel> contact});
+  Future<void> deleteContacts({required List<ContactEntity> contacts});
 
   Future<ContactModel> getContact({required int id});
 
   Future<String> getImageUrl({required int id});
 
-  Future<ContactModel> createContact({required ContactModel contact});
+  Future<ContactModel> createContact({required ContactModel contactModel});
 
   Future<ContactModel> updateContact({required ContactModel contact});
 
@@ -48,9 +50,10 @@ class ContactRemoteDataSourceImpl extends ContactRemoteDataSource {
   }
 
   @override
-  Future<ContactModel> createContact({required ContactModel contact}) async {
+  Future<ContactModel> createContact(
+      {required ContactModel contactModel}) async {
     try {
-      final FormData formData = await contact.toFormData();
+      final FormData formData = await contactModel.toFormData();
       Response response = await dio.post(API.CONTACTS, data: formData);
       return ContactModel.fromJson(response.data);
     } on DioException catch (e) {
@@ -68,8 +71,8 @@ class ContactRemoteDataSourceImpl extends ContactRemoteDataSource {
   }
 
   @override
-  Future<void> deleteContacts({required List<ContactModel> contact}) async {
-    final List<int?> identifiers = contact.map((e) => e.id).toList();
+  Future<void> deleteContacts({required List<ContactEntity> contacts}) async {
+    final List<int?> identifiers = contacts.map((e) => e.id).toList();
     try {
       await dio.delete(API.CONTACTS, data: identifiers);
     } on DioException catch (e) {

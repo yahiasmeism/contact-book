@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../constants/colors.dart';
 
-ThemeData themeApp() {
+ThemeData appTheme() {
   return ThemeData(
     scaffoldBackgroundColor: const Color(0xffF7F7F7),
     colorScheme: const ColorScheme.light().copyWith(primary: COLORS.PRIMARY),

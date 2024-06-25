@@ -1,15 +1,13 @@
+import 'package:dartz/dartz.dart';
+
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/network/network_info.dart';
+import '../../domain/entities/company_entity.dart';
+import '../../domain/repositories/company_repository.dart';
 import '../data_sources/company_local_data_source.dart';
 import '../data_sources/company_remote_data_source.dart';
 import '../models/company_model.dart';
-
-import '../../domain/entities/company_entity.dart';
-
-import 'package:dartz/dartz.dart';
-
-import '../../domain/repositories/company_repository.dart';
 
 class CompanyRepositoryImpl implements CompanyRepository {
   final CompanyLocalDataSource companyLocalDataSource;

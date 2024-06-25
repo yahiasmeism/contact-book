@@ -15,7 +15,4 @@ abstract class API {
   // USERS
   static const USERS = '$BASE_URL/Users';
   static const CURRENT_USER = '$USERS/current-user';
-
-
-  
 }

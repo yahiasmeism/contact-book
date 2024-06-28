@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:contact_book/core/widgets/custom_search_field.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/widgets/bread_crumb.dart';
 import '../../../../core/widgets/custom_button.dart';
@@ -7,7 +8,7 @@ import '../pages/user_invite_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'users_builder.dart';
+import 'users_bloc_consumer.dart';
 
 class UsersBody extends StatelessWidget {
   const UsersBody({
@@ -50,7 +51,7 @@ class UsersBody extends StatelessWidget {
 
   Widget buildSearchField(BuildContext context) {
     return SliverToBoxAdapter(
-      child: TextField(
+      child: CustomSearchField(
         onChanged: (value) {
           if (value.isNotEmpty) {
             context
@@ -60,12 +61,6 @@ class UsersBody extends StatelessWidget {
             context.read<UsersBloc>().add(UndoFilterUsersEvent());
           }
         },
-        onTapOutside: (event) {
-          FocusScope.of(context).unfocus();
-        },
-        decoration: const InputDecoration(
-          labelText: 'Search',
-        ),
       ),
     );
   }

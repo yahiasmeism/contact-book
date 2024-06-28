@@ -7,10 +7,12 @@ class CustomDivider extends StatelessWidget {
     this.indent,
     this.endIndent,
     this.color = COLORS.BORDER,
+    this.height = 0,
   });
   final double? indent;
   final double? endIndent;
   final Color? color;
+  final double? height;
   @override
   Widget build(BuildContext context) {
     return Divider(
@@ -18,7 +20,7 @@ class CustomDivider extends StatelessWidget {
       endIndent: endIndent,
       color: color,
       thickness: 1,
-      height: 0,
+      height: height,
     );
   }
 }

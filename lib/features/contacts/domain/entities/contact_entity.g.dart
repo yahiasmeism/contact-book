@@ -31,7 +31,7 @@ class ContactEntityAdapter extends TypeAdapter<ContactEntity> {
       address: fields[11] as String,
       addressTwo: fields[12] as String?,
       companyId: fields[13] as int?,
-      companyModel: fields[14] as CompanyModel?,
+      company: fields[14] as CompanyEntity?,
     );
   }
 
@@ -68,7 +68,7 @@ class ContactEntityAdapter extends TypeAdapter<ContactEntity> {
       ..writeByte(13)
       ..write(obj.companyId)
       ..writeByte(14)
-      ..write(obj.companyModel);
+      ..write(obj.company);
   }
 
   @override

@@ -20,7 +20,7 @@ class CompanyLocalDataSourceImpl extends CompanyLocalDataSource {
       final companyEntity = box.get(COMAPNY_INFO_KEY);
       return CompanyModel.fromEntity(companyEntity);
     } else {
-      throw EmptyChacheException(MESSAGES.DATA_NOT_FOUND);
+      throw EmptyChacheException(MESSAGES.NOT_FOUND);
     }
   }
 

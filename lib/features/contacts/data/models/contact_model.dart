@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -6,22 +8,22 @@ import '../../../company/data/models/company_model.dart';
 import '../../domain/entities/contact_entity.dart';
 
 class ContactModel extends ContactEntity {
-  const ContactModel({
-    required super.id,
+  ContactModel({
+    super.id,
     required super.firstName,
     required super.lastName,
     required super.email,
-    required super.emailTwo,
+    super.emailTwo,
     required super.phoneNumber,
-    required super.mobileNumber,
-    required super.imageUploadFile,
-    required super.imageUrl,
-    required super.status,
-    required super.isFavorite,
+    super.mobileNumber,
+    super.imageUploadFile,
+    super.imageUrl,
+    super.status,
+    super.isFavorite,
     required super.address,
-    required super.addressTwo,
-    required super.companyId,
-    required super.companyModel,
+    super.addressTwo,
+    super.companyId,
+    super.company,
   });
 
   factory ContactModel.fromJson(Map<String, dynamic> json) {
@@ -42,8 +44,8 @@ class ContactModel extends ContactEntity {
       address: json['address'] as String,
       addressTwo: json['addressTwo'] as String?,
       companyId: json['companyId'] as int?,
-      companyModel: json['companyModel'] != null
-          ? CompanyModel.fromJson(json['companyModel'])
+      company: json['company'] != null
+          ? CompanyModel.fromJson(json['company'])
           : null,
     );
   }
@@ -63,23 +65,22 @@ class ContactModel extends ContactEntity {
         'address': address,
         'addressTwo': addressTwo,
         'companyId': companyId,
-        'company': companyModel?.toJson()
+        'company': company != null ? CompanyModel.fromEntity(company!) : null,
       };
 
   Future<FormData> toFormData() async {
     return FormData.fromMap({
-      'id': id,
       'firstName': firstName,
       'lastName': lastName,
+      'status': status,
       'email': email,
       'emailTwo': emailTwo,
       'phoneNumber': phoneNumber,
       'mobileNumber': mobileNumber,
-      'status': status,
-      'isFavorite': isFavorite,
       'address': address,
       'addressTwo': addressTwo,
-      'company': companyModel?.toJson(),
+      'companyId': companyId,
+      'company': company != null ? CompanyModel.fromEntity(company!) : null,
       if (imageUploadFile != null)
         'imageUploadFile': await MultipartFile.fromFile(imageUploadFile!.path),
     });
@@ -101,26 +102,27 @@ class ContactModel extends ContactEntity {
       address: contactEntity.address,
       addressTwo: contactEntity.addressTwo,
       companyId: contactEntity.companyId,
-      companyModel: contactEntity.companyModel,
+      company: contactEntity.company,
     );
   }
 
   ContactEntity toEntity() {
     return ContactEntity(
-        id: id,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        emailTwo: emailTwo,
-        phoneNumber: phoneNumber,
-        mobileNumber: mobileNumber,
-        imageUploadFile: imageUploadFile,
-        imageUrl: imageUrl,
-        status: status,
-        isFavorite: isFavorite,
-        address: address,
-        addressTwo: addressTwo,
-        companyId: companyId,
-        companyModel: companyModel);
+      id: id,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      emailTwo: emailTwo,
+      phoneNumber: phoneNumber,
+      mobileNumber: mobileNumber,
+      imageUploadFile: imageUploadFile,
+      imageUrl: imageUrl,
+      status: status,
+      isFavorite: isFavorite,
+      address: address,
+      addressTwo: addressTwo,
+      companyId: companyId,
+      company: company,
+    );
   }
 }

@@ -1,10 +1,10 @@
+import '../../../home/persintation/pages/home_page.dart';
 import '../cubits/login_cubit/login_cubit.dart';
 
 import '../../../../core/constants/styles.dart';
 import '../pages/register_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../../../home/pages/home_page.dart';
 import '../../domain/entities/login.dart';
 
 import '../../../../core/widgets/custom_email_form_field.dart';
@@ -31,7 +31,6 @@ class _LoginFormState extends State<LoginForm> {
   @override
   void dispose() {
     emailController.dispose();
-    passwordController.dispose();
     super.dispose();
   }
 

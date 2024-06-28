@@ -25,7 +25,7 @@ class UsersBlocConsumer extends StatelessWidget {
         if (state is UsersLoading) {
           return const SingleChildScrollView(
               child: Center(child: CircularProgressIndicator()));
-        } else if (state is FilterUsersState) {
+        } else if (state is OnFilterUsersState) {
           return UserListView(users: state.usersFilter);
         } else {
           final users = context.read<UsersBloc>().users;

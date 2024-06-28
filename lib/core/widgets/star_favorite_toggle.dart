@@ -21,6 +21,9 @@ class _StarFavoriteToggleState extends State<StarFavoriteToggle> {
       onTap: () {
         setState(() {
           widget.initalValue = !widget.initalValue;
+          if (widget.favoriteToggle != null) {
+            widget.favoriteToggle!(widget.initalValue);
+          }
         });
       },
       child: Padding(

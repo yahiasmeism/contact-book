@@ -1,6 +1,7 @@
+import 'package:contact_book/core/network/api_client.dart';
+
 import '../../../../core/constants/api.dart';
 import '../../../../core/constants/constant.dart';
-import '../../../../core/error/exceptions.dart';
 import '../models/company_model.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,54 +12,29 @@ abstract interface class CompanyRemoteDataSource {
 }
 
 class CompanyRemoteDataSourceImpl extends CompanyRemoteDataSource {
-  final Dio dio;
+  final ApiClient apiClient;
   final SharedPreferences sharedPreferences;
   CompanyRemoteDataSourceImpl(
-      {required this.sharedPreferences, required this.dio}) {
-    // initial dio base option
-    dio.options = BaseOptions(
-      contentType: 'application/json',
-      connectTimeout: const Duration(seconds: 3),
-      sendTimeout: const Duration(seconds: 3),
-      receiveTimeout: const Duration(seconds: 3),
-    );
-  }
+      {required this.sharedPreferences, required this.apiClient});
 
-  MapEntry<String, String> get _authToken {
-    return MapEntry(
-      'Authorization',
-      'bearer ${sharedPreferences.getString(ACCESS_TOKEN_KEY)}',
-    );
+  String? get _authToken {
+    return sharedPreferences.getString(ACCESS_TOKEN_KEY);
   }
 
   @override
   Future<CompanyModel> getCompanyInfo() async {
-    try {
-      Response response = await dio.get(
-        API.COMPANIES,
-        options: Options(
-          headers: {_authToken.key: _authToken.value},
-        ),
-      );
-      return CompanyModel.fromJson(response.data);
-    } on DioException catch (e) {
-      throw ServerException.fromDioException(e);
-    }
+    Response response = await apiClient.get(API.COMPANIES, token: _authToken);
+    return CompanyModel.fromJson(response.data);
   }
 
   @override
   Future<CompanyModel> updateCompanyInfo(
       {required CompanyModel companyModel}) async {
-    try {
-      Response response = await dio.put(
-        API.COMPANIES,
-        data: companyModel.toJson(),
-        options: Options(headers: {_authToken.key: _authToken.value}),
-      );
-
-      return CompanyModel.fromJson(response.data);
-    } on DioException catch (e) {
-      throw ServerException.fromDioException(e);
-    }
+    Response response = await apiClient.put(
+      API.COMPANIES,
+      data: companyModel.toJson(),
+      token: _authToken,
+    );
+    return CompanyModel.fromJson(response.data);
   }
 }

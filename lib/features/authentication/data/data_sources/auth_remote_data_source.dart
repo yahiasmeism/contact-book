@@ -1,8 +1,43 @@
+import 'package:contact_book/core/network/api_client.dart';
 import 'package:dio/dio.dart';
 
 import '../../../../core/constants/api.dart';
+import '../models/login_model.dart';
+import '../models/register_model.dart';
+
+abstract interface class AuthRemoteDataSource {
+  Future<String> login(LoginModel login);
+  Future<void> register(RegisterModel register);
+}
+
+class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
+  ApiClient apiClient;
+  AuthRemoteDataSourceImpl({required this.apiClient});
+
+  @override
+  Future<String> login(LoginModel login) async {
+    Response response = await apiClient.post(API.LOGIN, data: login.toJson());
+    return response.data['token'];
+  }
+
+  @override
+  Future<void> register(RegisterModel register) async {
+    await apiClient.post(API.REGISTER, data: register.toJson());
+  }
+}
+
+
+
+
+
+
+
+
+
+/* import 'package:dio/dio.dart';
+
+import '../../../../core/constants/api.dart';
 import '../../../../core/constants/messages.dart';
-import '../../../../core/error/exceptions.dart';
 import '../models/login_model.dart';
 import '../models/register_model.dart';
 
@@ -25,33 +60,19 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<String> login(LoginModel login) async {
-    try {
-      Response response = await dio.post(
-        API.LOGIN,
-        data: login.toJson(),
-        options: Options(
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          },
-        ),
-      );
-      return response.data['token'];
-    } on DioException catch (e) {
-      throw ServerException(message: _mapLoginDioExceptionToMessage(e));
-    }
+    Response response = await dio.post(
+      API.LOGIN,
+      data: login.toJson(),
+    );
+    return response.data['token'];
   }
 
   @override
   Future<void> register(RegisterModel register) async {
-    try {
-      await dio.post(
-        API.REGISTER,
-        data: register.toJson(),
-      );
-    } on DioException catch (e) {
-      throw ServerException(message: _mapRegisterDioExceptionToMessage(e));
-    }
+    await dio.post(
+      API.REGISTER,
+      data: register.toJson(),
+    );
   }
 
   //=======================
@@ -59,7 +80,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     if (e.response?.statusCode == 401) {
       return MESSAGES.INCORRECT_EMAIL_OR_PASSWORD;
     } else if (e.type == DioExceptionType.connectionError) {
-      return MESSAGES.CHECK_NETWORK;
+      return MESSAGES.CONNECTION_TIMEOUT;
     } else {
       return MESSAGES.UNEXPECTED_ERROR;
     }
@@ -78,9 +99,10 @@ String _mapRegisterDioExceptionToMessage(DioException e) {
     // message in first error
     errorMessage = (firstError.value as List).first;
   } else if (e.type == DioExceptionType.connectionError) {
-    errorMessage = MESSAGES.CHECK_NETWORK;
+    errorMessage = MESSAGES.CONNECTION_TIMEOUT;
   } else {
     errorMessage = MESSAGES.UNEXPECTED_ERROR;
   }
   return errorMessage;
 }
+ */

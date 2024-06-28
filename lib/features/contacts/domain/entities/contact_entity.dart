@@ -1,14 +1,17 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
-import '../../../company/data/models/company_model.dart';
+import 'package:contact_book/features/company/domain/entities/company_entity.dart';
 
 part 'contact_entity.g.dart';
 
 @HiveType(typeId: 2)
 class ContactEntity extends Equatable {
+  
   @HiveField(0)
   final int? id;
   @HiveField(1)
@@ -30,7 +33,7 @@ class ContactEntity extends Equatable {
   @HiveField(9)
   final String? status;
   @HiveField(10)
-  final bool? isFavorite;
+  bool? isFavorite;
   @HiveField(11)
   final String address;
   @HiveField(12)
@@ -38,24 +41,24 @@ class ContactEntity extends Equatable {
   @HiveField(13)
   final int? companyId;
   @HiveField(14)
-  final CompanyModel? companyModel;
+  final CompanyEntity? company;
 
-  const ContactEntity({
-    required this.id,
+   ContactEntity({
+    this.id,
     required this.firstName,
     required this.lastName,
     required this.email,
-    required this.emailTwo,
+    this.emailTwo,
     required this.phoneNumber,
-    required this.mobileNumber,
-    required this.imageUploadFile,
-    required this.imageUrl,
-    required this.status,
-    required this.isFavorite,
+    this.mobileNumber,
+    this.imageUploadFile,
+    this.imageUrl,
+    this.status,
+    this.isFavorite,
     required this.address,
-    required this.addressTwo,
-    required this.companyId,
-    required this.companyModel,
+    this.addressTwo,
+    this.companyId,
+    this.company,
   });
 
   @override
@@ -75,7 +78,12 @@ class ContactEntity extends Equatable {
       address,
       addressTwo,
       companyId,
-      companyModel,
+      company,
     ];
+  }
+
+  @override
+  String toString() {
+    return 'ContactEntity(id: $id, firstName: $firstName, lastName: $lastName, email: $email, emailTwo: $emailTwo, phoneNumber: $phoneNumber, mobileNumber: $mobileNumber, imageUploadFile: $imageUploadFile, imageUrl: $imageUrl, status: $status, isFavorite: $isFavorite, address: $address, addressTwo: $addressTwo, companyId: $companyId, company: $company)';
   }
 }

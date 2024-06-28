@@ -255,7 +255,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
     lastNameController.dispose();
     emailController.dispose();
     phoneNumberController.dispose();
-    passwordController.dispose();
     companyNameController.dispose();
     vatNumberController.dispose();
     streetOneController.dispose();

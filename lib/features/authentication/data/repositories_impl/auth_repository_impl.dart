@@ -46,8 +46,8 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> logout() async {
-    await local.removeToken();
     await local.clearAppData();
+
   }
 
   @override
@@ -56,7 +56,7 @@ class AuthRepositoryImpl implements AuthRepository {
       return Future.value(const Right(unit));
     } else {
       return Future.value(
-        Left(NetworkFailure(message: MESSAGES.NOT_LOGGED_IN)),
+        Left(ServerFailure(message: MESSAGES.NOT_LOGGED_IN)),
       );
     }
   }

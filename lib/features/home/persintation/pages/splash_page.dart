@@ -1,10 +1,10 @@
-import '../../../core/constants/assets.dart';
-import '../../authentication/presentation/pages/login_page.dart';
+import '../../../../core/constants/assets.dart';
+import '../../../authentication/presentation/cubits/auth_cubit/auth_cubit.dart';
+import '../../../authentication/presentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../authentication/presentation/cubits/auth_cubit/auth_cubit.dart';
 import 'home_page.dart';
 
 class SplashPage extends StatefulWidget {

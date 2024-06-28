@@ -1,4 +1,7 @@
 import 'package:contact_book/core/router/app_router.dart';
+import 'package:contact_book/features/contacts/presentation/bloc/contacts_bloc.dart';
+import 'package:contact_book/features/contacts/presentation/bloc/send_email_cubit/send_email_cubit.dart';
+import 'package:contact_book/features/home/persintation/cubits/activities_cubit/activities_cubit.dart';
 
 import 'core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +17,7 @@ import 'features/authentication/presentation/cubits/login_cubit/login_cubit.dart
 import 'features/authentication/presentation/cubits/logout_cubit/logout_cubit.dart';
 import 'features/authentication/presentation/cubits/register_cubit/register_cubit.dart';
 import 'features/company/presentation/bloc/company_bloc.dart';
-import 'features/home/managers/network_cubit/network_cubit.dart';
+import 'features/home/persintation/cubits/network_cubit/network_cubit.dart';
 import 'features/users/presentation/blocs/current_user_cubit/current_user_cubit.dart';
 import 'features/users/presentation/blocs/users_bloc.dart';
 
@@ -43,6 +46,9 @@ class ContactBookApp extends StatelessWidget {
         BlocProvider(create: (context) => di.sl<CompanyBloc>()),
         BlocProvider(create: (context) => di.sl<UsersBloc>()),
         BlocProvider(create: (context) => di.sl<CurrentUserCubit>()),
+        BlocProvider(create: (context) => di.sl<ContactsBloc>()),
+        BlocProvider(create: (context) => di.sl<SendEmailCubit>()),
+        BlocProvider(create: (context) => di.sl<ActivitiesCubit>()),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,

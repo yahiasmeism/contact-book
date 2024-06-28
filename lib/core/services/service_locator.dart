@@ -1,3 +1,23 @@
+import 'package:contact_book/core/network/api_client.dart';
+import 'package:contact_book/features/contacts/data/data_sources/contacts_local_data_source.dart';
+import 'package:contact_book/features/contacts/data/data_sources/contacts_remote_data_source.dart';
+import 'package:contact_book/features/contacts/data/repositories_impl/contacts_repository_impl.dart';
+import 'package:contact_book/features/contacts/domain/repositories/contacts_repository.dart';
+import 'package:contact_book/features/contacts/presentation/bloc/contacts_bloc.dart';
+import 'package:contact_book/features/contacts/presentation/bloc/send_email_cubit/send_email_cubit.dart';
+import 'package:contact_book/features/home/data/date_sources/activities_local_data_source.dart';
+import 'package:contact_book/features/home/data/date_sources/activities_remote_data_source.dart';
+import 'package:contact_book/features/home/data/repository_impl/home_repository_impl.dart';
+import 'package:contact_book/features/home/domin/use_case/get_activities_use_case.dart';
+import 'package:contact_book/features/home/persintation/cubits/activities_cubit/activities_cubit.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import '../../features/contacts/domain/use_cases/create_contact_use_case.dart';
+import '../../features/contacts/domain/use_cases/delete_contacts_use_case.dart';
+import '../../features/contacts/domain/use_cases/get_all_contacts_use_case.dart';
+import '../../features/contacts/domain/use_cases/send_emai_use_case.dart';
+import '../../features/contacts/domain/use_cases/toggle_favorite_use_case.dart';
+import '../../features/contacts/domain/use_cases/update_contact_use_case.dart';
+import '../../features/home/domin/repository/home_repository.dart';
 import '../network/network_info.dart';
 import '../../features/company/data/data_sources/company_local_data_source.dart';
 import '../../features/company/data/data_sources/company_remote_data_source.dart';
@@ -38,6 +58,64 @@ import '../../features/users/presentation/blocs/users_bloc.dart';
 final sl = GetIt.instance;
 Future<void> init() async {
   //! Features
+  //! Home feautere ==============================================
+  // cubits & blocs
+  sl.registerFactory(() => ActivitiesCubit(getActivitiesUseCase: sl()));
+  // use cases
+  sl.registerLazySingleton(() => GetActivitiesUseCase(homeRepository: sl()));
+  // repositories
+  sl.registerLazySingleton<HomeRepository>(
+    () => HomeRepositoryImpl(networkInfo: sl(), local: sl(), remote: sl()),
+  );
+  // datasources
+  sl.registerLazySingleton<ActivitiesRemoteDataSource>(
+    () => ActivitiesRemoteDataSourceImpl(
+        apiClient: sl(), sharedPreferences: sl()),
+  );
+  sl.registerLazySingleton<ActivitiesLocalDataSource>(
+    () => ActivitiesLocalDataSourceImpl(),
+  );
+
+  //! Contacts feautere ==============================================
+
+  // cubits & blocs
+  sl.registerFactory(
+    () => ContactsBloc(
+      createContactUseCase: sl(),
+      deleteContactsUseCase: sl(),
+      getAllContactsUseCase: sl(),
+      toggleFavoriteUseCase: sl(),
+      updateContactUseCase: sl(),
+    ),
+  );
+  sl.registerFactory(() => SendEmailCubit(sendEmaiUseCase: sl()));
+
+  // use cases
+  sl.registerLazySingleton(
+      () => CreateContactUseCase(contactsRepository: sl()));
+  sl.registerLazySingleton(
+      () => DeleteContactsUseCase(contactsRepository: sl()));
+  sl.registerLazySingleton(
+      () => GetAllContactsUseCase(contactsRepository: sl()));
+  sl.registerLazySingleton(
+      () => ToggleFavoriteUseCase(contactsRepository: sl()));
+  sl.registerLazySingleton(
+      () => UpdateContactUseCase(contactsRepository: sl()));
+  sl.registerLazySingleton(() => SendEmaiUseCase(contactsRepository: sl()));
+
+  // repositories
+  sl.registerLazySingleton<ContactsRepository>(
+    () => ContactsRepositoryImpl(networkInfo: sl(), local: sl(), remote: sl()),
+  );
+
+  // datasources
+  sl.registerLazySingleton<ContactsRemoteDataSource>(
+    () =>
+        ContactsRemoteDataSourceImpl(apiClient: sl(), sharedPreferences: sl()),
+  );
+  sl.registerLazySingleton<ContactsLocalDataSource>(
+    () => ContacstLocalDataSourceImpl(cacheManager: sl()),
+  );
 
   //! Authentication feautere ==============================================
 
@@ -64,7 +142,7 @@ Future<void> init() async {
     () => AuthLocalDataSourceimpl(sharedPreferences: sl()),
   );
   sl.registerLazySingleton<AuthRemoteDataSource>(
-    () => AuthRemoteDataSourceImpl(dio: sl()),
+    () => AuthRemoteDataSourceImpl(apiClient: sl()),
   );
 
   //! Company feautere ==========================================================
@@ -83,9 +161,10 @@ Future<void> init() async {
   // repositories
   sl.registerLazySingleton<CompanyRepository>(
     () => CompanyRepositoryImpl(
-        companyLocalDataSource: sl(),
-        companyRemoteDataSource: sl(),
-        networkInfo: sl()),
+      companyLocalDataSource: sl(),
+      companyRemoteDataSource: sl(),
+      networkInfo: sl(),
+    ),
   );
 
   // data sources
@@ -93,7 +172,7 @@ Future<void> init() async {
     () => CompanyLocalDataSourceImpl(),
   );
   sl.registerLazySingleton<CompanyRemoteDataSource>(
-    () => CompanyRemoteDataSourceImpl(dio: sl(), sharedPreferences: sl()),
+    () => CompanyRemoteDataSourceImpl(apiClient: sl(), sharedPreferences: sl()),
   );
 
   //! Users Feature ===========================================
@@ -126,12 +205,11 @@ Future<void> init() async {
       () => UsersLocalDataSourceImpl());
   sl.registerLazySingleton<UsersRemoteDataSource>(
       () => UsersRemoteDataSourceImpl(
-            dio: sl(),
+            apiClient: sl(),
             sharedPreferences: sl(),
           ));
   //! External ===============================================================
-  sl.registerLazySingleton<Dio>(() => Dio());
-
+  sl.registerLazySingleton(() => (Dio()));
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton<SharedPreferences>(
     () => sharedPreferences,
@@ -139,4 +217,6 @@ Future<void> init() async {
 
   //! Core =======================================================
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl());
+  sl.registerLazySingleton<CacheManager>(() => DefaultCacheManager());
+  sl.registerLazySingleton<ApiClient>(() => (ApiClientImpl(dio: sl())));
 }

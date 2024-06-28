@@ -1,10 +1,11 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:contact_book/features/contacts/presentation/pages/contacts_page.dart';
+import '../../../features/home/persintation/pages/home_page.dart';
 import '../../constants/colors.dart';
 import '../../../features/authentication/presentation/cubits/logout_cubit/logout_cubit.dart';
 import '../../../features/authentication/presentation/pages/login_page.dart';
 import '../../../features/company/presentation/pages/company_profile_page.dart';
 import 'drawer_item.dart';
-import '../../../features/home/pages/home_page.dart';
 import '../../../features/users/presentation/pages/users_page.dart';
 import '../../../main.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class DrawerMenuItems extends StatelessWidget {
         DrawerItem(
           title: 'Contacts',
           onTap: () {
-            Navigator.pop(context);
+            pushPageAndPopDrawer(context, ContactsPage.name);
           },
         ),
         const CustomDivider(),

@@ -34,6 +34,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
       either.fold((failure) => emit(UsersFailure(message: failure.message)),
           (users) {
         this.users = users;
+        usersSelected.clear();
         emit(UsersLoaded());
       });
     });
@@ -48,7 +49,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
               user.phoneNumber.contains(event.searchKeyword.trim());
         },
       ).toList();
-      emit(FilterUsersState(usersFilter: usersFilter));
+      emit(OnFilterUsersState(usersFilter: usersFilter));
     });
     // undo search
     on<UndoFilterUsersEvent>((event, emit) {

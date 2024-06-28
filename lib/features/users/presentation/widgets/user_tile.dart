@@ -11,8 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../pages/user_details_page.dart';
-import 'star_favorite_toggle.dart';
-import 'status_text.dart';
+import '../../../../core/widgets/star_favorite_toggle.dart';
+import '../../../../core/widgets/status_text.dart';
 
 class UserTile extends StatelessWidget {
   const UserTile({

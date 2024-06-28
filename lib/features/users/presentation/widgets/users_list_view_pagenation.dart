@@ -2,7 +2,7 @@ import '../../domain/entities/user_entity.dart';
 import 'user_tile.dart';
 import 'package:flutter/material.dart';
 
-import 'custom_pagenation.dart';
+import '../../../../core/widgets/custom_pagenation.dart';
 
 class UsersListViewPagination extends StatefulWidget {
   const UsersListViewPagination({

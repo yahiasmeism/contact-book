@@ -1,4 +1,6 @@
-import 'dart:developer';
+import 'dart:convert';
+
+import 'package:contact_book/core/network/api_client.dart';
 
 import '../../../../core/constants/constant.dart';
 import '../../../../core/error/exceptions.dart';
@@ -20,86 +22,45 @@ abstract interface class UsersRemoteDataSource {
 
 class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
   SharedPreferences sharedPreferences;
-  Dio dio;
-  UsersRemoteDataSourceImpl({
-    required this.sharedPreferences,
-    required this.dio,
-  }) {
-    // initail dio base options
+  ApiClient apiClient;
+  UsersRemoteDataSourceImpl(
+      {required this.sharedPreferences, required this.apiClient});
 
-    dio.options = BaseOptions(
-      contentType: 'application/json',
-      connectTimeout: const Duration(seconds: 3),
-      sendTimeout: const Duration(seconds: 3),
-      receiveTimeout: const Duration(seconds: 3),
-    );
-  }
-  MapEntry<String, String> get _authToken {
-    return MapEntry(
-      'Authorization',
-      'bearer ${sharedPreferences.getString(ACCESS_TOKEN_KEY)}',
-    );
+  String? get _authToken {
+    return sharedPreferences.getString(ACCESS_TOKEN_KEY);
   }
 
   @override
   Future<UserModel> addUser({required UserModel userModel}) async {
-    try {
-      Response response = await dio.post(
-        options: Options(headers: {_authToken.key: _authToken.value}),
-        API.USERS,
-        data: userModel.toJson,
-      );
-      return UserModel.fromJson(response.data);
-    } on DioException catch (e) {
-      if (e.response?.statusCode == 400) {
-        throw ServerException(message: e.response!.data);
-      } else {
-        throw ServerException.fromDioException(e);
-      }
-    }
+    Response response = await apiClient.post(
+      token: _authToken,
+      API.USERS,
+      data: userModel.toJson,
+    );
+    return UserModel.fromJson(response.data);
   }
 
   @override
   Future<void> deleteUsers({required List<UserEntity> users}) async {
     List<String?> userIDs = users.map((user) => user.id).toList();
-
-    try {
-      await dio.delete(
-        API.USERS,
-        data: userIDs,
-        options: Options(headers: {_authToken.key: _authToken.value}),
-      );
-    } on DioException catch (e) {
-      throw ServerException.fromDioException(e);
-    }
+    await apiClient.delete(API.USERS,
+        data: jsonEncode(userIDs), token: _authToken);
   }
 
   @override
   Future<List<UserModel>> getAllUsers() async {
-    try {
-      Response response = await dio.get(
-        API.USERS,
-        options: Options(headers: {_authToken.key: _authToken.value}),
-      );
-      final usersJsonList = response.data as List<dynamic>;
-      log("current user: ${(await getCurrentUser()).firstName}");
-      return usersJsonList.map(
-        (userJson) {
-          return UserModel.fromJson(userJson);
-        },
-      ).toList();
-    } on DioException catch (e) {
-      throw ServerException.fromDioException(e);
-    }
+    Response response = await apiClient.get(API.USERS, token: _authToken);
+    final usersJsonList = response.data as List<dynamic>;
+    return usersJsonList.map((userJson) {
+      return UserModel.fromJson(userJson);
+    }).toList();
   }
 
   @override
   Future<UserModel> getCurrentUser() async {
     try {
-      Response response = await dio.get(
-        API.CURRENT_USER,
-        options: Options(headers: {_authToken.key: _authToken.value}),
-      );
+      Response response =
+          await apiClient.get(API.CURRENT_USER, token: _authToken);
       return UserModel.fromJson(response.data);
     } on DioException catch (e) {
       throw ServerException.fromDioException(e);
@@ -108,14 +69,9 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
 
   @override
   Future<UserModel> updateUser({required UserModel userModel}) async {
-    try {
-      String url = '${API.USERS}/${userModel.id}';
-      Response response = await dio.put(url,
-          options: Options(headers: {_authToken.key: _authToken.value}),
-          data: userModel.toJson);
-      return UserModel.fromJson(response.data);
-    } on DioException catch (e) {
-      throw ServerException.fromDioException(e);
-    }
+    String url = '${API.USERS}/${userModel.id}';
+    Response response =
+        await apiClient.put(url, token: _authToken, data: userModel.toJson);
+    return UserModel.fromJson(response.data);
   }
 }

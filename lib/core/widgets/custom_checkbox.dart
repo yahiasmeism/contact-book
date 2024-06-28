@@ -26,7 +26,9 @@ class _CustomCheckBoxState extends State<CustomCheckBox> {
       onChanged: (value) {
         setState(() {
           widget.initalValue = value!;
-          widget.onChange!(widget.initalValue);
+          if (widget.onChange != null) {
+            widget.onChange!(widget.initalValue);
+          }
         });
       },
     );

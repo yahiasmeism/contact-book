@@ -1,3 +1,5 @@
+import 'package:contact_book/features/contacts/domain/entities/send_email_entity.dart';
+
 import '../../../../core/error/failures.dart';
 
 import 'package:dartz/dartz.dart';
@@ -23,5 +25,6 @@ abstract interface class ContactsRepository {
   Future<Either<Failure, ContactEntity>> toggleFavorite(
       {required ContactEntity contact});
 
-  Future<Either<Failure, String>> getImageUrl({required int id});
+  Future<Either<Failure, Unit>> sendEmail(
+      {required SendEmailEntity sendEmailEntity});
 }

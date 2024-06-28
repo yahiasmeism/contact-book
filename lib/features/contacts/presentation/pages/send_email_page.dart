@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/styles.dart';
 import '../../../../core/widgets/bread_crumb.dart';
-import '../bloc/send_email_cubit/send_email_cubit.dart';
+import '../managers/send_email_cubit/send_email_cubit.dart';
 
 class SendEmailPage extends StatelessWidget {
   const SendEmailPage({super.key});

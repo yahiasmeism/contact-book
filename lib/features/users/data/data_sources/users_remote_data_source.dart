@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:contact_book/core/network/api_client.dart';
 
 import '../../../../core/constants/constant.dart';
-import '../../../../core/error/exceptions.dart';
 import '../../domain/entities/user_entity.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,7 +31,7 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
 
   @override
   Future<UserModel> addUser({required UserModel userModel}) async {
-    Response response = await apiClient.post(
+    Response response = await apiClient.postData(
       token: _authToken,
       API.USERS,
       data: userModel.toJson,
@@ -43,13 +42,13 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
   @override
   Future<void> deleteUsers({required List<UserEntity> users}) async {
     List<String?> userIDs = users.map((user) => user.id).toList();
-    await apiClient.delete(API.USERS,
+    await apiClient.deleteData(API.USERS,
         data: jsonEncode(userIDs), token: _authToken);
   }
 
   @override
   Future<List<UserModel>> getAllUsers() async {
-    Response response = await apiClient.get(API.USERS, token: _authToken);
+    Response response = await apiClient.getData(API.USERS, token: _authToken);
     final usersJsonList = response.data as List<dynamic>;
     return usersJsonList.map((userJson) {
       return UserModel.fromJson(userJson);
@@ -58,20 +57,16 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
 
   @override
   Future<UserModel> getCurrentUser() async {
-    try {
-      Response response =
-          await apiClient.get(API.CURRENT_USER, token: _authToken);
-      return UserModel.fromJson(response.data);
-    } on DioException catch (e) {
-      throw ServerException.fromDioException(e);
-    }
+    Response response =
+        await apiClient.getData(API.CURRENT_USER, token: _authToken);
+    return UserModel.fromJson(response.data);
   }
 
   @override
   Future<UserModel> updateUser({required UserModel userModel}) async {
     String url = '${API.USERS}/${userModel.id}';
     Response response =
-        await apiClient.put(url, token: _authToken, data: userModel.toJson);
+        await apiClient.putData(url, token: _authToken, data: userModel.toJson);
     return UserModel.fromJson(response.data);
   }
 }

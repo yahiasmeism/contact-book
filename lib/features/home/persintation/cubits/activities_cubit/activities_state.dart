@@ -13,8 +13,8 @@ final class ActivitiesLoading extends ActivitiesState {}
 
 final class ActivitiesLoaded extends ActivitiesState {}
 
-final class ActivitieFailure extends ActivitiesState {
+final class ActivitiesFailure extends ActivitiesState {
   final String message;
 
-  const ActivitieFailure({required this.message});
+  const ActivitiesFailure({required this.message});
 }

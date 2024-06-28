@@ -15,7 +15,7 @@ class ActivitiesCubit extends Cubit<ActivitiesState> {
   getActivities() async {
     emit(ActivitiesLoading());
     final either = await getActivitiesUseCase();
-    either.fold((failure) => emit(ActivitieFailure(message: failure.message)),
+    either.fold((failure) => emit(ActivitiesFailure(message: failure.message)),
         (activities) {
       this.activities = activities;
       emit(ActivitiesLoaded());

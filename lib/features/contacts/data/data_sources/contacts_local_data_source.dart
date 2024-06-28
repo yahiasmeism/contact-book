@@ -1,4 +1,5 @@
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:contact_book/core/error/exceptions.dart';
+import 'package:flutter/foundation.dart';
 import '../../domain/entities/contact_entity.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -11,12 +12,13 @@ abstract interface class ContactsLocalDataSource {
   Future<void> deleteContact({required int id});
   Future<void> storeContact({required ContactEntity contact});
   Future<List<ContactEntity>> getAllContacts();
+  Future<void> storeImage({required Uint8List image, required int? id});
+  Future<Uint8List> getImage({required int? id});
 }
 
 class ContacstLocalDataSourceImpl extends ContactsLocalDataSource {
-  final CacheManager cacheManager;
   late Box _box;
-  ContacstLocalDataSourceImpl({required this.cacheManager}) {
+  ContacstLocalDataSourceImpl() {
     _box = Hive.box(APP_BOX);
   }
 
@@ -43,11 +45,35 @@ class ContacstLocalDataSourceImpl extends ContactsLocalDataSource {
 
   @override
   Future<ContactEntity> getContact({required int id}) {
-    return _box.get(id);
+    try {
+      return _box.get(id);
+    } on HiveError catch (e) {
+      throw DatabaseException(e.message);
+    }
   }
 
   @override
   Future<void> deleteContact({required int id}) async {
     await _box.delete(id);
+  }
+
+  @override
+  Future<Uint8List> getImage({required int? id}) async {
+    try {
+      return await _box.get('Contacts/$id');
+    } on HiveError catch (e) {
+      throw DatabaseException(e.message);
+    }
+  }
+
+  @override
+  Future<void> storeImage(
+      {required Uint8List image, required int? id}) async {
+    try {
+      if (id == null) return;
+      await _box.put('Contacts/$id', image);
+    } on HiveError catch (e) {
+      throw DatabaseException(e.message);
+    }
   }
 }

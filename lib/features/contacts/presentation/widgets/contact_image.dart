@@ -1,45 +1,65 @@
-import 'dart:io';
-
 import 'package:contact_book/core/constants/assets.dart';
 import 'package:contact_book/features/contacts/domain/entities/contact_entity.dart';
-import 'package:contact_book/features/contacts/presentation/widgets/image_loading_indecator.dart';
+import 'package:contact_book/features/contacts/presentation/managers/contact_image_cubit/contact_image_cubit.dart';
+import 'package:contact_book/features/contacts/presentation/widgets/loading/image_loading_indecator.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../core/helpers/image_cache_manager.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ContactImage extends StatelessWidget {
-  const ContactImage(
-      {super.key,
-      required this.contact,
-      this.radius = 50,
-      this.onChangeImageFile});
+  const ContactImage({
+    super.key,
+    required this.contact,
+    this.radius = 50,
+  });
   final ContactEntity contact;
   final double radius;
-  final Function(File? file)? onChangeImageFile;
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: ImageCacheManager.getImage(imageUrl: contact.imageUrl ?? ''),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done &&
-            snapshot.hasData) {
-          final imageFile = snapshot.data!;
-          if (onChangeImageFile != null) {
-            onChangeImageFile!(imageFile);
-          }
+    context.read<ContactImageCubit>().getContactImage(contact: contact);
+    return BlocBuilder<ContactImageCubit, ContactImageState>(
+      builder: (context, state) {
+        if (state is ContactImageLoading) {
+          return ImageLoadingIndecator(radius: radius);
+        } else if (state is ContactImageLoaded) {
+          final image = context.read<ContactImageCubit>().image;
           return CircleAvatar(
             radius: radius,
-            backgroundImage: FileImage(imageFile),
+            backgroundImage: MemoryImage(image!),
           );
-        } else if (snapshot.hasError) {
+        } else {
           return CircleAvatar(
             radius: radius,
             backgroundImage: const AssetImage(ASSETS.PLACEHOLDER),
           );
-        } else {
-          return ImageLoadingIndecator(radius: radius);
         }
       },
     );
   }
 }
+
+
+
+
+
+
+//     return FutureBuilder(
+//       future: ImageCacheManager.getImage(imageUrl: contact.imageUrl ?? ''),
+//       builder: (context, snapshot) {
+//         if (snapshot.connectionState == ConnectionState.done &&
+//             snapshot.hasData) {
+  //  if (onChangeImageFile != null) {
+          //   onChangeImageFile!(imageFile);
+          // }
+//           final imageFile = snapshot.data!;
+//         } else if (snapshot.hasError) {
+//           return CircleAvatar(
+//             radius: radius,
+//             backgroundImage: const AssetImage(ASSETS.PLACEHOLDER),
+//           );
+//         } else {
+//           return ImageLoadingIndecator(radius: radius);
+//         }
+//       },
+//     );
+//   }
+// }

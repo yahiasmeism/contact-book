@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:contact_book/features/contacts/domain/entities/send_email_entity.dart';
 
 import '../../../../core/error/failures.dart';
@@ -27,4 +29,6 @@ abstract interface class ContactsRepository {
 
   Future<Either<Failure, Unit>> sendEmail(
       {required SendEmailEntity sendEmailEntity});
+
+  Future<Either<Failure, Uint8List>> getContactImage(ContactEntity contact);
 }

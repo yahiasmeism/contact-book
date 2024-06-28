@@ -23,14 +23,15 @@ class CompanyRemoteDataSourceImpl extends CompanyRemoteDataSource {
 
   @override
   Future<CompanyModel> getCompanyInfo() async {
-    Response response = await apiClient.get(API.COMPANIES, token: _authToken);
+    Response response =
+        await apiClient.getData(API.COMPANIES, token: _authToken);
     return CompanyModel.fromJson(response.data);
   }
 
   @override
   Future<CompanyModel> updateCompanyInfo(
       {required CompanyModel companyModel}) async {
-    Response response = await apiClient.put(
+    Response response = await apiClient.putData(
       API.COMPANIES,
       data: companyModel.toJson(),
       token: _authToken,

@@ -1,4 +1,4 @@
-import 'package:contact_book/features/contacts/presentation/bloc/contacts_bloc.dart';
+import 'package:contact_book/features/contacts/presentation/managers/contacts_bloc/contacts_bloc.dart';
 import 'package:contact_book/features/home/persintation/cubits/activities_cubit/activities_cubit.dart';
 
 import '../../../../core/widgets/app_scaffold.dart';

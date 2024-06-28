@@ -5,34 +5,38 @@ import 'interceptor/app_interceptor.dart';
 import 'interceptor/auth_interceptor.dart';
 
 abstract class ApiClient<Response> {
-  Future<Response> get(
+  Future<Response> getData(
     String path, {
     Map<String, dynamic>? query,
     String? token,
   });
-
-  Future<Response> post(
+  Future<Response> getImage(
     String path, {
-    dynamic data,
-    Map<String, dynamic>? query,
     String? token,
   });
 
-  Future<Response> put(
+  Future<Response> postData(
     String path, {
     dynamic data,
     Map<String, dynamic>? query,
     String? token,
   });
 
-  Future<Response> delete(
+  Future<Response> putData(
     String path, {
     dynamic data,
     Map<String, dynamic>? query,
     String? token,
   });
 
-  Future<Response> patch(
+  Future<Response> deleteData(
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? query,
+    String? token,
+  });
+
+  Future<Response> patchData(
     String path, {
     dynamic data,
     Map<String, dynamic>? query,
@@ -48,21 +52,23 @@ class ApiClientImpl extends ApiClient<Response> {
         sendTimeout: const Duration(seconds: 3));
   }
   @override
-  Future<Response> get(String path,
+  Future<Response> getData(String path,
       {Map<String, dynamic>? query, String? token}) async {
     try {
       _addInterceptors(token);
-      return await dio.get(
+      Response response = await dio.get(
         path,
         queryParameters: query,
       );
+
+      return response;
     } on DioException catch (e) {
       throw ServerException(message: e.message ?? '');
     }
   }
 
   @override
-  Future<Response> post(
+  Future<Response> postData(
     String path, {
     dynamic data,
     Map<String, dynamic>? query,
@@ -81,7 +87,7 @@ class ApiClientImpl extends ApiClient<Response> {
   }
 
   @override
-  Future<Response> put(
+  Future<Response> putData(
     String path, {
     dynamic data,
     Map<String, dynamic>? query,
@@ -100,7 +106,7 @@ class ApiClientImpl extends ApiClient<Response> {
   }
 
   @override
-  Future<Response> delete(
+  Future<Response> deleteData(
     String path, {
     dynamic data,
     Map<String, dynamic>? query,
@@ -119,7 +125,7 @@ class ApiClientImpl extends ApiClient<Response> {
   }
 
   @override
-  Future<Response> patch(
+  Future<Response> patchData(
     String path, {
     dynamic data,
     Map<String, dynamic>? query,
@@ -132,6 +138,19 @@ class ApiClientImpl extends ApiClient<Response> {
         queryParameters: query,
         data: data,
       );
+    } on DioException catch (e) {
+      throw ServerException(message: e.message ?? '');
+    }
+  }
+
+  @override
+  Future<Response> getImage(String path, {String? token}) async {
+    try {
+      _addInterceptors(token);
+      return await dio.get(path,
+          options: Options(
+            responseType: ResponseType.bytes,
+          ));
     } on DioException catch (e) {
       throw ServerException(message: e.message ?? '');
     }

@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/widgets/star_favorite_toggle.dart';
 import '../../../../core/widgets/status_text.dart';
-import '../bloc/contacts_bloc.dart';
+import '../managers/contacts_bloc/contacts_bloc.dart';
 
 class ContactTile extends StatelessWidget {
   const ContactTile({

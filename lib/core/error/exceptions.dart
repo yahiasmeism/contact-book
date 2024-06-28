@@ -1,5 +1,3 @@
-import 'package:dio/dio.dart';
-
 class EmptyChacheException implements Exception {
   final String message;
 
@@ -15,45 +13,6 @@ class DatabaseException implements Exception {
 class ServerException implements Exception {
   final String message;
   const ServerException({required this.message});
-
-  factory ServerException.fromDioException(DioException dioException) {
-    final String message;
-
-    switch (dioException.type) {
-      case DioExceptionType.cancel:
-        message = "Request to API server was cancelled";
-        break;
-      case DioExceptionType.connectionTimeout:
-        message = "Connection timeout";
-        break;
-      case DioExceptionType.sendTimeout:
-        message = "Send timeout in connection";
-        break;
-      case DioExceptionType.receiveTimeout:
-        message = "Receive timeout in connection";
-        break;
-      case DioExceptionType.badResponse:
-        if (dioException.response?.statusCode == 401) {
-          message = 'Session has expired , please login again';
-        } else {
-          message = 'Invalid server response. Try again later';
-        }
-        break;
-      case DioExceptionType.connectionError:
-        message = "Check internet connection";
-        break;
-      case DioExceptionType.badCertificate:
-        message = "Bad certificate error";
-        break;
-      case DioExceptionType.unknown:
-        message = "Unexpected error occurred";
-        break;
-      default:
-        message = "Something went wrong";
-        break;
-    }
-    return ServerException(message: message);
-  }
 }
 
 class NetworkException implements Exception {

@@ -1,3 +1,4 @@
+import '../../../../core/constants/enums.dart';
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../../../core/widgets/bread_crumb.dart';
 import '../../../../core/widgets/custom_button.dart';
@@ -26,7 +27,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
   late TextEditingController emailController;
   late TextEditingController phoneController;
   late TextEditingController roleController;
-  late UserDetailsMode mode;
+  late UserDetailsActions mode;
 
   @override
   void initState() {
@@ -37,7 +38,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
     emailController = TextEditingController();
     phoneController = TextEditingController();
     roleController = TextEditingController();
-    mode = UserDetailsMode.show;
+    mode = UserDetailsActions.show;
   }
 
   @override
@@ -92,7 +93,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                   child: Column(
                     children: [
                       UserDetailsForm(
-                        enabled: mode == UserDetailsMode.edit,
+                        enabled: mode == UserDetailsActions.edit,
                         formKey: formKey,
                         fNameController: fNameController,
                         lNameController: lNameController,
@@ -101,7 +102,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                         roleController: roleController,
                       ),
                       const SizedBox(height: 32),
-                      mode == UserDetailsMode.edit
+                      mode == UserDetailsActions.edit
                           ? builSaveButton()
                           : builEditButton(),
                       const SizedBox(height: 32),
@@ -120,7 +121,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
   Widget builEditButton() {
     return CustomButton(
       child: const Text('Edit'),
-      onPressed: () => setState(() => mode = UserDetailsMode.edit),
+      onPressed: () => setState(() => mode = UserDetailsActions.edit),
     );
   }
 
@@ -144,7 +145,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
             Navigator.pop(context);
           } else {
             setState(() {
-              mode = UserDetailsMode.show;
+              mode = UserDetailsActions.show;
             });
           }
         }
@@ -161,5 +162,3 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
     );
   }
 }
-
-enum UserDetailsMode { edit, show }

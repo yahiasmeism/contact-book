@@ -3,8 +3,9 @@ import 'package:contact_book/features/contacts/data/data_sources/contacts_local_
 import 'package:contact_book/features/contacts/data/data_sources/contacts_remote_data_source.dart';
 import 'package:contact_book/features/contacts/data/repositories_impl/contacts_repository_impl.dart';
 import 'package:contact_book/features/contacts/domain/repositories/contacts_repository.dart';
-import 'package:contact_book/features/contacts/presentation/bloc/contacts_bloc.dart';
-import 'package:contact_book/features/contacts/presentation/bloc/send_email_cubit/send_email_cubit.dart';
+import 'package:contact_book/features/contacts/presentation/managers/contact_image_cubit/contact_image_cubit.dart';
+import 'package:contact_book/features/contacts/presentation/managers/contacts_bloc/contacts_bloc.dart';
+import 'package:contact_book/features/contacts/presentation/managers/send_email_cubit/send_email_cubit.dart';
 import 'package:contact_book/features/home/data/date_sources/activities_local_data_source.dart';
 import 'package:contact_book/features/home/data/date_sources/activities_remote_data_source.dart';
 import 'package:contact_book/features/home/data/repository_impl/home_repository_impl.dart';
@@ -14,6 +15,7 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import '../../features/contacts/domain/use_cases/create_contact_use_case.dart';
 import '../../features/contacts/domain/use_cases/delete_contacts_use_case.dart';
 import '../../features/contacts/domain/use_cases/get_all_contacts_use_case.dart';
+import '../../features/contacts/domain/use_cases/get_contact_image_use_case.dart';
 import '../../features/contacts/domain/use_cases/send_emai_use_case.dart';
 import '../../features/contacts/domain/use_cases/toggle_favorite_use_case.dart';
 import '../../features/contacts/domain/use_cases/update_contact_use_case.dart';
@@ -89,6 +91,7 @@ Future<void> init() async {
     ),
   );
   sl.registerFactory(() => SendEmailCubit(sendEmaiUseCase: sl()));
+  sl.registerFactory(() => ContactImageCubit(getContactImageUseCase: sl()));
 
   // use cases
   sl.registerLazySingleton(
@@ -102,6 +105,8 @@ Future<void> init() async {
   sl.registerLazySingleton(
       () => UpdateContactUseCase(contactsRepository: sl()));
   sl.registerLazySingleton(() => SendEmaiUseCase(contactsRepository: sl()));
+  sl.registerLazySingleton(
+      () => GetContactImageUseCase(contactsRepository: sl()));
 
   // repositories
   sl.registerLazySingleton<ContactsRepository>(
@@ -114,7 +119,7 @@ Future<void> init() async {
         ContactsRemoteDataSourceImpl(apiClient: sl(), sharedPreferences: sl()),
   );
   sl.registerLazySingleton<ContactsLocalDataSource>(
-    () => ContacstLocalDataSourceImpl(cacheManager: sl()),
+    () => ContacstLocalDataSourceImpl(),
   );
 
   //! Authentication feautere ==============================================

@@ -7,6 +7,7 @@ import '../../features/authentication/presentation/pages/login_page.dart';
 import '../../features/authentication/presentation/pages/register_page.dart';
 import '../../features/company/presentation/pages/company_profile_page.dart';
 import '../../features/contacts/presentation/pages/send_email_page.dart';
+import '../../features/home/persintation/pages/activities_page.dart';
 import '../../features/home/persintation/pages/home_page.dart';
 import '../../features/home/persintation/pages/splash_page.dart';
 import '../../features/users/presentation/pages/user_details_page.dart';
@@ -28,5 +29,6 @@ abstract class AppRouter {
         CreateNewContactPage.name: (context) => const CreateNewContactPage(),
         ContactDetailsPage.name: (context) => const ContactDetailsPage(),
         SendEmailPage.name: (context) => const SendEmailPage(),
+        ActivitiesPage.name: (context) => const ActivitiesPage(),
       };
 }

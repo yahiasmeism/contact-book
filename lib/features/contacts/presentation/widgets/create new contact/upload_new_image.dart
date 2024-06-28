@@ -6,9 +6,9 @@ import 'package:contact_book/core/constants/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../../core/constants/styles.dart';
-import '../../../../core/widgets/custom_button.dart';
-import '../../../../core/widgets/snackbar_global.dart';
+import '../../../../../core/constants/styles.dart';
+import '../../../../../core/widgets/custom_button.dart';
+import '../../../../../core/widgets/snackbar_global.dart';
 
 class UploadNewImage extends StatefulWidget {
   const UploadNewImage({

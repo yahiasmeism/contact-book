@@ -23,7 +23,8 @@ class ActivitiesRemoteDataSourceImpl extends ActivitiesRemoteDataSource {
 
   @override
   Future<List<ActivityModel>> getActivities() async {
-    Response response = await apiClient.get(API.ACTIVITIES, token: _authToken);
+    Response response =
+        await apiClient.getData(API.ACTIVITIES, token: _authToken);
     List activitiesMap = response.data;
     List<ActivityModel> activities =
         activitiesMap.map((log) => ActivityModel.fromJson(log)).toList();

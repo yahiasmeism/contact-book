@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/colors.dart';
 import '../../../../core/widgets/custom_search_field.dart';
-import '../bloc/contacts_bloc.dart';
+import '../managers/contacts_bloc/contacts_bloc.dart';
 import 'contacts_bloc_consumer.dart';
 
 class ContactsBody extends StatelessWidget {

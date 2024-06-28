@@ -16,13 +16,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<String> login(LoginModel login) async {
-    Response response = await apiClient.post(API.LOGIN, data: login.toJson());
+    Response response =
+        await apiClient.postData(API.LOGIN, data: login.toJson());
     return response.data['token'];
   }
 
   @override
   Future<void> register(RegisterModel register) async {
-    await apiClient.post(API.REGISTER, data: register.toJson());
+    await apiClient.postData(API.REGISTER, data: register.toJson());
   }
 }
 

@@ -5,11 +5,11 @@ import 'package:equatable/equatable.dart';
 
 import 'package:contact_book/features/contacts/domain/use_cases/get_all_contacts_use_case.dart';
 
-import '../../../../core/constants/messages.dart';
-import '../../domain/use_cases/create_contact_use_case.dart';
-import '../../domain/use_cases/delete_contacts_use_case.dart';
-import '../../domain/use_cases/toggle_favorite_use_case.dart';
-import '../../domain/use_cases/update_contact_use_case.dart';
+import '../../../../../core/constants/messages.dart';
+import '../../../domain/use_cases/create_contact_use_case.dart';
+import '../../../domain/use_cases/delete_contacts_use_case.dart';
+import '../../../domain/use_cases/toggle_favorite_use_case.dart';
+import '../../../domain/use_cases/update_contact_use_case.dart';
 
 part 'contacts_event.dart';
 part 'contacts_state.dart';

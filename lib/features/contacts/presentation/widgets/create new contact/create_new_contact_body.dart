@@ -1,28 +1,25 @@
-import 'dart:developer';
 import 'dart:io';
-import 'package:contact_book/features/contacts/presentation/widgets/contact_image.dart';
+import 'package:contact_book/features/company/presentation/bloc/company_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/constants/styles.dart';
-import '../../../../core/widgets/bread_crumb.dart';
-import '../../../../core/widgets/custom_button.dart';
-import '../../../../core/widgets/custom_outline_button.dart';
-import '../../../../core/widgets/footer_app.dart';
-import '../../domain/entities/contact_entity.dart';
-import '../bloc/contacts_bloc.dart';
-import 'contact_details_form.dart';
+import '../../../../../core/constants/styles.dart';
+import '../../../../../core/widgets/bread_crumb.dart';
+import '../../../../../core/widgets/custom_button.dart';
+import '../../../../../core/widgets/custom_outline_button.dart';
+import '../../../../../core/widgets/footer_app.dart';
+import '../../../domain/entities/contact_entity.dart';
+import '../../managers/contacts_bloc/contacts_bloc.dart';
+import '../details/contact_details_form.dart';
 import 'upload_new_image.dart';
 
-class ContactDetailsBody extends StatefulWidget {
-  const ContactDetailsBody({super.key, required this.contact});
-  final ContactEntity contact;
+class CreateNewContactBody extends StatefulWidget {
+  const CreateNewContactBody({super.key});
   @override
-  State<ContactDetailsBody> createState() => _ContactDetailsBodyState();
+  State<CreateNewContactBody> createState() => _CreateNewContactBodyState();
 }
 
-class _ContactDetailsBodyState extends State<ContactDetailsBody> {
-  bool enabled = false;
+class _CreateNewContactBodyState extends State<CreateNewContactBody> {
   late GlobalKey<FormState> formKey;
   late TextEditingController fNameController;
   late TextEditingController lNameController;
@@ -36,14 +33,14 @@ class _ContactDetailsBodyState extends State<ContactDetailsBody> {
   @override
   void initState() {
     formKey = GlobalKey<FormState>();
-    fNameController = TextEditingController(text: widget.contact.firstName);
-    lNameController = TextEditingController(text: widget.contact.lastName);
-    emailController = TextEditingController(text: widget.contact.email);
-    email2Controller = TextEditingController(text: widget.contact.emailTwo);
-    phoneController = TextEditingController(text: widget.contact.phoneNumber);
-    mobileController = TextEditingController(text: widget.contact.mobileNumber);
-    addressController = TextEditingController(text: widget.contact.address);
-    address2Controller = TextEditingController(text: widget.contact.addressTwo);
+    fNameController = TextEditingController();
+    lNameController = TextEditingController();
+    emailController = TextEditingController();
+    email2Controller = TextEditingController();
+    phoneController = TextEditingController();
+    mobileController = TextEditingController();
+    addressController = TextEditingController();
+    address2Controller = TextEditingController();
     super.initState();
   }
 
@@ -81,32 +78,14 @@ class _ContactDetailsBodyState extends State<ContactDetailsBody> {
                           ],
                         ),
                         const SizedBox(height: 24),
-                        enabled
-                            ? UploadNewImage(
-                                initialImage: imageFile,
-                                onUploadNewImage: (image) {
-                                  imageFile = image;
-                                },
-                              )
-                            : Column(
-                                children: [
-                                  ContactImage(
-                                    onChangeImageFile: (file) {
-                                      imageFile = file;
-                                    },
-                                    contact: widget.contact,
-                                    radius: 60,
-                                  ),
-                                  const SizedBox(height: 16),
-                                  Text(
-                                    '${widget.contact.firstName} ${widget.contact.lastName}',
-                                    style: STYLES.TEXT_STYLE_20,
-                                  ),
-                                ],
-                              ),
+                        UploadNewImage(
+                          initialImage: imageFile,
+                          onUploadNewImage: (image) {
+                            imageFile = image;
+                          },
+                        ),
                         const SizedBox(height: 24),
                         ContactDetailsForm(
-                          enabled: enabled,
                           formKey: formKey,
                           fNameController: fNameController,
                           lNameController: lNameController,
@@ -118,9 +97,7 @@ class _ContactDetailsBodyState extends State<ContactDetailsBody> {
                           address2Controller: address2Controller,
                         ),
                         const SizedBox(height: 32),
-                        enabled
-                            ? _buildSaveButton(context)
-                            : _buildEditButton(context),
+                        _buildSaveButton(context),
                         const SizedBox(height: 24),
                         CustomOutlineButton(
                           child: const Text('Cancel'),
@@ -143,12 +120,11 @@ class _ContactDetailsBodyState extends State<ContactDetailsBody> {
   }
 
   Widget _buildSaveButton(BuildContext context) {
+    final company = context.read<CompanyBloc>().company;
     return CustomButton(
         child: const Text('Save'),
         onPressed: () {
           final contact = ContactEntity(
-            id: widget.contact.id,
-            status: widget.contact.status,
             imageUploadFile: imageFile,
             firstName: fNameController.text,
             lastName: lNameController.text,
@@ -158,29 +134,17 @@ class _ContactDetailsBodyState extends State<ContactDetailsBody> {
             mobileNumber: mobileController.text,
             address: addressController.text,
             addressTwo: address2Controller.text,
-            companyId: widget.contact.companyId,
-            company: widget.contact.company,
+            companyId: company?.id,
+            company: company,
           );
 
-          log(contact.toString());
           if (formKey.currentState?.validate() == true) {
             Navigator.pop(context);
             context
                 .read<ContactsBloc>()
-                .add(UpdateContactEvent(contact: contact));
+                .add(CreateNewContactEvent(contact: contact));
           }
         });
-  }
-
-  Widget _buildEditButton(BuildContext context) {
-    return CustomButton(
-      child: const Text('Edit'),
-      onPressed: () {
-        setState(() {
-          enabled = true;
-        });
-      },
-    );
   }
 
   @override

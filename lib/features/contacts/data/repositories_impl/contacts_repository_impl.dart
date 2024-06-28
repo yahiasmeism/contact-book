@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:contact_book/core/utils/file_converter.dart';
 import 'package:contact_book/features/contacts/data/models/contact_model.dart';
 import 'package:contact_book/features/contacts/data/models/send_email_model.dart';
 import 'package:contact_book/features/contacts/domain/entities/send_email_entity.dart';
@@ -93,6 +96,11 @@ class ContactsRepositoryImpl implements ContactsRepository {
     try {
       contactModel = await remote.updateContact(contact: contactModel);
       await local.storeContact(contact: contactModel);
+      if (contact.imageUploadFile != null) {
+        final Uint8List image =
+            await FileConverter.fileToUint8List(contact.imageUploadFile!);
+        await local.storeImage(image: image, id: contact.id);
+      }
       return right(contactModel.toEntity());
     } on ServerException catch (e) {
       return left(ServerFailure(message: e.message));
@@ -121,5 +129,19 @@ class ContactsRepositoryImpl implements ContactsRepository {
       return left(ServerFailure(message: e.message));
     }
     return right(unit);
+  }
+
+  @override
+  Future<Either<Failure, Uint8List>> getContactImage(
+      ContactEntity contact) async {
+    return executeRemoteOrLocal<Uint8List>(
+      remoteCall: () async {
+        final image = await remote.fetchContactImage(contact);
+        await local.storeImage(image: image, id: contact.id);
+        return image;
+      },
+      localCall: () async => await local.getImage(id: contact.id),
+      networkInfo: networkInfo,
+    );
   }
 }

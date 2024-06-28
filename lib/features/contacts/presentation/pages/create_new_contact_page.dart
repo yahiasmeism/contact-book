@@ -1,4 +1,4 @@
-import 'package:contact_book/features/contacts/presentation/widgets/create_new_contact_body.dart';
+import 'package:contact_book/features/contacts/presentation/widgets/create%20new%20contact/create_new_contact_body.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/widgets/app_scaffold.dart';

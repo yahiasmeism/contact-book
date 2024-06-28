@@ -19,10 +19,10 @@ class UsersLocalDataSourceImpl implements UsersLocalDataSource {
 
   @override
   Future<UserEntity> getCurrentUser() async {
-    if (_box.containsKey(CURRENT_USER_KEY)) {
+    try {
       return _box.get(CURRENT_USER_KEY);
-    } else {
-      throw DatabaseException('user not found');
+    } on HiveError catch (e) {
+      throw DatabaseException(e.message);
     }
   }
 

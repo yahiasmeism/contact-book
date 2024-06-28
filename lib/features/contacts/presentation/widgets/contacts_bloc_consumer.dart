@@ -1,4 +1,4 @@
-import 'package:contact_book/features/contacts/presentation/bloc/contacts_bloc.dart';
+import 'package:contact_book/features/contacts/presentation/managers/contacts_bloc/contacts_bloc.dart';
 import 'package:contact_book/features/contacts/presentation/widgets/contacts_list_view_pagination.dart';
 
 import '../../../../core/widgets/snackbar_global.dart';

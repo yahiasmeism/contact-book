@@ -12,6 +12,7 @@ import 'package:contact_book/features/home/data/repository_impl/home_repository_
 import 'package:contact_book/features/home/domin/use_case/get_activities_use_case.dart';
 import 'package:contact_book/features/home/persintation/cubits/activities_cubit/activities_cubit.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import '../../features/authentication/presentation/cubits/authorization_cubit/authorization_cubit.dart';
 import '../../features/contacts/domain/use_cases/create_contact_use_case.dart';
 import '../../features/contacts/domain/use_cases/delete_contacts_use_case.dart';
 import '../../features/contacts/domain/use_cases/get_all_contacts_use_case.dart';
@@ -44,7 +45,6 @@ import '../../features/authentication/domain/repositories/auth_repository.dart';
 import '../../features/authentication/domain/use_cases/login_usecase.dart';
 import '../../features/authentication/domain/use_cases/logout_usecase.dart';
 import '../../features/authentication/domain/use_cases/register_usecase.dart';
-import '../../features/authentication/presentation/cubits/auth_cubit/auth_cubit.dart';
 import '../../features/authentication/presentation/cubits/login_cubit/login_cubit.dart';
 import '../../features/authentication/presentation/cubits/logout_cubit/logout_cubit.dart';
 import '../../features/authentication/presentation/cubits/register_cubit/register_cubit.dart';
@@ -129,7 +129,7 @@ Future<void> init() async {
   sl.registerFactory(() => LoginCubit(loginUseCase: sl()));
   sl.registerFactory(() => RegisterCubit(registerUseCase: sl()));
   sl.registerFactory(() => LogoutCubit(logoutUseCase: sl()));
-  sl.registerFactory(() => AuthCubit(checkIsLoggedInUseCase: sl()));
+  sl.registerFactory(() => AuthorizedCubit(checkIsLoggedInUseCase: sl()));
 
   // Use Cases
   sl.registerLazySingleton(() => LoginUseCase(authRepository: sl()));

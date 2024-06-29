@@ -13,35 +13,35 @@ part 'contact_entity.g.dart';
 class ContactEntity extends Equatable {
   
   @HiveField(0)
-  final int? id;
+   int? id;
   @HiveField(1)
-  final String firstName;
+   String firstName;
   @HiveField(2)
-  final String lastName;
+   String lastName;
   @HiveField(3)
-  final String email;
+   String email;
   @HiveField(4)
-  final String? emailTwo;
+   String? emailTwo;
   @HiveField(5)
-  final String phoneNumber;
+   String phoneNumber;
   @HiveField(6)
-  final String? mobileNumber;
+   String? mobileNumber;
   @HiveField(7)
-  final File? imageUploadFile;
+  File? imageUploadFile;
   @HiveField(8)
-  final String? imageUrl;
+   String? imageUrl;
   @HiveField(9)
-  final String? status;
+   String? status;
   @HiveField(10)
   bool? isFavorite;
   @HiveField(11)
-  final String address;
+   String address;
   @HiveField(12)
-  final String? addressTwo;
+   String? addressTwo;
   @HiveField(13)
-  final int? companyId;
+   int? companyId;
   @HiveField(14)
-  final CompanyEntity? company;
+   CompanyEntity? company;
 
    ContactEntity({
     this.id,

@@ -251,9 +251,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
 
   @override
   void dispose() {
+    emailController.dispose();
     firstNameController.dispose();
     lastNameController.dispose();
-    emailController.dispose();
     phoneNumberController.dispose();
     companyNameController.dispose();
     vatNumberController.dispose();

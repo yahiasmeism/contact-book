@@ -11,4 +11,10 @@ final class ContactImageInitial extends ContactImageState {}
 
 final class ContactImageLoading extends ContactImageState {}
 
-final class ContactImageLoaded extends ContactImageState {}
+final class ContactImageLoaded extends ContactImageState {
+  final Uint8List image;
+
+  const ContactImageLoaded({required this.image});
+}
+
+final class ContactImageFailure extends ContactImageState {}

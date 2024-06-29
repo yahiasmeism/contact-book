@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import '../../../../core/constants/assets.dart';
 import '../../../../core/constants/colors.dart';
@@ -74,8 +73,6 @@ class UserTile extends StatelessWidget {
                   } else {
                     context.read<UsersBloc>().usersSelected.remove(userEntity);
                   }
-                  var list = context.read<UsersBloc>().usersSelected;
-                  log(list.length.toString());
                 },
                 initalValue: context
                     .read<UsersBloc>()

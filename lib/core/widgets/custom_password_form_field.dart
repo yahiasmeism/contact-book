@@ -48,10 +48,4 @@ class _CustomPasswordFormFieldState extends State<CustomPasswordFormField> {
       ),
     );
   }
-
-  @override
-  void dispose() {
-    widget.controller?.dispose();
-    super.dispose();
-  }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../constants/assets.dart';
-import 'main_popup_menu.dart';
+import 'app_bar_popup_menu/popup_button.dart';
 
 class AppScaffold extends StatelessWidget {
   const AppScaffold({
@@ -25,7 +25,7 @@ class AppScaffold extends StatelessWidget {
 
   AppBar myAppBAr(BuildContext context) {
     return AppBar(
-      actions: const <Widget>[MainPopupMenu()],
+      actions: const <Widget>[PopupButton()],
       centerTitle: true,
       title: SvgPicture.asset(ASSETS.LOGO_WHITE_PATH),
     );

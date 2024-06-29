@@ -1,6 +1,5 @@
 import 'package:contact_book/core/helpers/excute_remote_or_local.dart';
 
-import '../../../../core/constants/constant.dart';
 import '../../../../core/error/exceptions.dart';
 import '../models/user_model.dart';
 import 'package:dartz/dartz.dart';
@@ -17,35 +16,35 @@ class UserRepositoryImpl implements UserRepository {
   UsersLocalDataSource usersLocal;
   UsersRemoteDataSource usersRemote;
   UserRepositoryImpl({
+    
     required this.networkInfo,
     required this.usersLocal,
-    required this.usersRemote,
+    required this.usersRemote, 
   });
 
   @override
   Future<Either<Failure, List<UserEntity>>> getAllUsers() async {
-    return executeRemoteOrLocal<List<UserEntity>>(
-      networkInfo: networkInfo,
-      localCall: usersLocal.getAllUsers,
+    return await executeRemoteOrLocal<List<UserEntity>>(
       remoteCall: () async {
-        List<UserModel> usersModel = await usersRemote.getAllUsers();
-        await usersLocal.storeAllUsers(users: usersModel);
-
-        return usersModel.map((u) => u.toEntity()).toList();
+        final users = await usersRemote.getAllUsers();
+        await usersLocal.storeAllUsers(users: users);
+        return users;
       },
+      localCall: usersLocal.getAllUsers,
+      networkInfo: networkInfo,
     );
   }
 
   @override
   Future<Either<Failure, UserEntity>> getCurrentUser() async {
-    return executeRemoteOrLocal<UserEntity>(
+    return await executeRemoteOrLocal<UserEntity>(
       networkInfo: networkInfo,
       remoteCall: () async {
         final user = await usersRemote.getCurrentUser();
-        await usersLocal.storeUser(id: CURRENT_USER_KEY, user: user);
+        await usersLocal.storeCurrentUser(user: user);
         return user;
       },
-      localCall: usersLocal.getCurrentUser,
+      localCall: () async => await usersLocal.getCurrentUser(),
     );
   }
 
@@ -70,7 +69,7 @@ class UserRepositoryImpl implements UserRepository {
       final updatedUser = await usersRemote.updateUser(
           userModel: UserModel.fromEntity(userEntity));
 
-      usersLocal.storeUser(id: userEntity.id!, user: updatedUser);
+      usersLocal.storeUser(user: updatedUser);
       return Right(updatedUser.toEntity());
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));
@@ -85,7 +84,7 @@ class UserRepositoryImpl implements UserRepository {
     try {
       UserModel userModel = UserModel.fromEntity(user);
       UserEntity userEntity = await usersRemote.addUser(userModel: userModel);
-      await usersLocal.storeUser(id: userEntity.id!, user: userEntity);
+      await usersLocal.storeUser(user: userEntity);
       return Right(userEntity);
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));

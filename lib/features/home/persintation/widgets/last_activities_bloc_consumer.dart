@@ -13,7 +13,6 @@ class LastActivitiesBlocConsumer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ActivitiesCubit, ActivitiesState>(
       builder: (context, state) {
-        //
         if (state is ActivitiesLoading) {
           //
           return const ActivitiesFadingLoadingIndecator(
@@ -22,6 +21,13 @@ class LastActivitiesBlocConsumer extends StatelessWidget {
           //
         } else if (state is ActivitiesLoaded) {
           //
+          final latestActivity = context.read<ActivitiesCubit>().latestActivity;
+          if (latestActivity.isEmpty) {
+            return const Padding(
+              padding: EdgeInsets.only(bottom: 24),
+              child: Center(child: Text('Not Activites')),
+            );
+          }
           return Container(
             decoration: BoxDecoration(
               color: Colors.white,

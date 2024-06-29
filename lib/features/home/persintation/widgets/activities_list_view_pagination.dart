@@ -44,7 +44,7 @@ class _ActivitiesListViewPaginationState
         ),
       );
     } else {
-      return const Center(child: Text('No Contacts'));
+      return const Center(child: Text('No Activities'));
     }
   }
 

@@ -17,8 +17,8 @@ final class CurrnetUserFailure extends CurrentUserState {
   const CurrnetUserFailure({required this.message});
 }
 
-final class CurrnetUserLoaded extends CurrentUserState {
+final class CurrentUserLoaded extends CurrentUserState {
   final UserEntity user;
 
-  const CurrnetUserLoaded({required this.user});
+  const CurrentUserLoaded({required this.user});
 }

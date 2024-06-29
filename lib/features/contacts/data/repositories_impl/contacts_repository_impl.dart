@@ -134,7 +134,7 @@ class ContactsRepositoryImpl implements ContactsRepository {
   @override
   Future<Either<Failure, Uint8List>> getContactImage(
       ContactEntity contact) async {
-    return executeRemoteOrLocal<Uint8List>(
+    return await executeRemoteOrLocal<Uint8List>(
       remoteCall: () async {
         final image = await remote.fetchContactImage(contact);
         await local.storeImage(image: image, id: contact.id);

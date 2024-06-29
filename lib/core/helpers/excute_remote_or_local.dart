@@ -58,6 +58,8 @@ Future<Either<Failure, T>> executeRemoteOrLocal<T>({
       return right(await localCall());
     } on DatabaseException catch (e) {
       return left(DatabaseFailure(message: e.message));
+    } on EmptyChacheException catch(e){
+      return left(EmptyChacheFailure(message: e.message));
     }
   }
 }

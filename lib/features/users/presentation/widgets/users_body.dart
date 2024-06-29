@@ -21,29 +21,33 @@ class UsersBody extends StatelessWidget {
       onRefresh: () async {
         context.read<UsersBloc>().add(GetAllUsersEvent());
       },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: CustomScrollView(
-          physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics(),
-          ),
-          slivers: [
-            const SliverToBoxAdapter(child: BreadCrumbNavigator()),
-            SliverToBoxAdapter(
-              child: Row(
-                children: [
-                  buildDeleteButton(context),
-                  const SizedBox(width: 16),
-                  buildInviteUserButton(context),
-                ],
+      child: Container(
+        constraints:
+            BoxConstraints(minHeight: MediaQuery.of(context).size.height),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: CustomScrollView(
+            physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics(),
+            ),
+            slivers: [
+              const SliverToBoxAdapter(child: BreadCrumbNavigator()),
+              SliverToBoxAdapter(
+                child: Row(
+                  children: [
+                    buildDeleteButton(context),
+                    const SizedBox(width: 16),
+                    buildInviteUserButton(context),
+                  ],
+                ),
               ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(vertical: 24),
-              sliver: buildSearchField(context),
-            ),
-            const SliverToBoxAdapter(child: UsersBlocConsumer())
-          ],
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(vertical: 24),
+                sliver: buildSearchField(context),
+              ),
+              const SliverToBoxAdapter(child: UsersBlocConsumer())
+            ],
+          ),
         ),
       ),
     );

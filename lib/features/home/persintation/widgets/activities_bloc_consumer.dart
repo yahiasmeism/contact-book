@@ -24,7 +24,7 @@ class ActivitiesBlocConsumer extends StatelessWidget {
           final activities = context.read<ActivitiesCubit>().activities;
           return ActivitiesListViewPagination(activities: activities);
         } else {
-          return const SizedBox();
+          return const Center();
         }
       },
     );

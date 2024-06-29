@@ -18,7 +18,7 @@ class FileConverter {
     Directory tempDir = await getTemporaryDirectory();
 
     // Create a temporary file name
-    String tempFilePath = '${tempDir.path}/temp_file.txt';
+    String tempFilePath = tempDir.path;
 
     // Create a File instance
     File file = File(tempFilePath);

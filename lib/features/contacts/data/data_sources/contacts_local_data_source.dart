@@ -1,3 +1,4 @@
+import 'package:contact_book/core/constants/messages.dart';
 import 'package:contact_book/core/error/exceptions.dart';
 import 'package:flutter/foundation.dart';
 import '../../domain/entities/contact_entity.dart';
@@ -24,29 +25,42 @@ class ContacstLocalDataSourceImpl extends ContactsLocalDataSource {
 
   @override
   Future<void> deleteContacts({required List<ContactEntity> contacts}) async {
-    await _box.deleteAll(contacts.map((c) => c.id));
+    await _box.deleteAll(contacts.map((c) => 'Contacts/${c.id}'));
   }
 
   @override
-  Future<List<ContactEntity>> getAllContacts() async =>
-      _box.values.whereType<ContactEntity>().toList();
+  Future<List<ContactEntity>> getAllContacts() async {
+     final List<ContactEntity> contacts = [];
+    final keys = _box.keys.map((k) => k.toString());
+    final List<String> filterContactsKey =
+        keys.where((k) => k.startsWith('Contacts')).toList();
+
+    for (var contactKey in filterContactsKey) {
+      final contact = await _box.get(contactKey) as ContactEntity?;
+      if (contact != null) {
+        contacts.add(contact);
+      }
+    }
+
+    return contacts;
+  }
   @override
   Future<void> storeListOfContacts(
       {required List<ContactEntity> contacts}) async {
     for (var contact in contacts) {
-      await _box.put(contact.id, contact);
+      await _box.put('Contacts/${contact.id}', contact);
     }
   }
 
   @override
   Future<void> storeContact({required ContactEntity contact}) async {
-    await _box.put(contact.id, contact);
+    await _box.put('Contacts/${contact.id}', contact);
   }
 
   @override
   Future<ContactEntity> getContact({required int id}) {
     try {
-      return _box.get(id);
+      return _box.get('Contacts/$id');
     } on HiveError catch (e) {
       throw DatabaseException(e.message);
     }
@@ -54,24 +68,23 @@ class ContacstLocalDataSourceImpl extends ContactsLocalDataSource {
 
   @override
   Future<void> deleteContact({required int id}) async {
-    await _box.delete(id);
+    await _box.delete('Contacts/$id');
   }
 
   @override
   Future<Uint8List> getImage({required int? id}) async {
-    try {
-      return await _box.get('Contacts/$id');
-    } on HiveError catch (e) {
-      throw DatabaseException(e.message);
+    if (_box.containsKey('Contacts/$id/image')) {
+      return await _box.get('Contacts/$id/image');
+    } else {
+      throw EmptyChacheException(MESSAGES.NOT_FOUND);
     }
   }
 
   @override
-  Future<void> storeImage(
-      {required Uint8List image, required int? id}) async {
+  Future<void> storeImage({required Uint8List image, required int? id}) async {
     try {
       if (id == null) return;
-      await _box.put('Contacts/$id', image);
+      await _box.put('Contacts/$id/image', image);
     } on HiveError catch (e) {
       throw DatabaseException(e.message);
     }

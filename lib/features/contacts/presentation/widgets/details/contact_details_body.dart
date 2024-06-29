@@ -1,7 +1,4 @@
-import 'dart:developer';
 import 'dart:io';
-import 'package:contact_book/core/utils/file_converter.dart';
-import 'package:contact_book/features/contacts/presentation/managers/contact_image_cubit/contact_image_cubit.dart';
 import 'package:contact_book/features/contacts/presentation/widgets/contact_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,16 +43,8 @@ class _ContactDetailsBodyState extends State<ContactDetailsBody> {
     mobileController = TextEditingController(text: widget.contact.mobileNumber);
     addressController = TextEditingController(text: widget.contact.address);
     address2Controller = TextEditingController(text: widget.contact.addressTwo);
-    initialImage();
-    super.initState();
-  }
 
-  initialImage() async {
-    final imageBytes = context.read<ContactImageCubit>().image;
-    if (imageBytes != null) {
-      imageFile = await FileConverter.unit8ListToFile(imageBytes);
-    }
-    setState(() {});
+    super.initState();
   }
 
   @override
@@ -169,8 +158,6 @@ class _ContactDetailsBodyState extends State<ContactDetailsBody> {
             companyId: widget.contact.companyId,
             company: widget.contact.company,
           );
-
-          log(contact.toString());
           if (formKey.currentState?.validate() == true) {
             Navigator.pop(context);
             context

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/colors.dart';
-import '../../../../core/widgets/custom_search_field.dart';
+import '../../../../core/widgets/custom_fields/custom_search_field.dart';
 import '../managers/contacts_bloc/contacts_bloc.dart';
 import 'contacts_bloc_consumer.dart';
 
@@ -81,8 +81,7 @@ class ContactsBody extends StatelessWidget {
               context: context,
               animType: AnimType.bottomSlide,
               dialogType: DialogType.warning,
-              title:
-                  'Are you sure to delete ${contactsBloc.contactsSelected.length} user',
+              title: 'Are you sure to delete',
               btnOkColor: Colors.red,
               btnCancelColor: COLORS.PRIMARY,
               btnCancelOnPress: () {},

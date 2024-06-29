@@ -1,7 +1,7 @@
 import '../../../../core/widgets/country_drop_down_menu.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_outline_button.dart';
-import '../../../../core/widgets/custom_text_form_field.dart';
+import '../../../../core/widgets/custom_fields/custom_text_form_field.dart';
 import '../../domain/entities/company_entity.dart';
 import '../bloc/company_bloc.dart';
 import 'package:flutter/material.dart';

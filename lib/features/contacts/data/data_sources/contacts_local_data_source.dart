@@ -30,20 +30,21 @@ class ContacstLocalDataSourceImpl extends ContactsLocalDataSource {
 
   @override
   Future<List<ContactEntity>> getAllContacts() async {
-     final List<ContactEntity> contacts = [];
+    final List<ContactEntity> contacts = [];
     final keys = _box.keys.map((k) => k.toString());
     final List<String> filterContactsKey =
         keys.where((k) => k.startsWith('Contacts')).toList();
 
     for (var contactKey in filterContactsKey) {
-      final contact = await _box.get(contactKey) as ContactEntity?;
-      if (contact != null) {
-        contacts.add(contact);
+      if (_box.containsKey(contactKey)) {
+        final contact = await _box.get(contactKey) as ContactEntity;
+          contacts.add(contact);
       }
     }
 
     return contacts;
   }
+
   @override
   Future<void> storeListOfContacts(
       {required List<ContactEntity> contacts}) async {
@@ -73,8 +74,8 @@ class ContacstLocalDataSourceImpl extends ContactsLocalDataSource {
 
   @override
   Future<Uint8List> getImage({required int? id}) async {
-    if (_box.containsKey('Contacts/$id/image')) {
-      return await _box.get('Contacts/$id/image');
+    if (_box.containsKey('Image/$id')) {
+      return await _box.get('Image/$id');
     } else {
       throw EmptyChacheException(MESSAGES.NOT_FOUND);
     }
@@ -84,7 +85,7 @@ class ContacstLocalDataSourceImpl extends ContactsLocalDataSource {
   Future<void> storeImage({required Uint8List image, required int? id}) async {
     try {
       if (id == null) return;
-      await _box.put('Contacts/$id/image', image);
+      await _box.put('Image/$id', image);
     } on HiveError catch (e) {
       throw DatabaseException(e.message);
     }

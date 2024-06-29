@@ -29,15 +29,7 @@ List<PopupMenuEntry> popupMenu(BuildContext context, UserEntity user) {
       ),
     ),
 
-    // Settings
     const PopupMenuDivider(),
-    const PopupMenuItem(
-      child: ListTile(
-        leading: Icon(Icons.settings),
-        title: Text('Settings'),
-      ),
-    ),
-
     // Profile
     PopupMenuItem(
       onTap: () {

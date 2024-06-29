@@ -50,10 +50,6 @@ class DrawerMenuItems extends StatelessWidget {
           },
         ),
         const CustomDivider(),
-        const DrawerItem(
-          title: 'Username',
-        ),
-        const CustomDivider(),
         DrawerItem(
           leading: const Icon(Icons.person, size: 30),
           title: 'My Profile',

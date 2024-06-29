@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/styles.dart';
+import '../../constants/styles.dart';
 
 class CustomTextFromField extends StatelessWidget {
   const CustomTextFromField({
@@ -34,9 +34,14 @@ class CustomTextFromField extends StatelessWidget {
       controller: controller,
       keyboardType: keyboardType,
       validator: (value) {
-        if (!isRequired) return null;
-        if (value == '' || value == null) {
-          return '$labelText is required';
+        if (isRequired) {
+          if (value == '' || value == null && isRequired) {
+            return '$labelText is required';
+          }
+        }
+        final emailRegex = RegExp(r'^[a-zA-Z0-9]+$');
+        if (value!.isNotEmpty && !emailRegex.hasMatch(value)) {
+          return 'Please enter only letters and numbers';
         }
         return null;
       },

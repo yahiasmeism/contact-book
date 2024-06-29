@@ -1,5 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:contact_book/core/widgets/custom_search_field.dart';
+import 'package:contact_book/core/widgets/custom_fields/custom_search_field.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/widgets/bread_crumb.dart';
 import '../../../../core/widgets/custom_button.dart';
@@ -92,8 +92,7 @@ class UsersBody extends StatelessWidget {
               context: context,
               animType: AnimType.bottomSlide,
               dialogType: DialogType.warning,
-              title:
-                  'Are you sure to delete ${userBloc.usersSelected.length} user',
+              title: 'Are you sure to delete',
               btnOkColor: Colors.red,
               btnCancelColor: COLORS.PRIMARY,
               btnCancelOnPress: () {},

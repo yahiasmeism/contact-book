@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:path_provider/path_provider.dart';
 
 class FileConverter {
   static Future<Uint8List> fileToUint8List(File file) async {
@@ -13,16 +12,4 @@ class FileConverter {
     }
   }
 
-  static Future<File> unit8ListToFile(Uint8List bytes) async {
-    // Get the temporary directory
-    Directory tempDir = await getTemporaryDirectory();
-
-    // Create a temporary file name
-    String tempFilePath = tempDir.path;
-
-    // Create a File instance
-    File file = File(tempFilePath);
-
-    return await file.writeAsBytes(bytes);
-  }
 }

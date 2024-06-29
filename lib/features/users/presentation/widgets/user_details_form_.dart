@@ -1,9 +1,9 @@
-import '../../../../core/widgets/custom_text_form_field.dart';
+import '../../../../core/widgets/custom_fields/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/styles.dart';
 import '../../../../core/widgets/custom_drop_down_menu.dart';
-import '../../../../core/widgets/custom_email_form_field.dart';
+import '../../../../core/widgets/custom_fields/custom_email_form_field.dart';
 import '../../../../core/widgets/custom_switch.dart';
 
 class UserDetailsForm extends StatelessWidget {

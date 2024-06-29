@@ -1,12 +1,12 @@
+import 'package:contact_book/core/constants/constant.dart';
 import 'package:contact_book/features/contacts/presentation/managers/contacts_bloc/contacts_bloc.dart';
 import 'package:contact_book/features/home/persintation/cubits/activities_cubit/activities_cubit.dart';
+import 'package:hive/hive.dart';
 
 import '../../../../core/widgets/app_scaffold.dart';
-import '../../../../core/widgets/snackbar_global.dart';
 import '../../../company/presentation/bloc/company_bloc.dart';
 import '../../../users/presentation/blocs/current_user_cubit/current_user_cubit.dart';
 import '../../../users/presentation/blocs/users_bloc.dart';
-import '../cubits/network_cubit/network_cubit.dart';
 import '../widgets/home_body.dart';
 
 import 'package:flutter/material.dart';
@@ -33,29 +33,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<NetworkCubit, NetworkState>(
-      listenWhen: (previous, current) {
-        return !(previous == NetworkState.init &&
-            current == NetworkState.online);
-      },
-      listener: (context, state) {
-        if (state == NetworkState.offline) {
-          SnackBarGlobal.show(
-            context,
-            'No Internet',
-            color: Colors.red,
-            icon: Icons.wifi_off,
-          );
-        } else if (state == NetworkState.online) {
-          SnackBarGlobal.show(
-            context,
-            'Connected',
-            color: Colors.green,
-            icon: Icons.wifi,
-          );
-        }
-      },
-      child: const AppScaffold(body: HomeBody()),
-    );
+    return const AppScaffold(body: HomeBody());
+  }
+
+  @override
+  void dispose() {
+    Hive.box(APP_BOX).compact();
+    super.dispose();
   }
 }

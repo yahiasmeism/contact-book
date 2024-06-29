@@ -1,4 +1,5 @@
 import 'package:contact_book/features/contacts/domain/entities/contact_entity.dart';
+import 'package:contact_book/features/contacts/presentation/managers/contact_image_cubit/contact_image_cubit.dart';
 import 'package:contact_book/features/contacts/presentation/pages/contact_details_page.dart';
 import 'package:contact_book/features/contacts/presentation/widgets/contact_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,6 +57,7 @@ class ContactTile extends StatelessWidget {
   }
 
   Padding buildTopSection(BuildContext context) {
+    context.read<ContactImageCubit>().getContactImage(contact: contact);
     ContactsBloc contactsBloc = context.read<ContactsBloc>();
     return Padding(
       padding: const EdgeInsets.all(8.0),

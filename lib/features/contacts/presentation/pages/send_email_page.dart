@@ -1,8 +1,8 @@
 import 'package:contact_book/core/widgets/app_scaffold.dart';
 import 'package:contact_book/core/widgets/custom_button.dart';
-import 'package:contact_book/core/widgets/custom_email_form_field.dart';
+import 'package:contact_book/core/widgets/custom_fields/custom_email_form_field.dart';
 import 'package:contact_book/core/widgets/custom_outline_button.dart';
-import 'package:contact_book/core/widgets/custom_text_form_field.dart';
+import 'package:contact_book/core/widgets/custom_fields/custom_text_form_field.dart';
 import 'package:contact_book/core/widgets/footer_app.dart';
 import 'package:contact_book/core/widgets/snackbar_global.dart';
 import 'package:contact_book/features/contacts/domain/entities/send_email_entity.dart';

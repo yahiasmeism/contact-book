@@ -10,13 +10,6 @@ class CustomSearchField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       onChanged: onChanged
-      // if (value.isNotEmpty) {
-      //   context
-      //       .read<UsersBloc>()
-      //       .add(FilterUserEvent(searchKeyword: value));
-      // } else {
-      //   context.read<UsersBloc>().add(UndoFilterUsersEvent());
-      // }
       ,
       onTapOutside: (event) {
         FocusScope.of(context).unfocus();

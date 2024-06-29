@@ -7,12 +7,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../domain/entities/login.dart';
 
-import '../../../../core/widgets/custom_email_form_field.dart';
+import '../../../../core/widgets/custom_fields/custom_email_form_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_outline_button.dart';
-import '../../../../core/widgets/custom_password_form_field.dart';
+import '../../../../core/widgets/custom_fields/custom_password_form_field.dart';
 import 'package:flutter/material.dart';
 
 class LoginForm extends StatefulWidget {

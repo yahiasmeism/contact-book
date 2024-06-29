@@ -10,9 +10,9 @@ import '../cubits/register_cubit/register_cubit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../../core/widgets/custom_button.dart';
-import '../../../../core/widgets/custom_email_form_field.dart';
-import '../../../../core/widgets/custom_password_form_field.dart';
-import '../../../../core/widgets/custom_text_form_field.dart';
+import '../../../../core/widgets/custom_fields/custom_email_form_field.dart';
+import '../../../../core/widgets/custom_fields/custom_password_form_field.dart';
+import '../../../../core/widgets/custom_fields/custom_text_form_field.dart';
 import '../../domain/entities/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

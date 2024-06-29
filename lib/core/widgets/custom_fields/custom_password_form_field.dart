@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/styles.dart';
+import '../../constants/styles.dart';
 
 class CustomPasswordFormField extends StatefulWidget {
   const CustomPasswordFormField({
@@ -24,6 +24,9 @@ class _CustomPasswordFormFieldState extends State<CustomPasswordFormField> {
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Password is required';
+        }
+        if (value.length < 8) {
+          return 'Password must be at least 8 characters long';
         }
         return null;
       },

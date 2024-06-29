@@ -11,7 +11,7 @@ class ContactImageCubit extends Cubit<ContactImageState> {
   ContactImageCubit({required this.getContactImageUseCase})
       : super(ContactImageInitial());
 
-  Map<String, Uint8List>? images;
+  Map<String, Uint8List>? images = {};
 
   getContactImage({required ContactEntity contact}) async {
     emit(ContactImageLoading());

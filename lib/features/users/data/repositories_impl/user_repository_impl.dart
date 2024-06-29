@@ -16,10 +16,9 @@ class UserRepositoryImpl implements UserRepository {
   UsersLocalDataSource usersLocal;
   UsersRemoteDataSource usersRemote;
   UserRepositoryImpl({
-    
     required this.networkInfo,
     required this.usersLocal,
-    required this.usersRemote, 
+    required this.usersRemote,
   });
 
   @override
@@ -28,7 +27,7 @@ class UserRepositoryImpl implements UserRepository {
       remoteCall: () async {
         final users = await usersRemote.getAllUsers();
         await usersLocal.storeAllUsers(users: users);
-        return users;
+        return users.map((e) => e.toEntity()).toList();
       },
       localCall: usersLocal.getAllUsers,
       networkInfo: networkInfo,
@@ -68,8 +67,7 @@ class UserRepositoryImpl implements UserRepository {
     try {
       final updatedUser = await usersRemote.updateUser(
           userModel: UserModel.fromEntity(userEntity));
-
-      usersLocal.storeUser(user: updatedUser);
+      await usersLocal.storeUser(user: userEntity);
       return Right(updatedUser.toEntity());
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));

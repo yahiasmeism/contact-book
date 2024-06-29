@@ -20,14 +20,14 @@ class HomeRepositoryImpl implements HomeRepository {
   });
 
   @override
-  Future<Either<Failure, List<ActivityEntity>>> getAcitvities() {
-    return executeRemoteOrLocal<List<ActivityEntity>>(
+  Future<Either<Failure, List<ActivityEntity>>> getAcitvities() async {
+    return await executeRemoteOrLocal<List<ActivityEntity>>(
       remoteCall: () async {
         final List<ActivityModel> activities = await remote.getActivities();
         await local.storeActivities(activities: activities);
         return activities;
       },
-      localCall: local.getActivities,
+      localCall: ()async => await local.getActivities(),
       networkInfo: networkInfo,
     );
   }

@@ -4,6 +4,7 @@ import 'package:contact_book/features/contacts/presentation/managers/contact_ima
 import 'package:contact_book/features/contacts/presentation/widgets/loading/image_loading_indecator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/services/service_locator.dart' as di;
 
 class ContactImage extends StatelessWidget {
   const ContactImage({
@@ -13,26 +14,29 @@ class ContactImage extends StatelessWidget {
   });
   final ContactEntity contact;
   final double radius;
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ContactImageCubit, ContactImageState>(
-      builder: (context, state) {
-        if (state is ContactImageLoading) {
-          return ImageLoadingIndecator(radius: radius);
-        } else if (state is ContactImageLoaded) {
-          final image =
-              context.read<ContactImageCubit>().images![contact.id.toString()]!;
-          return CircleAvatar(
-            radius: radius,
-            backgroundImage: MemoryImage(image),
-          );
-        } else {
-          return CircleAvatar(
-            radius: radius,
-            backgroundImage: const AssetImage(ASSETS.PLACEHOLDER),
-          );
-        }
-      },
+    return BlocProvider(
+      create: (context) =>
+          di.sl<ContactImageCubit>()..loadImage(contact: contact),
+      child: BlocBuilder<ContactImageCubit, ContactImageState>(
+        builder: (context, state) {
+          if (state is ContactImageLoading) {
+            return ImageLoadingIndecator(radius: radius);
+          } else if (state is ContactImageLoaded) {
+            return CircleAvatar(
+              radius: radius,
+              backgroundImage: MemoryImage(state.image),
+            );
+          } else {
+            return CircleAvatar(
+              radius: radius,
+              backgroundImage: const AssetImage(ASSETS.PLACEHOLDER),
+            );
+          }
+        },
+      ),
     );
   }
 }

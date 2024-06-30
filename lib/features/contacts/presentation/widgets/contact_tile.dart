@@ -1,15 +1,13 @@
 import 'package:contact_book/features/contacts/domain/entities/contact_entity.dart';
-import 'package:contact_book/features/contacts/presentation/managers/contact_image_cubit/contact_image_cubit.dart';
 import 'package:contact_book/features/contacts/presentation/pages/contact_details_page.dart';
 import 'package:contact_book/features/contacts/presentation/widgets/contact_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
 
 import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/styles.dart';
 import '../../../../core/widgets/custom_checkbox.dart';
 import '../../../../core/widgets/custom_divider.dart';
-import 'package:flutter/material.dart';
-
 import '../../../../core/widgets/star_favorite_toggle.dart';
 import '../../../../core/widgets/status_text.dart';
 import '../managers/contacts_bloc/contacts_bloc.dart';
@@ -20,6 +18,7 @@ class ContactTile extends StatelessWidget {
     required this.contact,
   });
   final ContactEntity contact;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -43,13 +42,13 @@ class ContactTile extends StatelessWidget {
             buildTopSection(context),
             const CustomDivider(),
             // center section
-            buildCenterSection(),
+            buildCenterSection(context),
             const CustomDivider(
               indent: 25,
               endIndent: 25,
             ),
             // bottom section
-            buildBottomSection()
+            buildBottomSection(),
           ],
         ),
       ),
@@ -57,7 +56,6 @@ class ContactTile extends StatelessWidget {
   }
 
   Padding buildTopSection(BuildContext context) {
-    context.read<ContactImageCubit>().getContactImage(contact: contact);
     ContactsBloc contactsBloc = context.read<ContactsBloc>();
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -65,17 +63,18 @@ class ContactTile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Transform.scale(
-              scale: 1.2,
-              child: CustomCheckBox(
-                onChange: (value) {
-                  if (value) {
-                    contactsBloc.contactsSelected.add(contact);
-                  } else {
-                    contactsBloc.contactsSelected.remove(contact);
-                  }
-                },
-                initalValue: contactsBloc.contactsSelected.contains(contact),
-              )),
+            scale: 1.2,
+            child: CustomCheckBox(
+              onChange: (value) {
+                if (value) {
+                  contactsBloc.contactsSelected.add(contact);
+                } else {
+                  contactsBloc.contactsSelected.remove(contact);
+                }
+              },
+              initalValue: contactsBloc.contactsSelected.contains(contact),
+            ),
+          ),
           StarFavoriteToggle(
             initalValue: contact.isFavorite ?? false,
             favoriteToggle: (value) {
@@ -87,7 +86,7 @@ class ContactTile extends StatelessWidget {
     );
   }
 
-  Padding buildCenterSection() {
+  Padding buildCenterSection(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Row(
@@ -106,7 +105,7 @@ class ContactTile extends StatelessWidget {
                       style: STYLES.TEXT_STYLE_24.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
-                    )
+                    ),
                   ],
                 ),
                 Positioned(

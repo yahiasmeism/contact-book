@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     context.read<CompanyBloc>().add(GetCompanyInfoEvent());
     context.read<UsersBloc>().add(GetAllUsersEvent());
-    context.read<CurrentUserCubit>().getCurrentUset();
+    context.read<CurrentUserCubit>().getCurrentUser();
     context.read<ContactsBloc>().add(GetAllContactsEvent());
     context.read<ActivitiesCubit>().getActivities();
     super.initState();

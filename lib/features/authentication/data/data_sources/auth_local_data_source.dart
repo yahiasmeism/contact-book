@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hive/hive.dart';
 
 import '../../../../core/constants/constant.dart';
@@ -35,6 +34,5 @@ class AuthLocalDataSourceimpl implements AuthLocalDataSource {
   Future<void> clearAppData() async {
     await Hive.box(APP_BOX).clear();
     await sharedPreferences.clear();
-    await DefaultCacheManager().emptyCache();
   }
 }

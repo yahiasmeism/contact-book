@@ -1,5 +1,4 @@
 import 'package:contact_book/core/router/app_router.dart';
-import 'package:contact_book/features/contacts/presentation/managers/contact_image_cubit/contact_image_cubit.dart';
 import 'package:contact_book/features/contacts/presentation/managers/contacts_bloc/contacts_bloc.dart';
 import 'package:contact_book/features/contacts/presentation/managers/send_email_cubit/send_email_cubit.dart';
 import 'package:contact_book/features/home/persintation/cubits/activities_cubit/activities_cubit.dart';
@@ -48,8 +47,6 @@ class ContactBookApp extends StatelessWidget {
         BlocProvider(create: (context) => di.sl<ContactsBloc>()),
         BlocProvider(create: (context) => di.sl<SendEmailCubit>()),
         BlocProvider(create: (context) => di.sl<ActivitiesCubit>()),
-        BlocProvider(create: (context) => di.sl<ContactImageCubit>()),
-        BlocProvider(create: (context) => di.sl<ContactImageCubit>())
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,

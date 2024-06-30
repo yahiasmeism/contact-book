@@ -10,13 +10,10 @@ class CurrentUserCubit extends Cubit<CurrentUserState> {
   CurrentUserCubit({required this.getCurrentUserUseCase})
       : super(CurrentUSerInitial());
 
-
-
-  getCurrentUset() async {
+  getCurrentUser() async {
     emit(CurrnetUserLoading());
     final either = await getCurrentUserUseCase.call();
     either.fold((failure) {}, (currentUser) {
-     
       emit(CurrentUserLoaded(user: currentUser));
     });
   }

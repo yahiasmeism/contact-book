@@ -1,3 +1,4 @@
+import 'package:contact_book/core/helpers/image_cache_manager.dart';
 import 'package:contact_book/core/network/api_client.dart';
 import 'package:contact_book/features/contacts/data/data_sources/contacts_local_data_source.dart';
 import 'package:contact_book/features/contacts/data/data_sources/contacts_remote_data_source.dart';
@@ -11,7 +12,6 @@ import 'package:contact_book/features/home/data/date_sources/activities_remote_d
 import 'package:contact_book/features/home/data/repository_impl/home_repository_impl.dart';
 import 'package:contact_book/features/home/domin/use_case/get_activities_use_case.dart';
 import 'package:contact_book/features/home/persintation/cubits/activities_cubit/activities_cubit.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import '../../features/authentication/presentation/cubits/authorization_cubit/authorization_cubit.dart';
 import '../../features/contacts/domain/use_cases/create_contact_use_case.dart';
 import '../../features/contacts/domain/use_cases/delete_contacts_use_case.dart';
@@ -91,7 +91,7 @@ Future<void> init() async {
     ),
   );
   sl.registerFactory(() => SendEmailCubit(sendEmaiUseCase: sl()));
-  sl.registerFactory(() => ContactImageCubit(getContactImageUseCase: sl()));
+  sl.registerFactory(() => ContactImageCubit(getContactImageUseCase: sl(),imageCacheManager: sl()));
 
   // use cases
   sl.registerLazySingleton(
@@ -222,6 +222,6 @@ Future<void> init() async {
 
   //! Core =======================================================
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl());
-  sl.registerLazySingleton<CacheManager>(() => DefaultCacheManager());
+  sl.registerLazySingleton(() => ImageCacheManager());
   sl.registerLazySingleton<ApiClient>(() => (ApiClientImpl(dio: sl())));
 }

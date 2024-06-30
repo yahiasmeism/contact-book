@@ -1,7 +1,5 @@
 import 'dart:io';
-import 'dart:typed_data';
-import 'package:contact_book/core/constants/assets.dart';
-import 'package:contact_book/features/contacts/presentation/managers/contact_image_cubit/contact_image_cubit.dart';
+import 'package:contact_book/features/contacts/presentation/widgets/contact_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -51,8 +49,9 @@ class _ContactDetailsBodyState extends State<ContactDetailsBody> {
 
   @override
   Widget build(BuildContext context) {
-    final Uint8List? imageData =
-        context.read<ContactImageCubit>().images?[widget.contact.id.toString()];
+    // final Uint8List? imageData = context
+    //     .read<ContactImageCubit>()
+    //     .imageCache[widget.contact.id];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
@@ -94,12 +93,7 @@ class _ContactDetailsBodyState extends State<ContactDetailsBody> {
                               )
                             : Column(
                                 children: [
-                                  CircleAvatar(
-                                    radius: 60,
-                                    backgroundImage: imageData != null
-                                        ? MemoryImage(imageData)
-                                        : const AssetImage(ASSETS.PLACEHOLDER),
-                                  ),
+                                  ContactImage(contact: widget.contact),
                                   const SizedBox(height: 16),
                                   Text(
                                     '${widget.contact.firstName} ${widget.contact.lastName}',

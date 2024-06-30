@@ -9,14 +9,13 @@ part 'contact_image_state.dart';
 
 class ContactImageCubit extends Cubit<ContactImageState> {
   final GetContactImageUseCase getContactImageUseCase;
-  final ImageCacheManager imageCacheManager;
   ContactImageCubit(
-      {required this.getContactImageUseCase, required this.imageCacheManager})
+      {required this.getContactImageUseCase})
       : super(ContactImageInitial());
 
   loadImage({required ContactEntity contact}) async {
     final key = contact.id.toString();
-    final image = imageCacheManager.getImage(key);
+    final image = ImageCacheManager.getImage(key);
     if (image != null) {
       emit(ContactImageLoaded(image: image));
     } else {
@@ -27,7 +26,7 @@ class ContactImageCubit extends Cubit<ContactImageState> {
           if (!isClosed) emit(ContactImageFailure());
         },
         (image) {
-          imageCacheManager.cacheImage(image, key);
+          ImageCacheManager.cacheImage(image, key);
           if (!isClosed) emit(ContactImageLoaded(image: image));
         },
       );

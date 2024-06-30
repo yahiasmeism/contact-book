@@ -1,4 +1,4 @@
-import 'package:contact_book/core/helpers/image_cache_manager.dart';
+
 import 'package:contact_book/core/network/api_client.dart';
 import 'package:contact_book/features/contacts/data/data_sources/contacts_local_data_source.dart';
 import 'package:contact_book/features/contacts/data/data_sources/contacts_remote_data_source.dart';
@@ -91,7 +91,7 @@ Future<void> init() async {
     ),
   );
   sl.registerFactory(() => SendEmailCubit(sendEmaiUseCase: sl()));
-  sl.registerFactory(() => ContactImageCubit(getContactImageUseCase: sl(),imageCacheManager: sl()));
+  sl.registerFactory(() => ContactImageCubit(getContactImageUseCase: sl()));
 
   // use cases
   sl.registerLazySingleton(
@@ -222,6 +222,5 @@ Future<void> init() async {
 
   //! Core =======================================================
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl());
-  sl.registerLazySingleton(() => ImageCacheManager());
   sl.registerLazySingleton<ApiClient>(() => (ApiClientImpl(dio: sl())));
 }

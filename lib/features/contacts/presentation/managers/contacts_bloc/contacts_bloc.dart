@@ -6,6 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:contact_book/features/contacts/domain/use_cases/get_all_contacts_use_case.dart';
 
 import '../../../../../core/constants/messages.dart';
+import '../../../../../core/helpers/image_cache_manager.dart';
 import '../../../domain/use_cases/create_contact_use_case.dart';
 import '../../../domain/use_cases/delete_contacts_use_case.dart';
 import '../../../domain/use_cases/toggle_favorite_use_case.dart';
@@ -92,6 +93,7 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
     //  update contact
     on<UpdateContactEvent>((event, emit) async {
       emit(ContactsLoading());
+      ImageCacheManager.deleteImage(event.contact.id.toString());
       final result = await updateContactUseCase(contact: event.contact);
       result.fold(
         (fialure) => emit(ContactsFailure(message: fialure.message)),
@@ -119,6 +121,5 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
         },
       );
     });
-
   }
 }
